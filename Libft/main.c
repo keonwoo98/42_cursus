@@ -14,6 +14,8 @@ int		main(void)
 	printf("ft_strlcpy\n%zu\n%s\n\n", ft_strlcpy(dst, src, 6), dst);
 	printf("ft_strlcat\n%zu\n%s\n\n", ft_strlcat(dst2, src, 9), dst2);
 	printf("ft_strncmp\n%d\n\n", ft_strncmp(s1, s2, 5));
+	printf("ft_strchr\n%s\n\n", ft_strchr(src, 'o'));
+	printf("ft_strrchr\n%s\n\n", ft_strrchr(src, 'o'));
 
 	return (0);
 }
