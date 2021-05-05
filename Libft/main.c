@@ -15,6 +15,9 @@ int		main(void)
 	char	arr[] = "Hello World!!";
 	char	*pdst;
 	char	mem[5] = "eeeee";
+	char	str[] = "test";
+	char	str2[] = "lorem ipsum dolor sit amet";
+	char	*dup;
 
 	printf("ft_atoi\n%d\n\n", ft_atoi("   -123abc   "));
 	printf("ft_strlen\n%zu\n\n", ft_strlen("123456abcd"));
@@ -37,6 +40,10 @@ int		main(void)
 	printf("ft_memcpy\n%s\n\n", ft_memcpy(dst3, src2, 32));
 	pdst = memccpy(dst4, src3, 's', 50); *pdst = '\0';
 	printf("ft_memccpy\n%s\n\n", dst4);
+	ft_memmove(str + 2, str, 4); printf("ft_memmove\n%s\n\n", str);
+	printf("ft_memchr\n%s\n\n", ft_memchr("Hello World", 'W', strlen("Hello World")));
+	printf("ft_memcmp\n%d\n\n", ft_memcmp("Hello", "Hellp", 5));
+	dup = ft_strdup(str2); printf("ft_strdup\n%s\n\n", dup); free(dup);
 
 	return (0);
 }
