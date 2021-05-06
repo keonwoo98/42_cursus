@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 15:16:50 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/05 11:28:03 by keokim           ###   ########.fr       */
+/*   Updated: 2021/05/06 15:52:22 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <unistd.h>
 
 int			ft_atoi(const char *str);
-size_t		ft_strlcat(char *dst, char *src, size_t dstsize);
-size_t		ft_strlcpy(char *dst, char *src, size_t dstsize);
+size_t		ft_strlcat(char *dst, char const *src, size_t dstsize);
+size_t		ft_strlcpy(char *dst, char const *src, size_t dstsize);
 size_t		ft_strlen(const char *s);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_strchr(const char *s, int c);
@@ -41,5 +41,9 @@ void		*ft_memchr(const void *s, int c, size_t n);
 int			ft_memcmp(const void *s1, const void *s2, size_t n);
 void		*ft_calloc(size_t count, size_t size);
 char		*ft_strdup(const char *s1);
+
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strtrim(char const *s1, char const *set);
 
 #endif

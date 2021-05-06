@@ -18,6 +18,10 @@ int		main(void)
 	char	str[] = "test";
 	char	str2[] = "lorem ipsum dolor sit amet";
 	char	*dup;
+	char	*sub_s;
+	char	*join;
+	char	str3[] = "\tlorem ipsum dolor sit amet\t\n";
+	char	*trim;
 
 	printf("ft_atoi\n%d\n\n", ft_atoi("   -123abc   "));
 	printf("ft_strlen\n%zu\n\n", ft_strlen("123456abcd"));
@@ -44,6 +48,10 @@ int		main(void)
 	printf("ft_memchr\n%s\n\n", ft_memchr("Hello World", 'W', strlen("Hello World")));
 	printf("ft_memcmp\n%d\n\n", ft_memcmp("Hello", "Hellp", 5));
 	dup = ft_strdup(str2); printf("ft_strdup\n%s\n\n", dup); free(dup);
+
+	sub_s = ft_substr(str2, 12, 9); printf("ft_substr\n%s\n\n", sub_s); free(sub_s);
+	join = ft_strjoin(s1, s2); printf("ft_strjoin\n%s\n\n", join); free(join);
+	trim = ft_strtrim(str3, "\t\n"); printf("ft_strtrim\n%s\n\n", trim); free(trim);
 
 	return (0);
 }

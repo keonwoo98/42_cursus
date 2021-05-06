@@ -6,13 +6,13 @@
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 14:36:06 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/03 17:52:05 by keokim           ###   ########.fr       */
+/*   Updated: 2021/05/06 15:52:59 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlcat(char *dst, char *src, size_t dstsize)
+size_t		ft_strlcat(char *dst, char const *src, size_t dstsize)
 {
 	size_t	i;
 	size_t	dst_len;
