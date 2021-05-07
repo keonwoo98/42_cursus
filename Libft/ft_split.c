@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 18:04:56 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/06 19:51:06 by keokim           ###   ########.fr       */
+/*   Updated: 2021/05/07 13:22:03 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char		**ft_malloc_error(char **tab)
 	return (NULL);
 }
 
-size_t			count_word(char *str)
+size_t			count_word(char const *str, char c)
 {
 	size_t	count;
 	size_t	i;
@@ -47,7 +47,7 @@ size_t			count_word(char *str)
 	return (count);
 }
 
-size_t			count_str(char *str)
+size_t			count_str(char const *str, char c)
 {
 	size_t	count;
 	size_t	i;
@@ -68,8 +68,7 @@ char			**ft_split(char const *s, char c)
 	int		j;
 	int		k;
 
-	ret = (char **)malloc(sizeof(char *) * (count_word(s) + 1));
-	if (!ret)
+	if (!(ret = (char **)malloc(sizeof(char *) * (count_word(s, c) + 1))))
 		return (NULL);
 	k = 0;
 	while (*s)
@@ -77,7 +76,7 @@ char			**ft_split(char const *s, char c)
 		j = 0;
 		while (*s && *s == c)
 			s++;
-		if (!(ret[k] = (char *)malloc(sizeof(char) * (count_str(s) + 1))))
+		if (!(ret[k] = (char *)malloc(sizeof(char) * (count_str(s, c) + 1))))
 			return (ft_malloc_error(ret));
 		while (*s && *s != c)
 		{
@@ -85,8 +84,6 @@ char			**ft_split(char const *s, char c)
 			s++;
 			j++;
 		}
-		while (*s && *s == c)
-			s++;
 		ret[k][j] = '\0';
 		k++;
 	}

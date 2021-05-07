@@ -22,6 +22,7 @@ int		main(void)
 	char	*join;
 	char	str3[] = "\tlorem ipsum dolor sit amet\t\n";
 	char	*trim;
+	char	**split;
 
 	printf("ft_atoi\n%d\n\n", ft_atoi("   -123abc   "));
 	printf("ft_strlen\n%zu\n\n", ft_strlen("123456abcd"));
@@ -52,6 +53,18 @@ int		main(void)
 	sub_s = ft_substr(str2, 12, 9); printf("ft_substr\n%s\n\n", sub_s); free(sub_s);
 	join = ft_strjoin(s1, s2); printf("ft_strjoin\n%s\n\n", join); free(join);
 	trim = ft_strtrim(str3, "\t\n"); printf("ft_strtrim\n%s\n\n", trim); free(trim);
+
+	split = ft_split("    lorem ipsum   dolor sit amet,   consectetur adipiscing   elit. Sed        non risus. Suspendisse    ", ' ');
+	printf("ft_split\n");
+	for (int i = 0; split[i] != NULL; i++)
+	{
+		for (int j = 0; split[i][j] != '\0'; j++)
+			printf("%c", split[i][j]);
+		printf("\n");
+	}
+	for (int i = 0; split[i] != NULL; i++)
+		free(split[i]);
+	free(split);
 
 	return (0);
 }
