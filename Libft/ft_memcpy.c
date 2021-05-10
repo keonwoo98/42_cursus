@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 14:29:43 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/07 17:44:36 by keokim           ###   ########.fr       */
+/*   Updated: 2021/05/10 15:14:49 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t	i;
 
-	//if (!dst && !src)
-		//return (dst);
+	if (!dst && !src)
+		return (NULL);
 	i = 0;
 	while (i < n)
 	{

@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 18:04:56 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/07 13:22:03 by keokim           ###   ########.fr       */
+/*   Updated: 2021/05/10 15:41:17 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ char			**ft_split(char const *s, char c)
 	int		j;
 	int		k;
 
+	if (!s)
+		return (NULL);
 	if (!(ret = (char **)malloc(sizeof(char *) * (count_word(s, c) + 1))))
 		return (NULL);
 	k = 0;
@@ -76,16 +78,13 @@ char			**ft_split(char const *s, char c)
 		j = 0;
 		while (*s && *s == c)
 			s++;
+		if (count_str(s, c) == 0)
+			break ;
 		if (!(ret[k] = (char *)malloc(sizeof(char) * (count_str(s, c) + 1))))
 			return (ft_malloc_error(ret));
 		while (*s && *s != c)
-		{
-			ret[k][j] = *s;
-			s++;
-			j++;
-		}
-		ret[k][j] = '\0';
-		k++;
+			ret[k][j++] = *s++;
+		ret[k++][j] = '\0';
 	}
 	ret[k] = NULL;
 	return (ret);

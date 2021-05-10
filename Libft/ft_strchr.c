@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 16:25:29 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/03 16:36:24 by keokim           ###   ########.fr       */
+/*   Updated: 2021/05/10 15:12:09 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ char	*ft_strchr(const char *s, int c)
 {
 	size_t	i;
 
-	if (s == 0)
-		return (0);
 	i = 0;
 	if (c == 0)
 		return ((char *)s + ft_strlen(s));

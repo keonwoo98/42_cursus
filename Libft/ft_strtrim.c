@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 13:43:46 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/06 17:16:19 by keokim           ###   ########.fr       */
+/*   Updated: 2021/05/10 13:56:18 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	end = ft_strlen(s1);
 	while (start <= end && ft_strchr(set, s1[start]))
 		start++;
-	while (0 <= end && ft_strchr(set, s1[end - 1]))
+	while (start <= end && ft_strchr(set, s1[end - 1]))
 		end--;
 	if (start >= end)
 		return (ft_strdup(""));

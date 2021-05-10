@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/03 16:36:43 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/03 16:40:17 by keokim           ###   ########.fr       */
+/*   Updated: 2021/05/10 13:46:51 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	size_t	i;
+	int		i;
 
 	i = ft_strlen(s);
 	while (i >= 0)

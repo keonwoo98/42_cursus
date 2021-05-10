@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 16:09:47 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/05 09:51:20 by keokim           ###   ########.fr       */
+/*   Updated: 2021/05/10 12:12:56 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	uc_src = (unsigned char *)src;
 	if (dst < src)
 		while (len--)
-			*uc_dst++ = *uc_src;
+			*uc_dst++ = *uc_src++;
 	else
 		while (len--)
 			*(uc_dst + len) = *(uc_src + len);
