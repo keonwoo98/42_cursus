@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 18:04:56 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/10 15:41:17 by keokim           ###   ########.fr       */
+/*   Updated: 2021/05/10 19:34:21 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char		**ft_malloc_error(char **tab)
 	return (NULL);
 }
 
-size_t			count_word(char const *str, char c)
+static size_t	count_word(char const *str, char c)
 {
 	size_t	count;
 	size_t	i;
@@ -47,7 +47,7 @@ size_t			count_word(char const *str, char c)
 	return (count);
 }
 
-size_t			count_str(char const *str, char c)
+static size_t	count_str(char const *str, char c)
 {
 	size_t	count;
 	size_t	i;
