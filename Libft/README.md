@@ -15,7 +15,7 @@ man에 정의되어 있는 대로 libc 함수들의 구성을 다시 구현합�
 |memchr|`void *ft_memchr(const void *s, int c, size_t n)`|배열 s를 처음부터 n의 길이까지 검사하되 도중 요소 c를 발견하면 그 지점의 주소를 반환하는 함수 <span style="color:red">*(n바이트 내에서 없을 시 NULL 반환)*</span>|
 |memcmp|`int ft_memcmp(const void *s1, const void *s2, size_t n)`|배열 s1과 s2를 n의 길이만큼 비교하되 같지 않은 부분이 나오면 그 인덱스의 `s1 - s2` 의 값을 반환하는 함수 <span style="color:red">*(n == 0 \|\| s1 == s2 일 시 0반환)*</span>|
 |strlen|`size_t ft_strlen(const char *s)`|문자열의 길이를 반환하는 함수|
-|strlcpy|`size_t ft_strlen(char *dst, char const *src, size_t dstsize)`|문자열 scr의 내용을 `dstsize - 1` 만큼(NULL 자리 확보) 문자열 dst에 복사 후 src의 길이를 반환하는 함수 <span style="color:red">*(dst와 src가 겹치면 정의되지 않은 행동 발생)*</span>|
+|strlcpy|`size_t ft_strlen(char *dst, char const *src, size_t dstsize)`|문자열 scr의 내용을 `dstsize - 1` 만큼(NULL 자리 확보) 문자열 dst에 복사 후 src의 길이를 반환하되 `dstsize == 0`이면 복사 진행하지 않고 src의 길이만 반환하는 함수 <span style="color:red">*(dst와 src가 겹치면 정의되지 않은 행동 발생)*</span>|
 |strlcat|`size_t ft_strlcat(char *dst, const char *src, size_t dstsize)`|문자열 src의 내용을 `dstsize - 1` 만큼(NULL 자리 확보) dst 끝에 붙여넣되 `dstsize < dst의 길이` 일 경우 `dstzide + scr의 길이`를 반환하고(복사 x) `dstsize > dst의 길이` 일 경우 복사 후 `dst의 길이 + scr의 길이`를 반환하는 함수 <span style="color:red">*(dst와 src가 겹치면 정의되지 않은 행동 발생)*</span>|
 |strchr|`char *ft_strchr(const char *s, int c)`|문자열 s의 첫 인덱스부터 검사하여 문자 c를 찾으면 그 주소를 반환하는 함수 <span style="color:red">*(문자 c가 존재하지 않을 경우 NULL반환)*</span>|
 |strrchr|`char *ft_strrchr(const char *s, int c)`|문자열 s의 마지막 인덱스부터 검사하여 문자 c를 찾으면 그 주소를 반환하는 함수 <span style="color:red">*(문자 c가 존재하지 않을 경우 NULL반환)*</span>|
