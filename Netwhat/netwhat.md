@@ -68,7 +68,8 @@ IP주소를 2진수로 표기했을 때 맨 앞자리 수가 항상 `110`이어�
 
 호스트 주소 범위는 `xxxx xxxx` 에서 x들이 가질 수 있는 경우의 수, `((2^8) - 2)` 개 이다.
 
-<!--클래스 이미지-->
+![class](https://user-images.githubusercontent.com/76714659/118439741-8817d880-b721-11eb-89f4-e4f445bc8509.jpeg)
+
 
 ## **Netmask & Subnetmask**
 ---
@@ -77,7 +78,8 @@ IP주소를 2진수로 표기했을 때 맨 앞자리 수가 항상 `110`이어�
 
 네트워크 주소 부분의 비트를 모두 1로 치환한 것으로 IP 주소와 AND연산을 하게되면 네트워크 주소를 얻을 수 있다.
 
-<!-- 넷마스크 이미지 -->
+<img width="876" alt="netmask" src="https://user-images.githubusercontent.com/76714659/118439763-92d26d80-b721-11eb-991c-529137beca0d.png">
+
 
 ### **2. Subnet**
 
@@ -122,7 +124,8 @@ IP 주소 낭비를 막기위해 원본 네트워크를 서브넷마스크를 �
 
 다른 예시 :
 
-<!-- 예시 2 이미지 -->
+<img width="827" alt="Screen Shot 2021-05-17 at 12 24 34 PM" src="https://user-images.githubusercontent.com/76714659/118439813-a5e53d80-b721-11eb-9295-0f4df2e734f6.png">
+
 
 > *참고 : 도메인 네임(DOMAIN NAME)*
 >- *사용자들이 쉽게 인식하고 사용할 수 있도록 숫자로 표기된 IP 주소를 문자 형태로 표시하는 인터넷 주소*  
@@ -202,7 +205,8 @@ CIDR(Classless Inter-Domain Routing)은 클래스로만 구분된 네트워크�
 
 > *참고 : 사설 IP 주소만으로는 인터넷에 직접 연결할 수 없다. 라우터를 통해 1개의 공인(Public) IP만 할당하고, 라우터에 연결된 개인 PC는 사설(Private) IP를 각각 할당 받아 인터넷에 접속할 수 있게 된다.*
 
-<!-- world wide wed 이미지 -->
+![image](https://user-images.githubusercontent.com/76714659/118439851-b5648680-b721-11eb-9dbe-e7f6f5285614.png)
+
 
 ### **4. 고정 IP & 유동 IP**
 
