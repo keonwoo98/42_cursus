@@ -13,7 +13,7 @@
 * LAN (Local Area Network)
 * MAN (Metropolitan Area Network)
 * WAN (Wide Area Network)
-* Van (Value Added Network)
+* VAN (Value Added Network)
 * ISDN (Integrated Services Digital Network)
 
 ### **2. IP (Internet Protocol) address란?**
