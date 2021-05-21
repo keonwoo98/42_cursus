@@ -6,8 +6,18 @@
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 19:54:22 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/18 19:54:26 by keokim           ###   ########.fr       */
+/*   Updated: 2021/05/21 10:47:11 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
 
+size_t		ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
