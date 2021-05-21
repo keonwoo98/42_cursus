@@ -17,6 +17,11 @@
 # include <limits.h>
 # include <unistd.h>
 
+size_t		ft_strlen(const char *s);
+size_t		ft_strlcpy(char *dst, char const *src, size_t dstsize);
+char	    *ft_strdup(const char *s1);
+char	    *ft_strjoin(char *s1, char *s2);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
 int			get_next_line(int fd, char **line);
 
 #endif
