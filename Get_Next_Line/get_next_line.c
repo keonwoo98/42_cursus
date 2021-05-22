@@ -40,8 +40,12 @@ int		sep_line(char **temp, char **line, int is_line)
 
 int		return_remain(char **temp, char **line, int read_size)
 {
+	int		i;
+
 	if (read_size < 0)
 		return (-1);
+	if (*temp && (i = chk_newline(*temp)) >= 0)
+		return (sep_line(temp, line, i));
 	else if (*temp)
 	{
 		*line = *temp;
@@ -56,10 +60,12 @@ int		get_next_line(int fd, char **line)
 {
 	int				is_line;
 	int				read_size;
-	char			buffer[BUFFER_SIZE + 1];
+	char			*buffer;
 	static char		*temp[OPEN_MAX];
 
 	if ((fd < 0) || !line || (BUFFER_SIZE <= 0))
+		return (-1);
+	if (!(buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
 	while ((read_size = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
@@ -67,7 +73,11 @@ int		get_next_line(int fd, char **line)
 		temp[fd] = ft_strjoin(temp[fd], buffer);
 		is_line = chk_newline(temp[fd]);
 		if (is_line >= 0)
+		{
+			free(buffer);
 			return (sep_line(&temp[fd], line, is_line));
+		}
 	}
+	free(buffer);
 	return (return_remain(&temp[fd], line, read_size));
 }
