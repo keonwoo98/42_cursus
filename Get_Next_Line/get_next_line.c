@@ -61,7 +61,7 @@ int		get_next_line(int fd, char **line)
 	int				is_line;
 	int				read_size;
 	char			*buffer;
-	static char		*temp[OPEN_MAX];
+	static char		*temp[MAX_FD];
 
 	if ((fd < 0) || !line || (BUFFER_SIZE <= 0))
 		return (-1);

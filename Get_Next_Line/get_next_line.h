@@ -17,6 +17,8 @@
 # include <limits.h>
 # include <unistd.h>
 
+# define MAX_FD 1024
+
 size_t		ft_strlen(const char *s);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
 char		*ft_strdup(const char *s1);
