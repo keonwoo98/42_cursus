@@ -32,7 +32,11 @@ int		sep_line(char **temp, char **line, int is_line)
 
 	(*temp)[is_line] = '\0';
 	*line = ft_strdup(*temp);
+	if (!(*line))
+		return (-1);
 	ptr = ft_strdup(*temp + is_line + 1);
+	if (!ptr)
+		return (-1);
 	free(*temp);
 	*temp = ptr;
 	return (1);
@@ -53,6 +57,8 @@ int		return_remain(char **temp, char **line, int read_size)
 		return (0);
 	}
 	*line = ft_strdup("");
+	if (!(*line))
+		return (-1);
 	return (0);
 }
 
@@ -71,6 +77,8 @@ int		get_next_line(int fd, char **line)
 	{
 		buffer[read_size] = '\0';
 		temp[fd] = ft_strjoin(temp[fd], buffer);
+		if (!(temp[fd]))
+			return (-1);
 		is_line = chk_newline(temp[fd]);
 		if (is_line >= 0)
 		{

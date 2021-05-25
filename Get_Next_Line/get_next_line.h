@@ -14,7 +14,6 @@
 # define GET_NEXT_LINE_H
 
 # include <stdlib.h>
-# include <limits.h>
 # include <unistd.h>
 
 # define MAX_FD 1024
