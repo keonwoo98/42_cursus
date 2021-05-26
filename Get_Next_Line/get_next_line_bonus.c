@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/18 12:33:29 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/26 09:31:37 by keokim           ###   ########.fr       */
+/*   Created: 2021/05/26 09:20:21 by keokim            #+#    #+#             */
+/*   Updated: 2021/05/26 09:30:32 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static int			chk_newline(char *temp)
 {
