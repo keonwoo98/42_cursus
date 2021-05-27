@@ -3,12 +3,13 @@
 >본 Subject의 개요와 Virtual Machine과 Debian 개념 잡기
 
 ## **Subject**
+---
 
 ### **1. Mandatory part**
 
 * 가장 최신 버전의 `CentOS` 또는 `Debian`을 최소한으로 설치 (GUI 금지)
 * `SELinux`, `AppArmor`(Debian)는 시작 시 실행되어야 한다.
-* 최소한 2개 이상의 `LVM`을 사용한 암호화된 파티션을 생성해야 한다.
+* 최소한 2개 이상의 `LVM`을 사용한 암호화된 파티션을 생성해야 한다.  
 *ex)*
 ![](https://images.velog.io/images/dogfootbirdfoot/post/b2c925a0-5e4f-4be5-bd1d-bf289276df8f/Screen%20Shot%202021-05-27%20at%201.14.46%20PM.png)
 
@@ -72,3 +73,12 @@
 * `lighttpd`, `MariaDB`, `PHP` 서비스를 사용하여 기능적인 `WordPress` 웹 사이트를 설정한다.
 * 유용하다고 생각되는 서비스를 선택적으로 설정한다. (`NGINX` / `Apache2` 제외) Defense 시 선택을 정당화할 수 있어야 한다.
 * Bonus part를 수행하기 위해 추가적으로 서비스를 설정할 수 있다. 이 경우 필요에 맞게 포트를 더 열 수 있다. 물론 `UFW` 규칙에 따라야 한다.
+
+## **Linux**
+---
+
+### **1. LVM**
+
+리눅스에서 디스크를 효율적으로 관리하고 사용하기 한 방법으로는 `LVM`과 `RAID` 기술이 있다.
+
+`LVM`(Logical Volume Manager)는 리눅스 안에서 하나의 디스크를 여러 파티션으로 분할해서 파일 시스템을 이용해 특정 디렉터리와 연결시켜 사용한다.
