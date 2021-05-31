@@ -1,6 +1,6 @@
 # **Born2beRoot**
 
->본 Subject의 개요와 Virtual Machine과 Debian 개념 잡기
+>본 Subject의 개요
 
 ## **Subject**
 ---
@@ -73,12 +73,3 @@
 * `lighttpd`, `MariaDB`, `PHP` 서비스를 사용하여 기능적인 `WordPress` 웹 사이트를 설정한다.
 * 유용하다고 생각되는 서비스를 선택적으로 설정한다. (`NGINX` / `Apache2` 제외) Defense 시 선택을 정당화할 수 있어야 한다.
 * Bonus part를 수행하기 위해 추가적으로 서비스를 설정할 수 있다. 이 경우 필요에 맞게 포트를 더 열 수 있다. 물론 `UFW` 규칙에 따라야 한다.
-
-## **Linux**
----
-
-### **1. LVM**
-
-리눅스에서 디스크를 효율적으로 관리하고 사용하기 한 방법으로는 `LVM`과 `RAID` 기술이 있다.
-
-`LVM`(Logical Volume Manager)는 리눅스 안에서 하나의 디스크를 여러 파티션으로 분할해서 파일 시스템을 이용해 특정 디렉터리와 연결시켜 사용한다.
