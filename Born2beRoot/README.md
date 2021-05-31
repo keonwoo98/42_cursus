@@ -8,7 +8,7 @@
 ### **1. Mandatory part**
 
 * 가장 최신 버전의 `CentOS` 또는 `Debian`을 최소한으로 설치 (GUI 금지)
-* `SELinux`, `AppArmor`(Debian)는 시작 시 실행되어야 한다.
+* `SELinux`(CentOS), `AppArmor`(Debian)는 시작 시 실행되어야 한다.
 * 최소한 2개 이상의 `LVM`을 사용한 암호화된 파티션을 생성해야 한다.  
 *ex)*
 ![](https://images.velog.io/images/dogfootbirdfoot/post/b2c925a0-5e4f-4be5-bd1d-bf289276df8f/Screen%20Shot%202021-05-27%20at%201.14.46%20PM.png)
