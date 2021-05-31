@@ -88,17 +88,17 @@
 <table>
     <thead>
         <tr>
-            <th>물리디스크</th>
+            <th>물리 디스크</th>
             <th>파티션</th>
             <th>볼륨 1</th>
             <th>볼륨 2</th>
         </tr>
     </thead>
     <tr>
-        <td rowspan="3">하드디스크</td>
+        <td rowspan="2">하드디스크</td>
         <td>파티션 1</td>
         <td>C:드라이브</td>
-        <td rowspan="3">LVM(가상)</td>
+        <td rowspan="2">LVM(가상)</td>
     </tr>
     <tr>
         <td>파티션 2</td>
