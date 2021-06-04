@@ -17,12 +17,12 @@ top -b -n1 | grep "%Cpu(s)" | awk '{printf("#CPU load : %.1f%%\n"), $2 + $4}'
 echo -n "#Last boot: " && who -b | awk '{print $3" "$4}'
 
 echo -n "#LVM use : "
-LVSCAN=`lvscan | grep "ACTIVE" | wc -l`
-if [ $[LVSCAN] != 0];
+LV_DATA=`lsblk | grep "lvm" | wc -l`
+if [ $LV_DATA = 0];
 then
-    echo "yes"
-else
     echo "no"
+else
+    echo "yes"
 fi
 
 echo -n "#Connections TCP : "$(ss -t | grep -v "State" | wc -l) && echo " ESTABLISHED"
