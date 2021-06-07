@@ -150,5 +150,5 @@ int             main()
     ft_putchar('\n', 1);
     printf("printf : %c %c %c\n", 'a', 'b', 'c');
     printf("printf : %c %c %c\n", a, b, c);
-    printf("%09.2f\n", 9.12);
+    // printf("%09.2f\n", 9.12);
 }
