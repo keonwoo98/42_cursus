@@ -8,10 +8,6 @@ free -h | grep Mem | awk '{printf("#Memory Usage : %d"), $3}'
 free -h | grep Mem | awk '{printf("/%dMB "), $2}'
 free -t | grep Mem | awk '{printf("(%.2f%%)\n"), $3/$2*100}'
 
-# df -h | grep root | awk '{printf("#Disk Usage : %d"), $3}'
-# df -h | grep root | awk '{printf("/%dGb "), $4}'
-# df -h | grep root | awk '{printf("(%d%%)\n"), $5}'
-
 df --total | tail -n 1 | awk '{printf "#Disk Usage: %d/%dGb (%d%%)\n", ($3/1024), ($2/1048576), $5}'
 
 top -b -n1 | grep "%Cpu(s)" | awk '{printf("#CPU load : %.1f%%\n"), $2 + $4}'
