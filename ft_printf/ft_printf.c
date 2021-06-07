@@ -24,15 +24,22 @@ static void     init_format(t_format *format)
 
 static void     type_char(va_list ap, t_format *format)
 {
-    if (format->minus == 0)
-    {
-        ft_putchar(' ', format->width);
+    if (format->width == 0)
         ft_putchar(va_arg(ap, int), 1);
-    }
     else
     {
-        ft_putchar(va_arg(ap, int), 1);
-        ft_putchar(' ', format->width);
+        if (format->minus == 0)
+        {
+            // write(1, &" ", format->width);
+            // ft_putchar(&" ", format->width);
+            ft_putchar(va_arg(ap, int), 1);
+        }
+        else
+        {
+            ft_putchar(va_arg(ap, int), 1);
+            // ft_putchar(&" ", format->width);
+            // write(1, &" ", format->width);
+        }
     }
 }
 
@@ -101,7 +108,6 @@ static void      find_format(const char *str, va_list ap, t_format *format)
         {
             // format = width_prec(ap, format, *str);
             format->width = (format->width * 10) + (*str - '0');
-            printf("%d\n", format->width);
         }
         str++;
     }
@@ -144,11 +150,9 @@ int             main()
 
     ft_printf("ft_printf : %c %c %c\n", 'a', 'b', 'c');
     ft_printf("ft_printf : %c %c %c\n", a, b, c);
-    // ft_printf("ft_printf : %11c\n", 'Z');
-    // ft_printf("ft_printf : %-11c\n", 'Z');
-    ft_putchar(' ', 11);
-    ft_putchar('\n', 1);
+    ft_printf("ft_printf : %11c\n", 'Z');
+    ft_printf("ft_printf : %-11c\n", 'Z');
     printf("printf : %c %c %c\n", 'a', 'b', 'c');
     printf("printf : %c %c %c\n", a, b, c);
-    // printf("%09.2f\n", 9.12);
+    printf("%09.2f\n", 9.12);
 }
