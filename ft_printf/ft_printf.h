@@ -19,6 +19,7 @@
 
 typedef struct  s_format
 {
+    int     ret;
     int     minus;
     int     zero;
     int     width;
@@ -27,9 +28,19 @@ typedef struct  s_format
 }               t_format;
 
 int		        ft_isdigit(int c);
-void            ft_putchar(char c, int width);
+int             ft_putchar(char c);
 void            ft_putstr(const char *str);
 size_t		    ft_strlen(const char *s);
 int             ft_strchr(const char *s, char c);
+
+void            init_format(t_format *format);
+void            find_format(const char *str, va_list ap, t_format *format);
+t_format        *width_prec(va_list ap, t_format *format, char c);
+
+void            type_char(va_list ap, t_format *format);
+void            type_str(va_list ap, t_format *format);
+void            chk_type(va_list ap, t_format *format);
+
+int			    ft_printf(const char *str, ...);
 
 #endif

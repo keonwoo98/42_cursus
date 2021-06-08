@@ -17,9 +17,10 @@ int		        ft_isdigit(int c)
 	return (c >= '0' && c <= '9');
 }
 
-void            ft_putchar(char c, int width)
+int            ft_putchar(char c)
 {
-    write(1, &c, width);
+    write(1, &c, 1);
+	return (1);
 }
 
 void            ft_putstr(const char *str)
@@ -28,7 +29,7 @@ void            ft_putstr(const char *str)
 
     i = 0;
     while (str[i])
-        ft_putchar(str[i++], 1);
+        ft_putchar(str[i++]);
 }
 
 size_t		    ft_strlen(const char *s)
