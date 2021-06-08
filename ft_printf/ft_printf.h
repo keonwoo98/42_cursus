@@ -28,10 +28,16 @@ typedef struct  s_format
 }               t_format;
 
 int		        ft_isdigit(int c);
+void	        *ft_memset(void *b, int c, size_t len);
+void	        *ft_memcpy(void *dst, const void *src, size_t n);
 int             ft_putchar(char c);
 void            ft_putstr(const char *str);
 size_t		    ft_strlen(const char *s);
 int             ft_strchr(const char *s, char c);
+size_t		    ft_strlcpy(char *dst, char const *src, size_t dstsize);
+char	        *ft_strdup(const char *s1);
+char		    *ft_substr(char const *s, unsigned int start, size_t len);
+char	        *ft_strjoin(char const *s1, char const *s2);
 
 void            init_format(t_format *format);
 void            find_format(const char *str, va_list ap, t_format *format);
