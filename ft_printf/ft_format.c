@@ -64,7 +64,7 @@ t_format        *width_prec(va_list ap, t_format *format, char c)
         }
         else        // 정밀도가 고정 인자 문자열에 있는 경우
         {
-            format->prec = (format->width * 10) + (c - '0');
+            format->prec = (format->prec * 10) + (c - '0');
             return (format);
         }
     }

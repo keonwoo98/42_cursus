@@ -77,6 +77,18 @@ int			    ft_printf(const char *str, ...)
 
 int main()
 {
-    ft_printf("-->|%6s|<--\n", "keokim");
+    ft_printf("-->|%10s|<--\n", "keokim");
     printf("-->|%10s|<--\n", "keokim");
+    ft_printf("-->|%2.8s|<--\n", "keokim");
+    printf("-->|%2.8s|<--\n", "keokim");
+    ft_printf("-->|%8.2s|<--\n", "keokim");
+    printf("-->|%8.2s|<--\n", "keokim");
+    ft_printf("-->|%.9s|<--\n", "keokim");
+    printf("-->|%.9s|<--\n", "keokim");
+    ft_printf("-->|%3.4s|<--\n", "keokim");
+    printf("-->|%3.4s|<--\n", "keokim");
+    ft_printf("-->|%-3.4s|<--\n", "keokim");
+    printf("-->|%-3.4s|<--\n", "keokim");
+    ft_printf("-->|%-10.3s|<--\n", "keokim");
+    printf("-->|%-10.3s|<--\n", "keokim");
 }

@@ -52,18 +52,67 @@ void            type_str(va_list ap, t_format *format)
         str = "(null)";
     if (format->prec > -1)      // 만약 '.'플래그가 존재한다면
     {
-        if (len < format->prec && (format->width == 0 || format->width < len))
+        if (len <= format->prec)
         {
-            ft_putstr(str);
+            if (format->width < format->prec || !format->width)
+            {
+                // 그냥 출력
+                ft_putstr(str);
+                format->ret += len;
+            }
+            else if (format->width >= format->prec)
+            {
+                // 출력 + width - len만큼 공백 출력
+                if (format->minus == 0)
+                {
+                    while (i++ < format->width - len)
+                        ft_putchar(' ');
+                    i = 0;
+                    while (i < format->prec)
+                        ft_putchar(str[i++]);
+                }
+                else
+                {
+                    while (i < format->prec)
+                        ft_putchar(str[i++]);
+                    i = 0;
+                    while (i++ < format->width - len)
+                        ft_putchar(' ');
+                }
+                format->ret += format->width;
+            }
         }
-        else if (len < format->prec && len < format->width)
+        else if (len > format->prec)
         {
-            
-        }
-        else if (len >= format->prec)
-        {
-            while (i < format->prec)
-                ft_putchar(str[i++]);
+            if (format->width < format->prec || !format->width)
+            {
+                // precision만큼 출력
+                while (i < format->prec)
+                    ft_putchar(str[i++]);
+                format->ret += format->prec;
+            }
+            else if (format->width >= format->prec)
+            {
+                // precision만큼 출력 + width - precision만큼 공백 출력
+                if (format->minus == 0)
+                {
+                    while (i++ < (format->width - format->prec))
+                        ft_putchar(' ');
+                    i = 0;
+                    while (i < format->prec)
+                        ft_putchar(str[i++]);
+                }
+                else
+                {
+                    ft_putstr(str);
+                    while (i < format->prec)
+                        ft_putchar(str[i++]);
+                    i = 0;
+                    while (i++ < (format->width - format->prec))
+                        ft_putchar(' ');
+                }
+                format->ret += (format->prec + (format->width - format->prec));
+            }
         }
     }
     else        // 만약 '.'플래그가 없다면
