@@ -16,9 +16,11 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef struct  s_format
 {
+    va_list ap;
     int     ret;
     int     minus;
     int     zero;
@@ -31,7 +33,7 @@ int		        ft_isdigit(int c);
 void	        *ft_memset(void *b, int c, size_t len);
 void	        *ft_memcpy(void *dst, const void *src, size_t n);
 int             ft_putchar(char c);
-void            ft_putstr(const char *str);
+int             ft_putstr(const char *str);
 size_t		    ft_strlen(const char *s);
 int             ft_strchr(const char *s, char c);
 size_t		    ft_strlcpy(char *dst, char const *src, size_t dstsize);
@@ -40,12 +42,14 @@ char		    *ft_substr(char const *s, unsigned int start, size_t len);
 char	        *ft_strjoin(char const *s1, char const *s2);
 
 void            init_format(t_format *format);
-void            find_format(const char *str, va_list ap, t_format *format);
-t_format        *width_prec(va_list ap, t_format *format, char c);
+void            find_format(const char *str, t_format *format);
+t_format        *width_prec(t_format *format, char c);
 
-void            type_char(va_list ap, t_format *format);
-void            type_str(va_list ap, t_format *format);
-void            chk_type(va_list ap, t_format *format);
+void            type_char(t_format *format);
+void            type_str(t_format *format);
+void            chk_type(t_format *format);
+char            *ft_align(t_format *format, char *prec, char *width);
+char            *ft_malset(t_format *format, int len);
 
 int			    ft_printf(const char *str, ...);
 

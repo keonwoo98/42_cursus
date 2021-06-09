@@ -23,13 +23,14 @@ int            ft_putchar(char c)
 	return (1);
 }
 
-void            ft_putstr(const char *str)
+int            ft_putstr(const char *str)
 {
     int         i;
 
     i = 0;
     while (str[i])
         ft_putchar(str[i++]);
+	return (i);
 }
 
 size_t		    ft_strlen(const char *s)

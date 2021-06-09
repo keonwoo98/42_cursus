@@ -12,50 +12,44 @@
 
 #include "ft_printf.h"
 
-void            chk_type(va_list ap, t_format *format)
+void            chk_type(t_format *format)
 {
     if (format->type == 'c')
-        type_char(ap, format);
+        type_char(format);
     else if (format->type == 's')
-        type_str(ap, format);
+        type_str(format);
+    // else if (format->type == 'd')
+    //     type_int(format);
 }
 
-void            type_char(va_list ap, t_format *format)
+void            type_char(t_format *format)
 {
-    int         i;
+    char            *c_width;
 
-    i = 0;
+    if (format->width > 0)
+        c_width = ft_malset(format, 1);
+    else
+        c_width = ft_strdup("");
     if (format->minus == 0)
     {
-        while (++i < format->width)
-        {
-            ft_putchar(' ');
-            format->ret++;
-        }
-        ft_putchar(va_arg(ap, int));
-        format->ret++;
+        format->ret += ft_putstr(c_width);
+        format->ret += ft_putchar(va_arg(format->ap, int));
     }
     else
     {
-        ft_putchar(va_arg(ap, int));
-        format->ret++;
-        while (++i < format->width)
-        {
-            ft_putchar(' ');
-            format->ret++;
-        }
+        format->ret += ft_putchar(va_arg(format->ap, int));
+        format->ret += ft_putstr(c_width);
     }
 }
 
-void            type_str(va_list ap, t_format *format)
+void            type_str(t_format *format)
 {
     char            *str;
     char            *str_prec;
     char            *str_width;
-    char            *str_print;
     int             len;
 
-    str = va_arg(ap, char *);
+    str = va_arg(format->ap, char *);
     len = ft_strlen(str);
     if (str == NULL)
         str = "(null)";
@@ -63,26 +57,65 @@ void            type_str(va_list ap, t_format *format)
         str_prec = ft_substr(str, 0, format->prec);
     else
         str_prec = ft_strdup(str);  // 동적할당에 실패해서 str_prec에 NULL이 저장될 경우도 가드 해줘야됌?? 응 ㅈㄹ하지마셈
-    if (format->width > len)
+    if (format->width > 0 && (size_t)format->width > ft_strlen(str_prec))
     {
-        str_width = (char *)malloc(sizeof(char) * (format->width - ft_strlen(str_prec) + 1));
-        if (format->zero == 0)
-            ft_memset(str_width, ' ', (format->width - ft_strlen(str_prec)));
-        else
-            ft_memset(str_width, '0', (format->width - ft_strlen(str_prec)));
+        str_width = ft_malset(format, (int)ft_strlen(str_prec));
+        str_prec = ft_align(format, str_prec, str_width);
+        free(str_width);
     }
-    else
-        str_width = ft_strdup("");
-    if (format->minus == 0)
-        str_print = ft_strjoin(str_width, str_prec);
-    else
-        str_print = ft_strjoin(str_prec, str_width);
-    ft_putstr(str_print);
-    format->ret = ft_strlen(str_print);
+    format->ret += ft_putstr(str_prec);
     free(str_prec);
-    free(str_width);
-    free(str_print);
 }
+
+char                *ft_align(t_format *format, char *prec, char *width)
+{
+    char            *s;
+
+    if (format->minus == 0)
+        s = ft_strjoin(width, prec);
+    else
+        s = ft_strjoin(prec, width);
+    return (s);
+}
+
+char                *ft_malset(t_format *format, int len)
+{
+    char            *s;
+
+    s = (char *)malloc(sizeof(char) * (format->width - len + 1));
+    if (format->zero == 0)
+        ft_memset(s, ' ', (format->width - len));
+    else
+        ft_memset(s, '0', (format->width - len));
+    return (s);
+}
+
+// void            type_char(va_list ap, t_format *format)
+// {
+//     int         i;
+
+//     i = 0;
+//     if (format->minus == 0)
+//     {
+//         while (++i < format->width)
+//         {
+//             ft_putchar(' ');
+//             format->ret++;
+//         }
+//         ft_putchar(va_arg(ap, int));
+//         format->ret++;
+//     }
+//     else
+//     {
+//         ft_putchar(va_arg(ap, int));
+//         format->ret++;
+//         while (++i < format->width)
+//         {
+//             ft_putchar(' ');
+//             format->ret++;
+//         }
+//     }
+// }
 
 // void            type_str(va_list ap, t_format *format)
 // {
