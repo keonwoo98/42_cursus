@@ -35,7 +35,7 @@ int			    ft_printf(const char *str, ...)
         else
         {
             find_format(++str, &format);
-            while (*str && !ft_strchr("cspsuixX%", *str))
+            while (*str && !ft_strchr("csdpsuixX%", *str))
                 str++;
             str++;
             ret += format.ret;
@@ -45,62 +45,7 @@ int			    ft_printf(const char *str, ...)
     return (ret);
 }
 
-// int main(void)
+// int main()
 // {
-//     int n = 0;
-//     ft_printf("ft_printf : %c %c %c\n", 'a', 'b', 'c');
-//     n = ft_printf("ft_printf : %s + %s", "abc", "xyz");
+//     ft_printf("-->|% -4.d|<--\n", 0);
 // }
-
-// int             main()
-// {
-//     char a = 'a';
-//     char b = 'b';
-//     char c = 'c';
-
-//     ft_printf("ft_printf : %c %c %c\n", 'a', 'b', 'c');
-//     ft_printf("ft_printf : %c %c %c\n", a, b, c);
-//     ft_printf("ft_printf : %5c\n", 'Z');
-//     ft_printf("ft_printf : %-5c\n", 'Z');
-//     ft_printf("ft_printf : %*c\n", 5, 'a');
-//     ft_printf("ft_printf : %*c\n", -5, 'a');
-//     printf("printf : %c %c %c\n", 'a', 'b', 'c');
-//     printf("printf : %c %c %c\n", a, b, c);
-//     printf("printf : %09.2f\n", 9.12);
-//     printf("printf : %*c\n", 5, 'a');
-// }
-
-
-int main()
-{
-    // ft_printf("-->|%10s|<--\n", "keokim");
-    // printf("-->|%10s|<--\n", "keokim");
-    // ft_printf("-->|%2.8s|<--\n", "keokim");
-    // printf("-->|%2.8s|<--\n", "keokim");
-    // ft_printf("-->|%-8.2s|<--\n", "keokim");
-    // printf("-->|%-8.2s|<--\n", "keokim");
-    // ft_printf("-->|%.9s|<--\n", "keokim");
-    // printf("-->|%.9s|<--\n", "keokim");
-    // ft_printf("-->|%3.4s|<--\n", "keokim");
-    // printf("-->|%3.4s|<--\n", "keokim");
-    ft_printf("-->|%-3.4s|<--\n", "keokim");
-    printf("-->|%-3.4s|<--\n", "keokim");
-    ft_printf("-->|%10.3s|<--\n", "keokim");
-    printf("-->|%10.3s|<--\n", "keokim");
-    ft_printf("-->|%-10.3s|<--\n", "keokim");
-    printf("-->|%-10.3s|<--\n", "keokim");
-    ft_printf("-->|%-16.*s|<--\n", -4, "keokim");
-    printf("-->|%-16.*s|<--\n", -4, "keokim");
-    ft_printf("-->|%-16.16s|<--\n", "keokim");
-    printf("-->|%-16.16s|<--\n", "keokim");
-    ft_printf("-->|%-16.*s|<--\n", 4, "keokim");
-    printf("-->|%-16.*s|<--\n", 4, "keokim");
-    ft_printf("-->|%-16.4s|<--\n", "keokim");
-    printf("-->|%-16.4s|<--\n", "keokim");
-    ft_printf("-->|%-16.*s|<--\n", 1, "a");
-    printf("-->|%-16.*s|<--\n", 1, "a");
-    ft_printf("-->|%8.1s|<--\n", "a");
-    printf("-->|%8.1s|<--\n", "a");
-    ft_printf("-->|%16s|<--\n", "nark nark");
-    printf("-->|%16s|<--\n", "nark nark");
-}

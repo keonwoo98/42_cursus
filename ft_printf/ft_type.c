@@ -18,8 +18,8 @@ void            chk_type(t_format *format)
         type_char(format);
     else if (format->type == 's')
         type_str(format);
-    // else if (format->type == 'd')
-    //     type_int(format);
+    else if (format->type == 'd')
+        type_int(format);
 }
 
 void            type_char(t_format *format)
@@ -50,9 +50,9 @@ void            type_str(t_format *format)
     int             len;
 
     str = va_arg(format->ap, char *);
-    len = ft_strlen(str);
-    if (str == NULL)
+    if (!str)
         str = "(null)";
+    len = ft_strlen(str);
     if (format->prec > - 1)
         str_prec = ft_substr(str, 0, format->prec);
     else
@@ -65,6 +65,104 @@ void            type_str(t_format *format)
     }
     format->ret += ft_putstr(str_prec);
     free(str_prec);
+}
+
+void            type_int(t_format *format)
+{
+    char            *str;
+    char            *str_ret;
+    char            *str_width;
+    // char            *str_flag;
+    int             num;
+    int             len;
+    int             i;
+
+    i = 0;
+    num = va_arg(format->ap, int);
+    str = ft_itoa(num);
+    len = ft_strlen(str);
+    if (format->prec > -1 && format->prec >= len)
+        str = create_prec_str(format, str, len);
+    else if (format->prec == 0 && num == 0)
+        str = ft_strdup("");
+    
+    // if (format->plus && num >= 0)
+    //     str = ft_strjoin("+", str_ret);
+    // else if (format->blank && num >= 0)
+    //     str = ft_strjoin(" ", str_ret);
+    
+    // if (format->plus && num >= 0)
+    // {
+    //     str_flag = ft_strjoin("+", str);
+    //     if (format->prec > -1 && format->prec > len)
+    //         free(str);
+    //     str = str_flag;
+    // }
+    // else if (format->blank && num >= 0)
+    // {
+    //     str_flag = ft_strjoin(" ", str);
+    //     if (format->prec > -1 && format->prec > len)
+    //         free(str);
+    //     str = str_flag;
+    // }
+    
+    /*
+    str_ret = str;
+    if (format->width > 0 && (size_t)format->width > ft_strlen(str_ret))
+    {
+        str_width = ft_malset(format, (int)ft_strlen(str_ret));
+        str_ret = ft_align(format, str_ret, str_width);
+        free(str_width);
+    }
+    if (num < 0 && format->zero && format->prec == -1 && format->width > len)
+    {
+        str_ret[format->width - len] = '0';
+        str_ret[0] = '-';
+    }
+    format->ret += ft_putstr(str_ret);
+    */
+
+    
+    if (format->width > 0 && (size_t)format->width > ft_strlen(str))
+    {
+        str_width = ft_malset(format, (int)ft_strlen(str));
+        str = ft_align(format, str, str_width);
+        free(str_width);
+    }
+    if (num < 0 && format->zero && format->prec == -1 && format->width > len)
+    {
+        str[format->width - len] = '0';
+        str[0] = '-';
+    }
+    str_ret = str;
+    format->ret += ft_putstr(str_ret);
+
+    // if (format->prec > -1)
+    //     free(str);
+    // if (format->plus || format->blank)
+    //     free(str_ret);
+}
+
+char            *create_prec_str(t_format *format, char *str, int len)
+{
+    char            *str_prec;
+
+    if (*str == '-')
+    {
+        str_prec = (char *)malloc(sizeof(char) * format->prec + 2);
+        ft_memset(str_prec, '0', format->prec + 1);
+        str_prec[format->prec + 2] = '\0';
+        str_prec[0] = '-';
+        ft_memcpy(&str_prec[format->prec - len + 2], str + 1, len);
+    }
+    else
+    {
+        str_prec = (char *)malloc(sizeof(char) * format->prec + 1);
+        ft_memset(str_prec, '0', format->prec);
+        str_prec[format->prec + 1] = '\0';
+        ft_memcpy(&str_prec[format->prec - len], str, len);
+    }
+    return (str_prec);
 }
 
 char                *ft_align(t_format *format, char *prec, char *width)
@@ -84,9 +182,10 @@ char                *ft_malset(t_format *format, int len)
 
     s = (char *)malloc(sizeof(char) * (format->width - len + 1));
     if (format->zero == 0)
-        ft_memset(s, ' ', (format->width - len));
+        ft_memset(s, ' ', (format->width - len ));
     else
         ft_memset(s, '0', (format->width - len));
+    s[format->width - len] = '\0';
     return (s);
 }
 
