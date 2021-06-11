@@ -47,5 +47,7 @@ int			    ft_printf(const char *str, ...)
 
 // int main()
 // {
-//     ft_printf("-->|% -4.d|<--\n", 0);
+//     int d = 0;
+
+//     printf("-->|%+0*.*d|<--\n", 2, -4, d);
 // }

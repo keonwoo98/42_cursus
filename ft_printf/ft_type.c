@@ -72,12 +72,9 @@ void            type_int(t_format *format)
     char            *str;
     char            *str_ret;
     char            *str_width;
-    // char            *str_flag;
     int             num;
     int             len;
-    int             i;
-
-    i = 0;
+    
     num = va_arg(format->ap, int);
     str = ft_itoa(num);
     len = ft_strlen(str);
@@ -86,42 +83,10 @@ void            type_int(t_format *format)
     else if (format->prec == 0 && num == 0)
         str = ft_strdup("");
     
-    // if (format->plus && num >= 0)
-    //     str = ft_strjoin("+", str_ret);
-    // else if (format->blank && num >= 0)
-    //     str = ft_strjoin(" ", str_ret);
-    
-    // if (format->plus && num >= 0)
-    // {
-    //     str_flag = ft_strjoin("+", str);
-    //     if (format->prec > -1 && format->prec > len)
-    //         free(str);
-    //     str = str_flag;
-    // }
-    // else if (format->blank && num >= 0)
-    // {
-    //     str_flag = ft_strjoin(" ", str);
-    //     if (format->prec > -1 && format->prec > len)
-    //         free(str);
-    //     str = str_flag;
-    // }
-    
-    /*
-    str_ret = str;
-    if (format->width > 0 && (size_t)format->width > ft_strlen(str_ret))
-    {
-        str_width = ft_malset(format, (int)ft_strlen(str_ret));
-        str_ret = ft_align(format, str_ret, str_width);
-        free(str_width);
-    }
-    if (num < 0 && format->zero && format->prec == -1 && format->width > len)
-    {
-        str_ret[format->width - len] = '0';
-        str_ret[0] = '-';
-    }
-    format->ret += ft_putstr(str_ret);
-    */
-
+    if (format->plus == 1 && num >= 0)
+        str = ft_strjoin("+", str);
+    else if (format->blank == 1 && num >= 0)
+        str = ft_strjoin(" ", str);
     
     if (format->width > 0 && (size_t)format->width > ft_strlen(str))
     {
@@ -129,18 +94,29 @@ void            type_int(t_format *format)
         str = ft_align(format, str, str_width);
         free(str_width);
     }
-    if (num < 0 && format->zero && format->prec == -1 && format->width > len)
-    {
-        str[format->width - len] = '0';
-        str[0] = '-';
-    }
-    str_ret = str;
+    if (format->zero)
+        str_ret = chk_zero(str);
+    else
+        str_ret = str;
+    free(str);
     format->ret += ft_putstr(str_ret);
+}
 
-    // if (format->prec > -1)
-    //     free(str);
-    // if (format->plus || format->blank)
-    //     free(str_ret);
+char            *chk_zero(char *str)
+{
+    int         i;
+    char        tmp;
+
+    i = 1;
+    while (str[i] && !ft_strchr("+ -", str[i]))
+        i++;
+    if (ft_strchr("+ -", str[i]))
+    {
+        tmp = str[0];
+        str[0] = str[i];
+        str[i] = tmp;
+    }
+    return (str);
 }
 
 char            *create_prec_str(t_format *format, char *str, int len)

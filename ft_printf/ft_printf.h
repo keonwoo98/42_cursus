@@ -52,6 +52,7 @@ void            find_format(const char *str, t_format *format);
 t_format        *width_prec(t_format *format, char c);
 
 void            type_char(t_format *format);
+char            *chk_zero(char *str);
 void            type_str(t_format *format);
 void            type_int(t_format *format);
 void            chk_type(t_format *format);

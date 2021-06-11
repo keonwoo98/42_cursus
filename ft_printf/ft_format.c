@@ -17,7 +17,7 @@ void            init_format(t_format *format)
     format->ret = 0;
     format->minus = 0;
     format->zero = 0;
-    format->prec = 0;
+    format->plus = 0;
     format->blank = 0;
     format->sharp = 0;
     format->width = 0;
