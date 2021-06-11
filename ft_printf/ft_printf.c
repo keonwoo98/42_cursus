@@ -40,6 +40,7 @@ int			    ft_printf(const char *str, ...)
             str++;
             ret += format.ret;
         }
+        // while(1);
     }
     va_end(format.ap);     // 가변 인자 목록 포인터를 NULL로 초기화
     return (ret);
@@ -47,7 +48,10 @@ int			    ft_printf(const char *str, ...)
 
 // int main()
 // {
-//     int d = 0;
+//     unsigned int u = 4294967161;
 
-//     printf("-->|%+0*.*d|<--\n", 2, -4, d);
+//     // ft_printf("%3.7i", 3267);
+//     // ft_printf("%3.7d", 3267);
+//     ft_printf("-->|%-4.*u|<--\n", -4, u);
+//     ft_printf("this %x number\n", 33);
 // }

@@ -18,8 +18,12 @@ void            chk_type(t_format *format)
         type_char(format);
     else if (format->type == 's')
         type_str(format);
-    else if (format->type == 'd')
+    else if (format->type == 'd' || format->type == 'i')
         type_int(format);
+    else if (format->type == 'u')
+        type_unsigned_int(format);
+    else if (format->type == 'x' || format->type == 'X')
+        type_hexa(format);
 }
 
 void            type_char(t_format *format)
@@ -40,6 +44,7 @@ void            type_char(t_format *format)
         format->ret += ft_putchar(va_arg(format->ap, int));
         format->ret += ft_putstr(c_width);
     }
+    free(c_width);
 }
 
 void            type_str(t_format *format)
@@ -78,45 +83,131 @@ void            type_int(t_format *format)
     num = va_arg(format->ap, int);
     str = ft_itoa(num);
     len = ft_strlen(str);
-    if (format->prec > -1 && format->prec >= len)
-        str = create_prec_str(format, str, len);
-    else if (format->prec == 0 && num == 0)
-        str = ft_strdup("");
-    
-    if (format->plus == 1 && num >= 0)
-        str = ft_strjoin("+", str);
-    else if (format->blank == 1 && num >= 0)
-        str = ft_strjoin(" ", str);
-    
+    if (format->prec != -1)
+        str = chk_prec(format, str, num, len);
+    if ((format->plus || format->blank) && num >= 0)
+        str = chk_plus_blank(format, str);
     if (format->width > 0 && (size_t)format->width > ft_strlen(str))
     {
         str_width = ft_malset(format, (int)ft_strlen(str));
         str = ft_align(format, str, str_width);
         free(str_width);
     }
-    if (format->zero)
-        str_ret = chk_zero(str);
-    else
-        str_ret = str;
+    str_ret = chk_zero(format, str);
     free(str);
     format->ret += ft_putstr(str_ret);
 }
 
-char            *chk_zero(char *str)
+void            type_unsigned_int(t_format *format)
+{
+    char            *str;
+    char            *str_ret;
+    char            *str_width;
+    unsigned int    num;
+    int             len;
+    
+    num = va_arg(format->ap, int);
+    str = ft_uitoa(num);
+    len = ft_strlen(str);
+    if (format->prec != -1)
+        str = chk_prec_ui(format, str, num, len);
+    // if (format->plus || format->blank)
+    //     str = chk_plus_blank(format, str);
+    if (format->width > 0 && (size_t)format->width > ft_strlen(str))
+    {
+        str_width = ft_malset(format, (int)ft_strlen(str));
+        str = ft_align(format, str, str_width);
+        free(str_width);
+    }
+    str_ret = chk_zero(format, str);
+    free(str);
+    format->ret += ft_putstr(str_ret);
+}
+
+void            type_hexa(t_format *format)
+{
+    char            *str;
+    char            *str_ret;
+    char            *str_width;
+    unsigned int    num;
+    int             len;
+    
+    num = va_arg(format->ap, int);
+    str = ft_itoa_base(format, num);
+    len = ft_strlen(str);
+    if (format->prec != -1)
+        str = chk_prec_ui(format, str, num, len);
+    // if (format->plus || format->blank)
+    //     str = chk_plus_blank(format, str);
+    if (format->width > 0 && (size_t)format->width > ft_strlen(str))
+    {
+        str_width = ft_malset(format, (int)ft_strlen(str));
+        str = ft_align(format, str, str_width);
+        free(str_width);
+    }
+    str_ret = chk_zero(format, str);
+    free(str);
+    format->ret += ft_putstr(str_ret);
+}
+
+char            *chk_prec(t_format *format, char *str, int num, int len)
+{
+    if (format->prec > -1 && format->prec >= len)
+        str = create_prec_str(format, str, len);
+    else if (format->prec == 0 && num == 0)
+    {
+        free(str);
+        str = ft_strdup("");
+    }
+    return (str);
+}
+
+char            *chk_prec_ui(t_format *format, char *str, unsigned int num, int len)
+{
+    if (format->prec > -1 && format->prec >= len)
+        str = create_prec_str(format, str, len);
+    else if (format->prec == 0 && num == 0)
+    {
+        free(str);
+        str = ft_strdup("");
+    }
+    return (str);
+}
+
+char            *chk_plus_blank(t_format *format, char *str)
+{
+    // if (format->plus == 1 && num >= 0)
+    //     str = ft_strjoin_free("+", str);
+    // else if (format->blank == 1 && num >= 0)
+    //     str = ft_strjoin_free(" ", str);
+    // return (str);
+    if (format->plus)
+        str = ft_strjoin_free("+", str);
+    else if (format->blank)
+        str = ft_strjoin_free(" ", str);
+    return (str);
+}
+
+char            *chk_zero(t_format *format, char *str)
 {
     int         i;
     char        tmp;
 
-    i = 1;
-    while (str[i] && !ft_strchr("+ -", str[i]))
-        i++;
-    if (ft_strchr("+ -", str[i]))
+    if (format->zero)
     {
-        tmp = str[0];
-        str[0] = str[i];
-        str[i] = tmp;
+        i = 1;
+        while (str[i] && !ft_strchr("+ -", str[i]))
+            i++;
+        if (ft_strchr("+ -", str[i]))
+        {
+            tmp = str[0];
+            str[0] = str[i];
+            str[i] = tmp;
+        }
+        return (str);
     }
-    return (str);
+    else
+        return (str);
 }
 
 char            *create_prec_str(t_format *format, char *str, int len)
@@ -138,6 +229,7 @@ char            *create_prec_str(t_format *format, char *str, int len)
         str_prec[format->prec + 1] = '\0';
         ft_memcpy(&str_prec[format->prec - len], str, len);
     }
+    free(str);
     return (str_prec);
 }
 
