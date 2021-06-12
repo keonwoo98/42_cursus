@@ -175,3 +175,27 @@ char	*ft_itoa_base(t_format *format, unsigned int num)
 	(i == 0) ? s[i] = '-' : 0;
 	return (s);
 }
+
+char	*ft_lltoa_base(t_format *format, long long num)
+{
+	char			*s;
+	long long		n;
+	int				i;
+
+	i = 1;
+	n = num;
+	while ((num /= 16) >= 1)
+		i++;
+	s = (char *)malloc(sizeof(char) * (i + 1));
+	s[i] = '\0';
+	if (format->type == 'p')
+	{
+		while (i--)
+		{
+			s[i] = (n % 16 < 10) ? n % 16 + '0' : n % 16 + 'a' - 10;
+			n /= 16;
+		}
+	}
+	(i == 0) ? s[i] = '-' : 0;
+	return (s);
+}

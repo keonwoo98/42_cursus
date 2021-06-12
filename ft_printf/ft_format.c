@@ -28,7 +28,7 @@ void            init_format(t_format *format)
 void            find_format(const char *str, t_format *format)
 {
     init_format(format);
-    while (*str && !ft_strchr("csdpsuixX%", *str))
+    while (*str && !ft_strchr("csdpuixXnfgo%", *str))
     {
         if (*str == '-')
             format->minus = 1;

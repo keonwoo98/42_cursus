@@ -24,6 +24,10 @@ void            chk_type(t_format *format)
         type_unsigned_int(format);
     else if (format->type == 'x' || format->type == 'X')
         type_hexa(format);
+    else if (format->type == 'p')
+        type_point(format);
+    else if (format->type == '%')
+        type_percent(format);
 }
 
 void            type_char(t_format *format)
@@ -106,13 +110,11 @@ void            type_unsigned_int(t_format *format)
     unsigned int    num;
     int             len;
     
-    num = va_arg(format->ap, int);
+    num = va_arg(format->ap, unsigned int);
     str = ft_uitoa(num);
     len = ft_strlen(str);
     if (format->prec != -1)
         str = chk_prec_ui(format, str, num, len);
-    // if (format->plus || format->blank)
-    //     str = chk_plus_blank(format, str);
     if (format->width > 0 && (size_t)format->width > ft_strlen(str))
     {
         str_width = ft_malset(format, (int)ft_strlen(str));
@@ -132,13 +134,38 @@ void            type_hexa(t_format *format)
     unsigned int    num;
     int             len;
     
-    num = va_arg(format->ap, int);
+    num = va_arg(format->ap, unsigned int);
     str = ft_itoa_base(format, num);
     len = ft_strlen(str);
     if (format->prec != -1)
         str = chk_prec_ui(format, str, num, len);
-    // if (format->plus || format->blank)
-    //     str = chk_plus_blank(format, str);
+    str = chk_sharp(format, str, num);
+    if (format->width > 0 && (size_t)format->width > ft_strlen(str))
+    {
+        str_width = ft_malset(format, (int)ft_strlen(str));
+        str = ft_align(format, str, str_width);
+        free(str_width);
+    }
+    str = chk_sharp2(format, str, num);
+    str_ret = chk_zero(format, str);
+    free(str);
+    format->ret += ft_putstr(str_ret);
+}
+
+void            type_point(t_format *format)
+{
+    char            *str;
+    char            *str_ret;
+    char            *str_width;
+    long long       num;
+    int             len;
+    
+    num = va_arg(format->ap, long long);
+    str = ft_lltoa_base(format, num);
+    len = ft_strlen(str);
+    if (format->prec != -1)
+        str = chk_prec_ui(format, str, num, len);
+    str = ft_strjoin_free("0x", str);
     if (format->width > 0 && (size_t)format->width > ft_strlen(str))
     {
         str_width = ft_malset(format, (int)ft_strlen(str));
@@ -148,6 +175,27 @@ void            type_hexa(t_format *format)
     str_ret = chk_zero(format, str);
     free(str);
     format->ret += ft_putstr(str_ret);
+}
+
+void            type_percent(t_format *format)
+{
+    char            *c_width;
+
+    if (format->width > 0)
+        c_width = ft_malset(format, 1);
+    else
+        c_width = ft_strdup("");
+    if (format->minus == 0)
+    {
+        format->ret += ft_putstr(c_width);
+        format->ret += ft_putchar(format->type);
+    }
+    else
+    {
+        format->ret += ft_putchar(format->type);
+        format->ret += ft_putstr(c_width);
+    }
+    free(c_width);
 }
 
 char            *chk_prec(t_format *format, char *str, int num, int len)
@@ -210,6 +258,26 @@ char            *chk_zero(t_format *format, char *str)
         return (str);
 }
 
+char            *chk_sharp(t_format *format, char *str, unsigned int num)
+{
+    if (format->sharp && num != 0 && format->zero)
+        format->width -= 2;
+    if (format->sharp && format->type == 'x' && num != 0 && !format->zero)
+        str = ft_strjoin_free("0x", str);
+    else if (format->sharp && format->type == 'X' && num != 0 && !format->zero)
+        str = ft_strjoin_free("0X", str);
+    return (str);
+}
+
+char            *chk_sharp2(t_format *format, char *str, unsigned int num)
+{
+    if (format->sharp && format->type == 'x' && num != 0 && format->zero)
+        str = ft_strjoin_free("0x", str);
+    else if (format->sharp && format->type == 'X' && num != 0 && format->zero)
+        str = ft_strjoin_free("0X", str);
+    return (str);
+}
+
 char            *create_prec_str(t_format *format, char *str, int len)
 {
     char            *str_prec;
@@ -250,7 +318,7 @@ char                *ft_malset(t_format *format, int len)
 
     s = (char *)malloc(sizeof(char) * (format->width - len + 1));
     if (format->zero == 0)
-        ft_memset(s, ' ', (format->width - len ));
+        ft_memset(s, ' ', (format->width - len));
     else
         ft_memset(s, '0', (format->width - len));
     s[format->width - len] = '\0';
