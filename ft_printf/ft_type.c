@@ -286,7 +286,7 @@ char            *create_prec_str(t_format *format, char *str, int len)
     {
         str_prec = (char *)malloc(sizeof(char) * format->prec + 2);
         ft_memset(str_prec, '0', format->prec + 1);
-        str_prec[format->prec + 2] = '\0';
+        str_prec[format->prec + 1] = '\0';
         str_prec[0] = '-';
         ft_memcpy(&str_prec[format->prec - len + 2], str + 1, len);
     }
@@ -294,7 +294,7 @@ char            *create_prec_str(t_format *format, char *str, int len)
     {
         str_prec = (char *)malloc(sizeof(char) * format->prec + 1);
         ft_memset(str_prec, '0', format->prec);
-        str_prec[format->prec + 1] = '\0';
+        str_prec[format->prec] = '\0';
         ft_memcpy(&str_prec[format->prec - len], str, len);
     }
     free(str);
@@ -309,6 +309,7 @@ char                *ft_align(t_format *format, char *prec, char *width)
         s = ft_strjoin(width, prec);
     else
         s = ft_strjoin(prec, width);
+    free(prec);
     return (s);
 }
 
