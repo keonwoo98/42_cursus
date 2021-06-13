@@ -16,6 +16,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef struct  s_format
 {
@@ -41,7 +42,7 @@ size_t	        get_ulen(unsigned int nb);
 char	        *ft_itoa(int n);
 char	        *ft_uitoa(unsigned int n);
 char	        *ft_itoa_base(t_format *format, unsigned int num);
-char	        *ft_lltoa_base(t_format *format, long long num);
+char	        *ft_ultoa_base(t_format *format, unsigned long num);
 size_t		    ft_strlen(const char *s);
 int             ft_strchr(const char *s, char c);
 size_t		    ft_strlcpy(char *dst, char const *src, size_t dstsize);

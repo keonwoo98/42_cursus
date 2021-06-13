@@ -77,6 +77,11 @@ int main()
     ft_printf("%5s\n", "abc");
     ft_printf("%05d\n", 10);
     ft_printf("%#012x\n", 0xff);
-    
+
+    ft_printf("ft_printf : %*p%-135.109d\n" ,-15,(void*)15603137398285451084lu,1482420587);
+    ft_printf("ft_printf : %*p\n" ,-15,(void*)15603137398285451);
+    // ft_printf("%21747483648.2147483648d", 125);
+    ft_printf("%120p\n" ,(void*)9377650025287837451lu);
+
     while(1);
 }

@@ -176,10 +176,10 @@ char	*ft_itoa_base(t_format *format, unsigned int num)
 	return (s);
 }
 
-char	*ft_lltoa_base(t_format *format, long long num)
+char	*ft_ultoa_base(t_format *format, unsigned long num)
 {
 	char			*s;
-	long long		n;
+	unsigned long		n;
 	int				i;
 
 	i = 1;
