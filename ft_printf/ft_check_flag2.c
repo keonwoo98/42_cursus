@@ -38,7 +38,8 @@ char			*create_prec_str(t_format *format, char *str, int len)
 
 	if (*str == '-')
 	{
-		str_prec = (char *)malloc(sizeof(char) * format->prec + 2);
+		if (!(str_prec = (char *)malloc(sizeof(char) * format->prec + 2)))
+			return (NULL);
 		ft_memset(str_prec, '0', format->prec + 1);
 		str_prec[format->prec + 1] = '\0';
 		str_prec[0] = '-';
@@ -46,7 +47,8 @@ char			*create_prec_str(t_format *format, char *str, int len)
 	}
 	else
 	{
-		str_prec = (char *)malloc(sizeof(char) * format->prec + 1);
+		if (!(str_prec = (char *)malloc(sizeof(char) * format->prec + 1)))
+			return (NULL);
 		ft_memset(str_prec, '0', format->prec);
 		str_prec[format->prec] = '\0';
 		ft_memcpy(&str_prec[format->prec - len], str, len);
@@ -71,7 +73,8 @@ char			*ft_malset(t_format *format, int len)
 {
 	char		*s;
 
-	s = (char *)malloc(sizeof(char) * (format->width - len + 1));
+	if (!(s = (char *)malloc(sizeof(char) * (format->width - len + 1))))
+		return (NULL);
 	if (format->zero == 0)
 		ft_memset(s, ' ', (format->width - len));
 	else

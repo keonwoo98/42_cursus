@@ -72,7 +72,8 @@ char				*ft_itoa_base(t_format *format, unsigned int n)
 	int				i;
 
 	i = get_hexlen(n);
-	s = (char *)malloc(sizeof(char) * (i + 1));
+	if (!(s = (char *)malloc(sizeof(char) * (i + 1))))
+		return (NULL);
 	s[i] = '\0';
 	if (format->type == 'X')
 	{
@@ -104,7 +105,8 @@ char				*ft_ultoa_base(t_format *format, unsigned long num)
 	n = num;
 	while ((num /= 16) >= 1)
 		i++;
-	s = (char *)malloc(sizeof(char) * (i + 1));
+	if (!(s = (char *)malloc(sizeof(char) * (i + 1))))
+		return (NULL);
 	s[i] = '\0';
 	if (format->type == 'p')
 	{

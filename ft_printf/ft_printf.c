@@ -100,7 +100,7 @@ int				ft_printf(const char *str, ...)
 			find_format(++str, &format);
 			while (*str && !ft_strchr("csdpuixXnfgo%", *str))
 				str++;
-			if (ft_strchr("cspdiuxX%", *str))
+			if (ft_strchr("cspdiuxXnfgo%", *str))
 				str++;
 			ret += format.ret;
 		}
