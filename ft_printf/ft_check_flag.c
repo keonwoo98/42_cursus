@@ -12,6 +12,31 @@
 
 #include "ft_printf.h"
 
+char			*create_prec_str(t_format *format, char *str, int len)
+{
+	char		*str_prec;
+
+	if (*str == '-')
+	{
+		if (!(str_prec = (char *)malloc(sizeof(char) * format->prec + 2)))
+			return (NULL);
+		ft_memset(str_prec, '0', format->prec + 1);
+		str_prec[format->prec + 1] = '\0';
+		str_prec[0] = '-';
+		ft_memcpy(&str_prec[format->prec - len + 2], str + 1, len);
+	}
+	else
+	{
+		if (!(str_prec = (char *)malloc(sizeof(char) * format->prec + 1)))
+			return (NULL);
+		ft_memset(str_prec, '0', format->prec);
+		str_prec[format->prec] = '\0';
+		ft_memcpy(&str_prec[format->prec - len], str, len);
+	}
+	free(str);
+	return (str_prec);
+}
+
 char			*chk_prec(t_format *format, char *str, int num, int len)
 {
 	if (format->prec > -1 && format->prec >= len)
