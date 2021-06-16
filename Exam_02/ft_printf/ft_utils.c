@@ -184,16 +184,6 @@ size_t			get_len(long long nb)
 	return (len);
 }
 
-size_t			get_hexlen(unsigned int nb)
-{
-	int			len;
-
-	len = 1;
-	while ((nb /= 16) >= 1)
-		len++;
-	return (len);
-}
-
 char				*ft_itoa(long long n)
 {
 	int				len;
@@ -221,12 +211,16 @@ char				*ft_itoa(long long n)
 	return (str);
 }
 
-char				*ft_itoa_base(t_format *format, long long n)
+char				*ft_itoa_base(t_format *format, long long num)
 {
 	char			*s;
+	long long		n;
 	int				i;
 
-	i = get_hexlen(n);
+	i = 1;
+	n = num;
+	while ((num /= 16) >= 1)
+		i++;
 	if (!(s = (char *)malloc(sizeof(char) * (i + 1))))
 		return (NULL);
 	s[i] = '\0';

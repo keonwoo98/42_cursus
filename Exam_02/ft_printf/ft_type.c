@@ -100,7 +100,7 @@ void				type_unsigned_int(t_format *format)
 	str = ft_itoa(num);
 	len = ft_strlen(str);
 	if (format->prec != -1)
-		str = chk_prec_ui(format, str, num, len);
+		str = chk_prec(format, str, num, len);
 	if (format->width > 0 && (size_t)format->width > ft_strlen(str))
 	{
 		str_width = ft_malset(format, (int)ft_strlen(str));
@@ -124,7 +124,7 @@ void				type_hexa(t_format *format)
 	str = ft_itoa_base(format, num);
 	len = ft_strlen(str);
 	if (format->prec != -1)
-		str = chk_prec_ui(format, str, num, len);
+		str = chk_prec(format, str, num, len);
 	if (format->width > 0 && (size_t)format->width > ft_strlen(str))
 	{
 		str_width = ft_malset(format, (int)ft_strlen(str));
@@ -148,7 +148,7 @@ void				type_point(t_format *format)
 	str = ft_ultoa_base(format, num);
 	len = ft_strlen(str);
 	if (format->prec != -1)
-		str = chk_prec_ui(format, str, num, len);
+		str = chk_prec(format, str, num, len);
 	str = ft_strjoin_free("0x", str);
 	if (format->width > 0 && (size_t)format->width > ft_strlen(str))
 	{

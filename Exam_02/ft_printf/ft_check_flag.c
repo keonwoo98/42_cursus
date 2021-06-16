@@ -25,7 +25,7 @@ char			*create_prec_str(t_format *format, char *str, int len)
 	return (str_prec);
 }
 
-char			*chk_prec(t_format *format, char *str, int num, int len)
+char			*chk_prec(t_format *format, char *str, long long num, int len)
 {
 	if (format->prec > -1 && format->prec >= len)
 		str = create_prec_str(format, str, len);
@@ -35,18 +35,6 @@ char			*chk_prec(t_format *format, char *str, int num, int len)
 		str = ft_strdup("");
 	}
 	return (str);
-}
-
-char			*chk_prec_ui(t_format *format, char *s, unsigned int n, int l)
-{
-	if (format->prec > -1 && format->prec >= l)
-		s = create_prec_str(format, s, l);
-	else if (format->prec == 0 && n == 0)
-	{
-		free(s);
-		s = ft_strdup("");
-	}
-	return (s);
 }
 
 char			*chk_zero(t_format *format, char *str)
