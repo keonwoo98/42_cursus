@@ -32,7 +32,7 @@ size_t			get_len(long long nb);
 size_t			get_hexlen(unsigned int nb);
 char			*ft_itoa(long long n);
 char			*ft_itoa_base(t_format *format, long long n);
-char				*ft_ultoa_base(t_format *format, unsigned long num);
+char			*ft_ultoa_base(t_format *format, unsigned long num);
 
 char			*create_prec_str(t_format *format, char *str, int len);
 char			*chk_prec(t_format *format, char *str, int num, int len);
