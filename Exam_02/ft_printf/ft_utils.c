@@ -238,7 +238,7 @@ char				*ft_itoa_base(t_format *format, long long n)
 			n /= 16;
 		}
 	}
-	else if (format->type == 'x' || format->type == 'p')
+	else if (format->type == 'x')
 	{
 		while (i--)
 		{
