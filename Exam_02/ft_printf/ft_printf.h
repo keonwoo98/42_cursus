@@ -28,13 +28,11 @@ char			*ft_strdup(const char *s1);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strjoin_free(char const *s1, char *s2);
-size_t			get_len(int nb);
-size_t			get_ulen(unsigned int nb);
+size_t			get_len(long long nb);
 size_t			get_hexlen(unsigned int nb);
-char			*ft_itoa(int n);
-char			*ft_uitoa(unsigned int n);
-char			*ft_itoa_base(t_format *format, unsigned int n);
-char			*ft_ultoa_base(t_format *format, unsigned long num);
+char			*ft_itoa(long long n);
+char			*ft_itoa_base(t_format *format, long long n);
+char				*ft_ultoa_base(t_format *format, unsigned long num);
 
 char			*create_prec_str(t_format *format, char *str, int len);
 char			*chk_prec(t_format *format, char *str, int num, int len);

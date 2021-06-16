@@ -97,7 +97,7 @@ void				type_unsigned_int(t_format *format)
 	int				len;
 
 	num = va_arg(format->ap, unsigned int);
-	str = ft_uitoa(num);
+	str = ft_itoa(num);
 	len = ft_strlen(str);
 	if (format->prec != -1)
 		str = chk_prec_ui(format, str, num, len);

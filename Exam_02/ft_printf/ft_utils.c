@@ -169,22 +169,7 @@ char			*ft_strjoin_free(char const *s1, char *s2)
 	return (str);
 }
 
-size_t			get_len(int nb)
-{
-	size_t		len;
-
-	len = 0;
-	if (nb <= 0)
-		len++;
-	while (nb)
-	{
-		len++;
-		nb = nb / 10;
-	}
-	return (len);
-}
-
-size_t			get_ulen(unsigned int nb)
+size_t			get_len(long long nb)
 {
 	size_t		len;
 
@@ -209,14 +194,14 @@ size_t			get_hexlen(unsigned int nb)
 	return (len);
 }
 
-char				*ft_itoa(int n)
+char				*ft_itoa(long long n)
 {
 	int				len;
 	char			*str;
-	long			nb;
+	long long		nb;
 
 	len = get_len(n);
-	nb = (long)n;
+	nb = n;
 	if (!(str = malloc(sizeof(char) * len + 1)))
 		return (NULL);
 	if (nb < 0)
@@ -236,34 +221,7 @@ char				*ft_itoa(int n)
 	return (str);
 }
 
-char				*ft_uitoa(unsigned int n)
-{
-	int				len;
-	char			*str;
-	long			nb;
-
-	len = get_ulen(n);
-	nb = (long)n;
-	if (!(str = malloc(sizeof(char) * len + 1)))
-		return (NULL);
-	if (nb < 0)
-	{
-		str[0] = '-';
-		nb = -nb;
-	}
-	if (nb == 0)
-		str[0] = '0';
-	str[len--] = '\0';
-	while (nb)
-	{
-		str[len] = nb % 10 + '0';
-		len--;
-		nb = nb / 10;
-	}
-	return (str);
-}
-
-char				*ft_itoa_base(t_format *format, unsigned int n)
+char				*ft_itoa_base(t_format *format, long long n)
 {
 	char			*s;
 	int				i;
@@ -280,7 +238,7 @@ char				*ft_itoa_base(t_format *format, unsigned int n)
 			n /= 16;
 		}
 	}
-	else if (format->type == 'x')
+	else if (format->type == 'x' || format->type == 'p')
 	{
 		while (i--)
 		{
