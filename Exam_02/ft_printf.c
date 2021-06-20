@@ -133,7 +133,7 @@ int				ft_printf(const char *str, ...)
 				int				len = numlen(num, 16);
 				int				w_len = width - (prec < len ? len : prec);
 				int				idx = 0;
-				while (idx < len)
+				while (idx < w_len)
 				{
 					ret += write(1, " ", 1);
 					idx++;
@@ -158,5 +158,9 @@ int		main()
 {
 	int		ret = 0;
 	ft_printf("ft_printf : %d %x %d %x %d %x %d %x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
-	printf("printf : %d %x %d %x %d %x %d %x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
+	printf("pf_printf : %d %x %d %x %d %x %d %x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
+	ft_printf("ft_printf : %0.5d %7.2x %5.5d %9x %11d %4.7x %7.3d %6.0x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
+	printf("pf_printf : %0.5d %7.2x %5.5d %9x %11d %4.7x %7.3d %6.0x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
+	ft_printf("ft_printf : %s %3.0s %5.2s %2.5s %3.3d %9.0x\n", "Hello", "World", "Good", "Morning", 12345678, 87654321);
+	printf("pf_printf : %s %3.0s %5.2s %2.5s %3.3d %9.0x\n", "Hello", "World", "Good", "Morning", 12345678, 87654321);
 }
