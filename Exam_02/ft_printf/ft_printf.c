@@ -8,7 +8,7 @@
 
 int				ret;
 
-int				ft_isdigit(int c)
+int				ft_isdigit(char c)
 {
 	return (c >= '0' && c <= '9');
 }
@@ -44,10 +44,11 @@ int				ft_printf(const char *str, ...)
     
 	ret = 0;
     va_start(ap, str);
-    while(str[i])
+    while (str[i])
     {
 		int			width = 0;
-		int			prec = -1;
+		int			prec = 0;
+		int			dot = 0;
 
 		if (str[i] != '%')
 		{
@@ -60,10 +61,10 @@ int				ft_printf(const char *str, ...)
 			while (str[i] != 's' && str[i] != 'd' && str[i] != 'x' && str[i] != '\0')
 			{
 				if (str[i] == '.')
-					prec = 0;
+					dot = 1;
 				if (ft_isdigit(str[i]))
 				{
-					if (prec == -1)
+					if (dot == 0)
 						width = (width * 10) + (str[i] - '0');
 					else
 						prec = (prec * 10) + (str[i] - '0');
@@ -75,9 +76,9 @@ int				ft_printf(const char *str, ...)
 				char		*s = va_arg(ap, char *);
 				if (!s)
 					s = "(null)";
-				if (prec == 0)
+				if (dot == 1 && prec == 0)
 					s = "";
-				else if (prec == -1)
+				else if (dot == 0)
 					prec = ft_strlen(s);
 				int			len = ft_strlen(s);
 				int			w_len = width - (len > prec ? prec : len);
@@ -104,7 +105,7 @@ int				ft_printf(const char *str, ...)
 					num *= -1;
 					sign = 1;
 				}
-				if (num == 0 && prec == 0)
+				if (num == 0 && dot == 1 && prec == 0)
 					width++;
 				int				len = numlen(num, 10);
 				int				w_len = width - sign - (prec < len ? len : prec);
@@ -121,14 +122,14 @@ int				ft_printf(const char *str, ...)
 					ret += write(1, "0", 1);
 					idx++;
 				}
-				if (num != 0 || prec != 0 || prec != -1)
+				if (num != 0 || dot != 1 || prec != 0)
 					ft_putnbr(num, 10, BASE);
 				i++;
 			}
 			else if (str[i] == 'x')
 			{
 				long long		num = va_arg(ap, unsigned int);
-				if (num == 0 && prec == 0)
+				if (num == 0 && dot == 1 && prec == 0)
 					width++;
 				int				len = numlen(num, 16);
 				int				w_len = width - (prec < len ? len : prec);
@@ -144,7 +145,7 @@ int				ft_printf(const char *str, ...)
 					ret += write(1, "0", 1);
 					idx++;
 				}
-				if (num != 0 || prec != 0 || prec != -1)
+				if (num != 0 || dot != 1 || prec != 0)
 					ft_putnbr(num, 16, BASEX);
 				i++;
 			}
@@ -154,13 +155,13 @@ int				ft_printf(const char *str, ...)
 	return (ret);
 }
 
-int		main()
-{
+// int		main()
+// {
 	
-	ft_printf("ft_printf : %d %x %d %x %d %x %d %x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
-	printf("pf_printf : %d %x %d %x %d %x %d %x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
-	ft_printf("ft_printf : %0.5d %7.2x %5.5d %9x %11d %4.7x %7.3d %6.0x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
-	printf("pf_printf : %0.5d %7.2x %5.5d %9x %11d %4.7x %7.3d %6.0x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
-	ft_printf("ft_printf : %s %3.0s %5.2s %2.5s %3.3d %9.0x\n", "Hello", "World", "Good", "Morning", 12345678, 87654321);
-	printf("pf_printf : %s %3.0s %5.2s %2.5s %3.3d %9.0x\n", "Hello", "World", "Good", "Morning", 12345678, 87654321);
-}
+// 	ft_printf("ft_printf : %.d %x %d %x %d %x %d %x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
+// 	printf("pf_printf : %.d %x %d %x %d %x %d %x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
+// 	ft_printf("ft_printf : %0.5d %7.2x %5.5d %9x %11d %4.7x %7.3d %6.0x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
+// 	printf("pf_printf : %0.5d %7.2x %5.5d %9x %11d %4.7x %7.3d %6.0x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
+// 	ft_printf("ft_printf : %s %3.0s %5.2s %2.5s %3.3d %9.0x\n", "Hello", "World", "Good", "Morning", 12345678, 87654321);
+// 	printf("pf_printf : %s %3.0s %5.2s %2.5s %3.3d %9.0x\n", "Hello", "World", "Good", "Morning", 12345678, 87654321);
+// }
