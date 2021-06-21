@@ -6,7 +6,7 @@
 #define BASE "0123456789"
 #define BASEX "0123456789abcdef"
 
-int				ret = 0;
+int				ret;
 
 int				ft_isdigit(int c)
 {
@@ -42,6 +42,7 @@ int				ft_printf(const char *str, ...)
     int			i = 0;
 	int			sign = 0;
     
+	ret = 0;
     va_start(ap, str);
     while(str[i])
     {
@@ -71,7 +72,6 @@ int				ft_printf(const char *str, ...)
 			}
 			if (str[i] == 's')
 			{
-				char		*s_ret;
 				char		*s = va_arg(ap, char *);
 				if (!s)
 					s = "(null)";
@@ -156,7 +156,7 @@ int				ft_printf(const char *str, ...)
 
 int		main()
 {
-	int		ret = 0;
+	
 	ft_printf("ft_printf : %d %x %d %x %d %x %d %x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
 	printf("pf_printf : %d %x %d %x %d %x %d %x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
 	ft_printf("ft_printf : %0.5d %7.2x %5.5d %9x %11d %4.7x %7.3d %6.0x\n", 0, 0, 42, 42, 2147483647, 2147483647, (int)-2147483648, (int)-2147483648);
