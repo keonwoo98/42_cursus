@@ -1,19 +1,18 @@
-#include <unistd.h>
-#include <stdlib.h>
+#include "get_next_line.h"
 
-int				ft_strlen(char *s)
+static int				ft_strlen(char *s)
 {
-	int			i = 0;
+	int					i = 0;
 	while (s[i])
 		i++;
 	return (i);
 }
 
-char			*ft_strdup(char *s)
+static char			*ft_strdup(char *s)
 {
-	int			i;
-	int			len;
-	char		*str;
+	int				i;
+	int				len;
+	char			*str;
 
 	len = ft_strlen(s);
 	if (!(str = (char *)malloc(len + 1)))
@@ -28,17 +27,17 @@ char			*ft_strdup(char *s)
 	return (str);
 }
 
-char			*ft_strjoin(char *s1, char *s2)
+static char			*ft_strjoin(char *s1, char *s2)
 {
-	int			len1, len2;
-	int			i = 0;
-	char		*ret;
+	int				len1, len2;
+	int				i = 0;
+	char			*ret;
 
 	if (!s1 || !s2)
 		return (0);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	if (!(ret = malloc(len1 + len2 + 1)))
+	if (!(ret = (char *)malloc(len1 + len2 + 1)))
 		return (0);
 	while (i < len1)
 	{
@@ -54,11 +53,11 @@ char			*ft_strjoin(char *s1, char *s2)
 	return (ret);
 }
 
-int				get_next_line(char **line)
+int					get_next_line(char **line)
 {
-	int			read_size;
-	char		buffer[2];
-	char		*tmp;
+	int				read_size;
+	char			buffer[2];
+	char			*tmp;
 
 	if (line == NULL)
 		return (-1);
