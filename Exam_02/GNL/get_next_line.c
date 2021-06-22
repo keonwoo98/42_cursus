@@ -1,7 +1,15 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-char			*ft_strdup(const char *s)
+int				ft_strlen(char *s)
+{
+	int			i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+char			*ft_strdup(char *s)
 {
 	int			i;
 	int			len;
@@ -20,51 +28,49 @@ char			*ft_strdup(const char *s)
 	return (str);
 }
 
-int				ft_strlen(char *s)
+char			*ft_strjoin(char *s1, char *s2)
 {
-	int			i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char			*ft_charappend(char *line, char buff)
-{
+	int			len1, len2;
 	int			i = 0;
 	char		*ret;
 
-	if (!(ret = malloc(ft_strlen(line) + 2)))
+	if (!s1 || !s2)
 		return (0);
-	while (line[i] != 0)
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	if (!(ret = malloc(len1 + len2 + 1)))
+		return (0);
+	while (i < len1)
 	{
-		ret[i] = line[i];
+		ret[i] = *s1++;
 		i++;
 	}
-	ret[i] = buff;
-	i++;
+	while (i < len1 + len2)
+	{
+		ret[i] = *s2++;
+		i++;
+	}
 	ret[i] = 0;
-	free(line);
 	return (ret);
 }
 
 int				get_next_line(char **line)
 {
 	int			read_size;
-	char		buffer;
+	char		buffer[2];
+	char		*tmp;
 
-	if (!(*line = malloc(1)))
+	if (line == NULL)
 		return (-1);
-	(*line)[0] = 0;
-	while ((read_size = read(0, &buffer, 1)) > 0)
+	*line = ft_strdup("");
+	while ((read_size = read(0, buffer, 1)) > 0)
 	{
-		if (buffer == '\n')
+		buffer[read_size] = 0;
+		if (buffer[0] == '\n')
 			return (1);
-		*line = ft_charappend(*line, buffer);
-		if (*line == 0)
-			return (-1);
+		tmp = *line;
+		*line = ft_strjoin(tmp, buffer);
+		free(tmp);
 	}
-	if (read_size == -1)
-		return (-1);
-	else
-		return (0);
+	return (read_size == 0 ? 0 : -1);
 }
