@@ -151,6 +151,7 @@ execve함수를 호출한 프로세스를 새 프로세스로 바꿔준다.
     * const char *path : 전체 경로 명
     * char *const argv[] : 인수 목록
     * char *const envp[] : 환경 설정 목록
+* 반환 : 실패 시 -1 반환
 
 **15. `fork`**
 

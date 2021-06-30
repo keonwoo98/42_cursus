@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-static char		**ft_malloc_error(char **tab)
+static char			**ft_malloc_free(char **tab)
 {
 	unsigned int	i;
 
@@ -28,8 +28,8 @@ static char		**ft_malloc_error(char **tab)
 
 static size_t	count_word(char const *str, char c)
 {
-	size_t	count;
-	size_t	i;
+	size_t		count;
+	size_t		i;
 
 	i = 0;
 	count = 0;
@@ -49,8 +49,8 @@ static size_t	count_word(char const *str, char c)
 
 static size_t	count_str(char const *str, char c)
 {
-	size_t	count;
-	size_t	i;
+	size_t		count;
+	size_t		i;
 
 	i = 0;
 	count = 0;
@@ -64,9 +64,9 @@ static size_t	count_str(char const *str, char c)
 
 char			**ft_split(char const *s, char c)
 {
-	char	**ret;
-	int		j;
-	int		k;
+	char		**ret;
+	int			j;
+	int			k;
 
 	if (!s)
 		return (NULL);
@@ -81,7 +81,7 @@ char			**ft_split(char const *s, char c)
 		if (count_str(s, c) == 0)
 			break ;
 		if (!(ret[k] = (char *)malloc(sizeof(char) * (count_str(s, c) + 1))))
-			return (ft_malloc_error(ret));
+			return (ft_malloc_free(ret));
 		while (*s && *s != c)
 			ret[k][j++] = *s++;
 		ret[k++][j] = '\0';
