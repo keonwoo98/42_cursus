@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = pipex
-SRCS = pipex.c ft_split.c str_utils.c str_utils2.c
+SRCS = pipex.c ft_split.c ft_path.c str_utils.c str_utils2.c
 OBJS = $(SRCS:.c=.o)
 INCS = pipex.h
 CC = gcc

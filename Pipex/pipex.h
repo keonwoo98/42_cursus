@@ -29,7 +29,6 @@ size_t			ft_strlcpy(char *dst, char const *src, size_t dstsize);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strdup(const char *s1);
 char			**ft_split(char const *s, char c);
-static void		free_all(char **path, char **cmd, char *cmd_path);
 char			**split_path(char **envp);
 char			*get_path(char **path, char *cmd);
 int				main(int argc, char **argv, char **envp);
