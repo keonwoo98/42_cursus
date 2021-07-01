@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 static void		free_all(char **path, char **cmd, char *cmd_path)
 {
@@ -27,59 +27,60 @@ static void		free_all(char **path, char **cmd, char *cmd_path)
 	free(cmd_path);
 }
 
-static void		child_process(int *fd, char **argv, char **envp)
+void			redirect_in(const char *file)
 {
 	int			infile;
-	char		**path;
-	char		**cmd;
-	char		*cmd_path;
 
-	if ((infile = open(argv[1], O_RDONLY)) == -1)
-		return (ft_putendl_fd("open fail", 2));
-	close(fd[0]);
-	dup2(fd[1], 1);
-	dup2(infile, 0);
-	close(fd[1]);
-	path = split_path(envp);
-	cmd = ft_split(argv[2], ' ');
-	if ((cmd_path = get_path(path, cmd[0])) == NULL)
+	infile = open(file, O_RDONLY);
+	if (infile < 0)
 	{
-		free_all(path, cmd, cmd_path);
-		return (ft_putendl_fd("command not found", 2));
+		perror("open fail");
+		exit(1);
 	}
-	if ((execve(cmd_path, cmd, envp)) == -1)
-	{
-		free_all(path, cmd, cmd_path);
-		return (ft_putendl_fd("exevc fail", 2));
-	}
-	free_all(path, cmd, cmd_path);
+	dup2(infile, STDIN_FILENO);
+	close(infile);
 }
 
-static void		parent_process(int *fd, char **argv, char **envp)
+void			redirect_out(const char *file)
 {
 	int			outfile;
+
+	outfile = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (outfile < 0)
+	{
+		perror("open fail");
+		exit(1);
+	}
+	dup2(outfile, STDOUT_FILENO);
+	close(outfile);
+}
+
+void			connect_pipe(int fd[2], int io)
+{
+	dup2(fd[io], io);
+	close(fd[0]);
+	close(fd[1]);
+}
+
+void			exe_cmd(int ac, char **argv, char **envp)
+{
 	char		**path;
 	char		**cmd;
 	char		*cmd_path;
 
-	if ((outfile = open(argv[4], O_RDWR | O_CREAT | O_TRUNC, 0644)) == -1)
-		return (ft_putendl_fd("open fail", 2));
-	wait(0);
-	close(fd[1]);
-	dup2(fd[0], 0);
-	dup2(outfile, 1);
-	close(fd[0]);
 	path = split_path(envp);
-	cmd = ft_split(argv[3], ' ');
+	cmd = ft_split(argv[ac], ' ');
 	if ((cmd_path = get_path(path, cmd[0])) == NULL)
 	{
 		free_all(path, cmd, cmd_path);
-		return (ft_putendl_fd("command not found", 2));
+		perror("command not found");
+		exit(1);
 	}
 	if ((execve(cmd_path, cmd, envp)) == -1)
 	{
 		free_all(path, cmd, cmd_path);
-		return (ft_putendl_fd("exevc fail", 2));
+		perror("exevc fail");
+		exit(1);
 	}
 	free_all(path, cmd, cmd_path);
 }
@@ -89,25 +90,35 @@ int				main(int argc, char **argv, char **envp)
 	pid_t		pid;
 	int			fd[2];
 
-	if (argc != 5)
+	if (argc < 5)
 	{
-		ft_putendl_fd("Usage : ./pipex infile cmd1 cmd2 outfile\n", 2);
+		perror("incorrect parameter");
 		return (0);
 	}
 	if (pipe(fd) == -1)
 	{
-		ft_putendl_fd("pipe fail", 2);
+		perror("pipe fail");
 		return (0);
 	}
 	pid = fork();
 	if (pid == -1)
 	{
-		ft_putendl_fd("fork fail", 2);
+		perror("fork fail");
 		return (0);
 	}
 	if (pid == 0)
-		child_process(fd, argv, envp);
+	{
+		heredoc(argv[1]);
+		// redirect_in(argv[1]);
+		connect_pipe(fd, STDOUT_FILENO);
+		exe_cmd(3, argv, envp);
+	}
 	else
-		parent_process(fd, argv, envp);
+	{
+		wait(0);
+		redirect_out(argv[argc - 1]);
+		connect_pipe(fd, STDIN_FILENO);
+		exe_cmd(argc - 2, argv, envp);
+	}
 	return (0);
 }
