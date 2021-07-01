@@ -26,10 +26,10 @@ static char			**ft_malloc_free(char **tab)
 	return (NULL);
 }
 
-static size_t	count_word(char const *str, char c)
+static size_t		count_word(char const *str, char c)
 {
-	size_t		count;
-	size_t		i;
+	size_t			count;
+	size_t			i;
 
 	i = 0;
 	count = 0;
@@ -47,10 +47,10 @@ static size_t	count_word(char const *str, char c)
 	return (count);
 }
 
-static size_t	count_str(char const *str, char c)
+static size_t		count_str(char const *str, char c)
 {
-	size_t		count;
-	size_t		i;
+	size_t			count;
+	size_t			i;
 
 	i = 0;
 	count = 0;
@@ -62,11 +62,11 @@ static size_t	count_str(char const *str, char c)
 	return (count);
 }
 
-char			**ft_split(char const *s, char c)
+char				**ft_split(char const *s, char c)
 {
-	char		**ret;
-	int			j;
-	int			k;
+	char			**ret;
+	int				j;
+	int				k;
 
 	if (!s)
 		return (NULL);

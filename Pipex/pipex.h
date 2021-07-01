@@ -13,7 +13,6 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
@@ -29,10 +28,8 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t			ft_strlcpy(char *dst, char const *src, size_t dstsize);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strdup(const char *s1);
-static char		**ft_malloc_free(char **tab);
-static size_t	count_word(char const *str, char c);
-static size_t	count_str(char const *str, char c);
 char			**ft_split(char const *s, char c);
+static void		free_all(char **path, char **cmd, char *cmd_path);
 char			**split_path(char **envp);
 char			*get_path(char **path, char *cmd);
 int				main(int argc, char **argv, char **envp);

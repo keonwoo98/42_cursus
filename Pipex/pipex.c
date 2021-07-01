@@ -12,17 +12,19 @@
 
 #include "pipex.h"
 
-static void		free_all(char **tab)
+static void		free_all(char **path, char **cmd, char *cmd_path)
 {
 	int			i;
 
 	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	while (path[i])
+		free(path[i++]);
+	free(path);
+	i = 0;
+	while (cmd[i])
+		free(cmd[i++]);
+	free(cmd);
+	free(cmd_path);
 }
 
 char			**split_path(char **envp)
@@ -64,6 +66,7 @@ char			*get_path(char **path, char *cmd)
 			free(cmd_join);
 			return (cmd_path);
 		}
+		i++;
 	}
 	free(cmd_join);
 	return (NULL);
@@ -76,21 +79,25 @@ static void		child_process(int *fd, char **argv, char **envp)
 	char		**cmd;
 	char		*cmd_path;
 
-	close(fd[0]);
-	dup2(fd[1], 1);
-	close(fd[1]);
 	if ((infile = open(argv[1], O_RDONLY)) == -1)
 		return (ft_putendl_fd("open fail", 2));
+	close(fd[0]);
+	dup2(fd[1], 1);
 	dup2(infile, 0);
+	close(fd[1]);
 	path = split_path(envp);
 	cmd = ft_split(argv[2], ' ');
 	if ((cmd_path = get_path(path, cmd[0])) == NULL)
+	{
+		free_all(path, cmd, cmd_path);
 		return (ft_putendl_fd("command not found", 2));
+	}
 	if ((execve(cmd_path, cmd, envp)) == -1)
+	{
+		free_all(path, cmd, cmd_path);
 		return (ft_putendl_fd("exevc fail", 2));
-	free_all(path);
-	free_all(cmd);
-	free(cmd_path);
+	}
+	free_all(path, cmd, cmd_path);
 }
 
 static void		parent_process(int *fd, char **argv, char **envp)
@@ -105,17 +112,21 @@ static void		parent_process(int *fd, char **argv, char **envp)
 	wait(0);
 	close(fd[1]);
 	dup2(fd[0], 0);
-	close(fd[0]);
 	dup2(outfile, 1);
+	close(fd[0]);
 	path = split_path(envp);
 	cmd = ft_split(argv[3], ' ');
 	if ((cmd_path = get_path(path, cmd[0])) == NULL)
+	{
+		free_all(path, cmd, cmd_path);
 		return (ft_putendl_fd("command not found", 2));
+	}
 	if ((execve(cmd_path, cmd, envp)) == -1)
+	{
+		free_all(path, cmd, cmd_path);
 		return (ft_putendl_fd("exevc fail", 2));
-	free_all(path);
-	free_all(cmd);
-	free(cmd_path);
+	}
+	free_all(path, cmd, cmd_path);
 }
 
 int				main(int argc, char **argv, char **envp)
