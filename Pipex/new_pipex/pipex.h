@@ -30,6 +30,11 @@ char			*ft_strdup(const char *s1);
 char			**ft_split(char const *s, char c);
 char			**split_path(char **envp);
 char			*get_path(char **path, char *cmd);
+void			redirect_in(const char *file);
+void			redirect_out(const char *file);
+void			connect_pipe(int fd[2], int io);
+void			exe_cmd(int ac, char **argv, char **envp);
+void			free_all(char **path, char **cmd, char *cmd_path);
 int				main(int argc, char **argv, char **envp);
 
 #endif

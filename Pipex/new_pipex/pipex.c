@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-static void		free_all(char **path, char **cmd, char *cmd_path)
+void			free_all(char **path, char **cmd, char *cmd_path)
 {
 	int			i;
 
@@ -27,62 +27,19 @@ static void		free_all(char **path, char **cmd, char *cmd_path)
 	free(cmd_path);
 }
 
-static void		redirect_in(const char *file)
+static void		child_process(int fd[2], char **argv, char **envp)
 {
-	int			infile;
-
-	infile = open(file, O_RDONLY);
-	if (infile < 0)
-	{
-		perror("open fail");
-		exit(1);
-	}
-	dup2(infile, STDIN_FILENO);
-	close(infile);
+	redirect_in(argv[1]);
+	connect_pipe(fd, STDOUT_FILENO);
+	exe_cmd(2, argv, envp);
 }
 
-static void		redirect_out(const char *file)
+static void		parent_process(int fd[2], int argc, char **argv, char **envp)
 {
-	int			outfile;
-
-	outfile = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (outfile < 0)
-	{
-		perror("open fail");
-		exit(1);
-	}
-	dup2(outfile, STDOUT_FILENO);
-	close(outfile);
-}
-
-static void		connect_pipe(int fd[2], int io)
-{
-	dup2(fd[io], io);
-	close(fd[0]);
-	close(fd[1]);
-}
-
-static void		exe_cmd(int ac, char **argv, char **envp)
-{
-	char		**path;
-	char		**cmd;
-	char		*cmd_path;
-
-	path = split_path(envp);
-	cmd = ft_split(argv[ac], ' ');
-	if ((cmd_path = get_path(path, cmd[0])) == NULL)
-	{
-		free_all(path, cmd, cmd_path);
-		perror("command not found");
-		exit(1);
-	}
-	if ((execve(cmd_path, cmd, envp)) == -1)
-	{
-		free_all(path, cmd, cmd_path);
-		perror("exevc fail");
-		exit(1);
-	}
-	free_all(path, cmd, cmd_path);
+	wait(0);
+	redirect_out(argv[argc - 1]);
+	connect_pipe(fd, STDIN_FILENO);
+	exe_cmd(3, argv, envp);
 }
 
 int				main(int argc, char **argv, char **envp)
@@ -107,17 +64,8 @@ int				main(int argc, char **argv, char **envp)
 		return (0);
 	}
 	if (pid == 0)
-	{
-		redirect_in(argv[1]);
-		connect_pipe(fd, STDOUT_FILENO);
-		exe_cmd(2, argv, envp);
-	}
+		child_process(fd, argv, envp);
 	else
-	{
-		wait(0);
-		redirect_out(argv[argc - 1]);
-		connect_pipe(fd, STDIN_FILENO);
-		exe_cmd(3, argv, envp);
-	}
+		parent_process(fd, argc, argv, envp);
 	return (0);
 }

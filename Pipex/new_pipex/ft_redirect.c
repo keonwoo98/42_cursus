@@ -1,31 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   ft_redirect.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/28 19:40:21 by keokim            #+#    #+#             */
-/*   Updated: 2021/06/28 19:40:26 by keokim           ###   ########.fr       */
+/*   Created: 2021/07/02 13:09:53 by keokim            #+#    #+#             */
+/*   Updated: 2021/07/02 13:09:55 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
-
-static void		free_all(char **path, char **cmd, char *cmd_path)
-{
-	int			i;
-
-	i = 0;
-	while (path[i])
-		free(path[i++]);
-	free(path);
-	i = 0;
-	while (cmd[i])
-		free(cmd[i++]);
-	free(cmd);
-	free(cmd_path);
-}
+#include "pipex.h"
 
 void			redirect_in(const char *file)
 {
@@ -82,43 +67,4 @@ void			exe_cmd(int ac, char **argv, char **envp)
 		perror("exevc fail");
 		exit(1);
 	}
-	free_all(path, cmd, cmd_path);
-}
-
-int				main(int argc, char **argv, char **envp)
-{
-	pid_t		pid;
-	int			fd[2];
-
-	if (argc < 5)
-	{
-		perror("incorrect parameter");
-		return (0);
-	}
-	if (pipe(fd) == -1)
-	{
-		perror("pipe fail");
-		return (0);
-	}
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork fail");
-		return (0);
-	}
-	if (pid == 0)
-	{
-		heredoc(argv[1]);
-		// redirect_in(argv[1]);
-		connect_pipe(fd, STDOUT_FILENO);
-		exe_cmd(3, argv, envp);
-	}
-	else
-	{
-		wait(0);
-		redirect_out(argv[argc - 1]);
-		connect_pipe(fd, STDIN_FILENO);
-		exe_cmd(argc - 2, argv, envp);
-	}
-	return (0);
 }
