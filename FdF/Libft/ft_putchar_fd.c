@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/05 11:38:43 by keokim            #+#    #+#             */
-/*   Updated: 2021/07/05 11:38:46 by keokim           ###   ########.fr       */
+/*   Created: 2021/05/07 16:29:45 by keokim            #+#    #+#             */
+/*   Updated: 2021/05/07 16:32:02 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-int     key_press(int keycode, void *param)
+void
+	ft_putchar_fd(char c, int fd)
 {
-    if (keycode == KEY_ESC)
-        exit(0);
-    return (0);
-}
-
-int     main(int argc, char **argv)
-{
-    void    *mlx;
-    void    *win;
-    void    *param;
-
-    mlx = mlx_init();
-    win = mlx_new_window(mlx, 500, 500, "fdf");
-    mlx_key_hook(win, key_press, param);
-    mlx_loop(mlx);
+	if (fd < 0)
+		return ;
+	write(fd, &c, 1);
 }

@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/05 11:38:43 by keokim            #+#    #+#             */
-/*   Updated: 2021/07/05 11:38:46 by keokim           ###   ########.fr       */
+/*   Created: 2021/05/04 16:09:47 by keokim            #+#    #+#             */
+/*   Updated: 2021/05/10 12:12:56 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-int     key_press(int keycode, void *param)
+void
+	*ft_memmove(void *dst, const void *src, size_t len)
 {
-    if (keycode == KEY_ESC)
-        exit(0);
-    return (0);
-}
+	unsigned char	*uc_dst;
+	unsigned char	*uc_src;
 
-int     main(int argc, char **argv)
-{
-    void    *mlx;
-    void    *win;
-    void    *param;
-
-    mlx = mlx_init();
-    win = mlx_new_window(mlx, 500, 500, "fdf");
-    mlx_key_hook(win, key_press, param);
-    mlx_loop(mlx);
+	if (dst == src || !len)
+		return (dst);
+	uc_dst = (unsigned char *)dst;
+	uc_src = (unsigned char *)src;
+	if (dst < src)
+		while (len--)
+			*uc_dst++ = *uc_src++;
+	else
+		while (len--)
+			*(uc_dst + len) = *(uc_src + len);
+	return (dst);
 }

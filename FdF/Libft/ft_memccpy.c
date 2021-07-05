@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/05 11:38:43 by keokim            #+#    #+#             */
-/*   Updated: 2021/07/05 11:38:46 by keokim           ###   ########.fr       */
+/*   Created: 2021/05/04 15:47:37 by keokim            #+#    #+#             */
+/*   Updated: 2021/05/04 16:09:13 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-int     key_press(int keycode, void *param)
+void
+	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-    if (keycode == KEY_ESC)
-        exit(0);
-    return (0);
-}
+	size_t			i;
+	unsigned char	*uc_src;
+	unsigned char	stop;
 
-int     main(int argc, char **argv)
-{
-    void    *mlx;
-    void    *win;
-    void    *param;
-
-    mlx = mlx_init();
-    win = mlx_new_window(mlx, 500, 500, "fdf");
-    mlx_key_hook(win, key_press, param);
-    mlx_loop(mlx);
+	uc_src = (unsigned char *)src;
+	stop = (char)c;
+	i = 0;
+	while (i < n)
+	{
+		((unsigned char *)dst)[i] = uc_src[i];
+		if (uc_src[i] == stop)
+			return (dst + (i + 1));
+		i++;
+	}
+	return (0);
 }

@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/05 11:38:43 by keokim            #+#    #+#             */
-/*   Updated: 2021/07/05 11:38:46 by keokim           ###   ########.fr       */
+/*   Created: 2021/05/10 16:29:38 by keokim            #+#    #+#             */
+/*   Updated: 2021/05/10 16:31:37 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-int     key_press(int keycode, void *param)
+t_list
+	*ft_lstnew(void *content)
 {
-    if (keycode == KEY_ESC)
-        exit(0);
-    return (0);
-}
+	t_list	*new;
 
-int     main(int argc, char **argv)
-{
-    void    *mlx;
-    void    *win;
-    void    *param;
-
-    mlx = mlx_init();
-    win = mlx_new_window(mlx, 500, 500, "fdf");
-    mlx_key_hook(win, key_press, param);
-    mlx_loop(mlx);
+	new = (t_list *)malloc(sizeof(t_list));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
 }

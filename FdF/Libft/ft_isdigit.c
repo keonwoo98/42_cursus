@@ -1,32 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/05 11:38:43 by keokim            #+#    #+#             */
-/*   Updated: 2021/07/05 11:38:46 by keokim           ###   ########.fr       */
+/*   Created: 2021/05/04 12:03:38 by keokim            #+#    #+#             */
+/*   Updated: 2021/05/04 12:06:23 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-int     key_press(int keycode, void *param)
+int
+	ft_isdigit(int c)
 {
-    if (keycode == KEY_ESC)
-        exit(0);
-    return (0);
-}
-
-int     main(int argc, char **argv)
-{
-    void    *mlx;
-    void    *win;
-    void    *param;
-
-    mlx = mlx_init();
-    win = mlx_new_window(mlx, 500, 500, "fdf");
-    mlx_key_hook(win, key_press, param);
-    mlx_loop(mlx);
+	return (c >= '0' && c <= '9');
 }

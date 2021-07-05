@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/05 11:38:43 by keokim            #+#    #+#             */
-/*   Updated: 2021/07/05 11:38:46 by keokim           ###   ########.fr       */
+/*   Created: 2021/05/06 13:22:51 by keokim            #+#    #+#             */
+/*   Updated: 2021/05/06 13:39:48 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "libft.h"
 
-int     key_press(int keycode, void *param)
+char
+	*ft_strjoin(char const *s1, char const *s2)
 {
-    if (keycode == KEY_ESC)
-        exit(0);
-    return (0);
-}
+	size_t	len_s1;
+	size_t	len_s2;
+	char	*str;
 
-int     main(int argc, char **argv)
-{
-    void    *mlx;
-    void    *win;
-    void    *param;
-
-    mlx = mlx_init();
-    win = mlx_new_window(mlx, 500, 500, "fdf");
-    mlx_key_hook(win, key_press, param);
-    mlx_loop(mlx);
+	if (!s1 || !s2)
+		return (NULL);
+	len_s1 = ft_strlen(s1);
+	len_s2 = ft_strlen(s2);
+	str = (char *)malloc(sizeof(char) * (len_s1 + len_s2 + 1));
+	if (!str)
+		return (NULL);
+	ft_memcpy(str, s1, len_s1);
+	ft_memcpy(str + len_s1, s2, len_s2);
+	str[len_s1 + len_s2] = 0;
+	return (str);
 }

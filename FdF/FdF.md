@@ -81,24 +81,24 @@
 **13. `mlx_loop`**
 
 * **SYM** : `int mix_loop(void *mlx_ptr)`
-* **DES** :
+* **DES** : Both  X-Window and MacOSX graphical systems are bi-directionnal. On one hand, the program sends orders to the screen to display pixels, images, and so on. On the other hand, it can get information from the keyboard and mouse associated to the screen. To do so, the program receives "events" from the keyboard or the mouse. To receive  events, you must use this function. This function never returns. It is an infinite loop that waits for an event, and then calls a user-defined function associated with this event. A single parameter is needed, the connection identifier <U>mlx_ptr</U>.
 
-**14. `mlx_key_hook`**
+**14. `mlx_key_hook` & `mlx_mouse_hook` & `mlx_expose_hook`**
 
 * **SYM** : `int mix_key_hook(void *win_ptr, int (*funct_ptr)(), void *param)`
-* **DES** :
-
-**15. `mlx_mouse_hook`**
-
 * **SYM** : `int mix_mouse_hook(void *win_ptr, int (*funct_ptr)(), void *param)`
-* **DES** :
-
-**16. `mlx_expose_hook`**
-
 * **SYM** : `int mix_expose_hook(void *win_ptr, int (*funct_ptr)(), void *param)`
-* **DES** :
+* **DES** : The  three  functions  work exactly the same way.  <U>funct_ptr</U> is a pointer to the function you want to be called when an event occurs. This assignment is specific to the  window  defined by the <U>win_ptr</U> identifier. The <U>param</U> address will be passed to the function everytime it is called, and should be used to store the parameters it might need.
 
 **17. `mlx_loop_hook`**
 
 * **SYM** : `int mix_loop_hook(void *win_ptr, int (*funct_ptr)(), void *param)`
-* **DES** :
+* **DES** : THis function is identical to the previous ones, but the given function will be called when no event occurs. When it catches an event, the MiniLibX calls the corresponding function with fixed parameters :
+    * `expose_hook(void *param)`
+    * `key_hook(int keycode,void *param)`
+    * `mouse_hook(int button,int x,int y,void *param)`
+    * `loop_hook(void *param)`
+
+    These function names are arbitrary. They here are used to distinguish parameters according to the event. These functions are NOT part of the MiniLibX.
+
+    param is the address specified in the mlx_*_hook calls. This address is never used nor modified by the MiniLibX. On key and mouse events, additional information is passed: keycode tells you which key is pressed, <U>(x, y)</U> are the coordinates of the mouse  click in the window, and button tells you which mouse button was pressed.
