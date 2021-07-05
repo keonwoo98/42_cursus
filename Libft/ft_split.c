@@ -12,21 +12,8 @@
 
 #include "libft.h"
 
-static char		**ft_malloc_error(char **tab)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-	return (NULL);
-}
-
-static size_t	count_word(char const *str, char c)
+static size_t
+	count_word(char const *str, char c)
 {
 	size_t	count;
 	size_t	i;
@@ -47,7 +34,8 @@ static size_t	count_word(char const *str, char c)
 	return (count);
 }
 
-static size_t	count_str(char const *str, char c)
+static size_t
+	count_str(char const *str, char c)
 {
 	size_t	count;
 	size_t	i;
@@ -62,7 +50,28 @@ static size_t	count_str(char const *str, char c)
 	return (count);
 }
 
-char			**ft_split(char const *s, char c)
+static char
+	**ft_malloc_error(char **tab)
+{
+	unsigned int	i;
+
+	if (!tab)
+	{
+		i = 0;
+		while (tab[i])
+		{
+			free(tab[i]);
+			i++;
+		}
+		free(tab);
+		return (NULL);
+	}
+	else
+		return (NULL);
+}
+
+char
+	**ft_split(char const *s, char c)
 {
 	char	**ret;
 	int		j;
@@ -70,7 +79,8 @@ char			**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	if (!(ret = (char **)malloc(sizeof(char *) * (count_word(s, c) + 1))))
+	ret = (char **)malloc(sizeof(char *) * (count_word(s, c) + 1));
+	if (!ret)
 		return (NULL);
 	k = 0;
 	while (*s)
@@ -80,8 +90,8 @@ char			**ft_split(char const *s, char c)
 			s++;
 		if (count_str(s, c) == 0)
 			break ;
-		if (!(ret[k] = (char *)malloc(sizeof(char) * (count_str(s, c) + 1))))
-			return (ft_malloc_error(ret));
+		ret[k] = (char *)malloc(sizeof(char) * (count_str(s, c) + 1));
+		ft_malloc_error(ret);
 		while (*s && *s != c)
 			ret[k][j++] = *s++;
 		ret[k++][j] = '\0';

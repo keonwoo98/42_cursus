@@ -12,7 +12,8 @@
 
 #include "libft.h"
 
-int		ft_atoi(const char *str)
+int
+	ft_atoi(const char *str)
 {
 	long		nbr;
 	long		sign;
