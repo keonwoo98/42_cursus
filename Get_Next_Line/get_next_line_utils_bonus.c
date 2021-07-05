@@ -12,7 +12,8 @@
 
 #include "get_next_line_bonus.h"
 
-static size_t	ft_strlen(const char *s)
+static size_t
+	ft_strlen(const char *s)
 {
 	size_t		i;
 
@@ -22,7 +23,8 @@ static size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-static void		*ft_memcpy(void *dst, const void *src, size_t n)
+static void
+	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	size_t		i;
 
@@ -37,14 +39,16 @@ static void		*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 
-char			*ft_strdup(const char *s1)
+char
+	*ft_strdup(const char *s1)
 {
 	size_t		i;
 	size_t		len;
 	char		*str;
 
 	len = ft_strlen(s1);
-	if (!(str = (char *)malloc(sizeof(char) * (len + 1))))
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
 		return (NULL);
 	i = 0;
 	while (s1[i])
@@ -56,7 +60,8 @@ char			*ft_strdup(const char *s1)
 	return (str);
 }
 
-char			*ft_strjoin(char *s1, char *s2)
+char
+	*ft_strjoin(char *s1, char *s2)
 {
 	size_t		len_s1;
 	size_t		len_s2;
@@ -70,7 +75,8 @@ char			*ft_strjoin(char *s1, char *s2)
 		return (ft_strdup(s1));
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen(s2);
-	if (!(str = (char *)malloc(sizeof(char) * (len_s1 + len_s2 + 1))))
+	str = (char *)malloc(sizeof(char) * (len_s1 + len_s2 + 1));
+	if (!str)
 		return (NULL);
 	ft_memcpy(str, s1, len_s1);
 	free(s1);
