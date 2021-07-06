@@ -17,9 +17,8 @@
 # include <unistd.h>
 
 # define MAX_FD 1024
+# define BUFFER_SIZE 10
 
-char	*ft_strdup(const char *s1);
-char	*ft_strjoin(char *s1, char *s2);
 int		get_next_line(int fd, char **line);
 
 #endif

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "../Libft/libft.h"
 
 static int
 	chk_newline(char *temp)
