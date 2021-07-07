@@ -61,7 +61,7 @@ char
 }
 
 char
-	*ft_strjoin(char *s1, char *s2)
+	*ft_strjoin_free(char *s1, char *s2)
 {
 	size_t		len_s1;
 	size_t		len_s2;

@@ -13,9 +13,8 @@
 #ifndef FDF_H
 # define FDF_H
 # include "./Libft/libft.h"
-# include "./Get_Next_Line/get_next_line.h"
-// # include <mlx.h>
-# include "./minilibx/mlx.h"
+# include <mlx.h>
+// # include "./minilibx/mlx.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
@@ -24,11 +23,17 @@
 
 typedef struct s_data
 {
-    void		*img;
-	char		*addr;
-	int			bits_per_pixel;
-	int			line_length;
-	int			endian;
+    int				width;
+	int				height;
 }t_data;
+
+typedef struct s_map
+{
+	int				**z;
+	unsigned int	**color;
+}t_map;
+
+int				get_next_line(int fd, char **line);
+unsigned int	ft_atoi_base(char *nbr);
 
 #endif

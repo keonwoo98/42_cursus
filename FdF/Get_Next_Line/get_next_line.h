@@ -17,7 +17,7 @@
 # include <unistd.h>
 
 # define MAX_FD 1024
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 1
 
 int		get_next_line(int fd, char **line);
 

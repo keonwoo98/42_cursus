@@ -10,8 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
 #include "../Libft/libft.h"
+#define BUFFER_SIZE 100
+#define MAX_FD 256
 
 static int
 	chk_newline(char *temp)
@@ -69,10 +70,10 @@ static int
 	return (0);
 }
 
-int
+static int
 	temp_str(char *temp[], char *buffer, int *is_line, int fd)
 {
-	temp[fd] = ft_strjoin(temp[fd], buffer);
+	temp[fd] = ft_strjoin_free(temp[fd], buffer);
 	if (!(temp[fd]))
 		return (1);
 	*is_line = chk_newline(temp[fd]);

@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static size_t
+size_t
 	count_word(char const *str, char c)
 {
 	size_t	count;
@@ -50,7 +50,7 @@ static size_t
 	return (count);
 }
 
-static char
+char
 	**ft_malloc_error(char **tab)
 {
 	unsigned int	i;
