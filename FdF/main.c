@@ -93,11 +93,25 @@ void
 		while (++j < data->width)
 			(*map)->z[i][j] = ft_atoi(split[j]);
 		i++;
+		free(line);
+		int k = 0;
+		while (split[k])
+			free(split[k++]);
+		free(split);
 	}
-	// i = 0;
-	// while (split[i])
-	// 	free(split[i]);
-	// free(split);
+	split = ft_split(line, ' ');
+	(*map)->z[i] = (int *)malloc(sizeof(int) * data->width);
+	if (!((*map)->z[i]))
+		error("Malloc error");
+	j = -1;
+	while (++j < data->width)
+		(*map)->z[i][j] = ft_atoi(split[j]);
+	i++;
+	free(line);
+	int k = 0;
+	while (split[k])
+		free(split[k++]);
+	free(split);
 	close(fd);
 }
 
@@ -127,57 +141,41 @@ void
 		j = -1;
 		while (++j < data->width)
 		{
-			if (ft_strchr(split[i], ','))
+			if (ft_strchr(split[j], ','))
 			{
-				split[i] = ft_strchr(split[i], ',');
-				split[i]++;
-				temp = ft_substr(temp, 2, ft_strlen(temp) - 2);
-				(*map)->color[i][j] = ft_atoi_base(temp);
-				free(temp);
+				split[j] = ft_strchr(split[j], ',');
+				split[j]++;
+				split[j]++;
+				split[j]++;
+				(*map)->color[i][j] = ft_atoi_base(split[j]);
 			}
 			else
 				(*map)->color[i][j] = 0;
 		}
 		i++;
+		free(line);
 	}
-	// i = 0;
-	// while (split[i])
-	// 	free(split[i]);
-	// free(split);
+	split = ft_split(line, ' ');
+	(*map)->color[i] = (unsigned int *)malloc(sizeof(unsigned int) * data->width);
+	if (!((*map)->color[i]))
+		error("Malloc error");
+	j = -1;
+	while (++j < data->width)
+	{
+		if (ft_strchr(split[j], ','))
+		{
+			split[j] = ft_strchr(split[j], ',');
+			split[j]++;
+			split[j]++;
+			split[j]++;
+			(*map)->color[i][j] = ft_atoi_base(split[j]);
+		}
+		else
+			(*map)->color[i][j] = 0;
+	}
+	free(line);
 	close(fd);
 }
-
-// t_map
-// 	*new_map(char *s)
-// {
-// 	t_map	*new;
-// 	char	**split;
-
-// 	new = (t_map *)malloc(sizeof(t_map));
-// 	if (!new)
-// 		error("Molloc error");
-// 	split = ft_split(s, ',');
-// 	new->z = ft_atoi(split[0]);
-// 	if (split[1])
-// 		new->color = ft_atoi_base(split[1] + 2);
-// 	else
-// 		new->color = -1;
-// 	new->next = NULL;
-// 	return (new);
-// }
-
-// int
-// 	parse_map(char **each_line, t_map *map)
-// {
-// 	int		x_max;
-
-// 	x_max = 0;
-// 	while (*each_line)
-// 	{
-// 		push(map, new_map(*(each_line++)));
-// 		x_max++;
-// 	}
-// }
 
 int
 	main(int argc, char **argv)
@@ -209,8 +207,9 @@ int
 	{
 		int j = 0;
 		while (j < data->width)
-			printf("%3d", map->color[i][j++]);
+			printf("%5d", map->color[i][j++]);
 		printf("\n");
 		i++;
 	}
+	while (1);
 }

@@ -1,5 +1,5 @@
-# **FdF**
-> 본 프로젝트를 진행하기 위한 개념 확립
+# **MiniLibX**
+> mlx 라이브러리 함수 man page 정리
 
 ## **MiniLibX 함수**
 

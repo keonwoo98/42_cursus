@@ -20,9 +20,9 @@ int
 
     i = 0;
     base = "0123456789abcdef";
-    while (ft_tolower(base[i]))
+    while (base[i])
     {
-        if (to_find == ft_tolower(base[i]))
+        if (ft_tolower(to_find) == base[i])
             return (i);
         i++;
     }
