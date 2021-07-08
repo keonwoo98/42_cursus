@@ -20,6 +20,13 @@ int
     return (0);
 }
 
+int
+	deal_key(int key, t_fdf *fdf)
+{
+	printf("%d\n", key);
+	return (0);
+}
+
 void
 	print_error(char *msg)
 {
@@ -221,6 +228,7 @@ int
 {
 	t_data	*data;
 	t_map	*map;
+	t_fdf	*fdf;
 
 	if (argc < 2)
 		print_error("Useage : ./fdf [File]");
@@ -230,28 +238,36 @@ int
 	invalid_width(argv, data);
 	get_z(argv, data, &map);
 	get_color(argv, data, &map);
-	printf("width : %d\nheight : %d\n", data->width, data->height);
-	int i = 0;
-	while (i < data->height)
-	{
-		int j = 0;
-		while (j < data->width)
-			printf("%3d", map->z[i][j++]);
-		printf("\n");
-		i++;
-	}
-	printf("---------------------------------------------\n");
-	i = 0;
-	while (i < data->height)
-	{
-		int j = 0;
-		while (j < data->width)
-			printf("%5d", map->color[i][j++]);
-		printf("\n");
-		i++;
-	}
+
+	// printf("width : %d\nheight : %d\n", data->width, data->height);
+	// int i = 0;
+	// while (i < data->height)
+	// {
+	// 	int j = 0;
+	// 	while (j < data->width)
+	// 		printf("%3d", map->z[i][j++]);
+	// 	printf("\n");
+	// 	i++;
+	// }
+	// printf("---------------------------------------------\n");
+	// i = 0;
+	// while (i < data->height)
+	// {
+	// 	int j = 0;
+	// 	while (j < data->width)
+	// 		printf("%5d", map->color[i][j++]);
+	// 	printf("\n");
+	// 	i++;
+	// }
+
+	fdf = fdf_init();
+	draw(data, map, fdf);
+	mlx_key_hook(fdf->win, key_press, NULL);
+    mlx_loop(fdf->mlx);
+
 	free_int(map->z, data->height);
 	free_uint(map->color, data->height);
 	free(map);
 	free(data);
+	free(fdf);
 }

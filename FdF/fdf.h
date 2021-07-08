@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <math.h>
 
 # define KEY_ESC 53
 
@@ -34,7 +35,21 @@ typedef struct s_map
 	unsigned int	**color;
 }t_map;
 
+typedef struct s_fdf
+{
+	void			*mlx;
+	void			*win;
+	void			*img;
+	char			*data_addr;
+	int				bits_per_pixel;
+	int				size_line;
+	int				endian;
+}t_fdf;
+
+void			print_error(char *msg);
 int				get_next_line(int fd, char **line);
 unsigned int	ft_atoi_base(char *nbr);
+t_fdf			*fdf_init(void);
+void			draw(t_data *data, t_map *map, t_fdf *fdf);
 
 #endif
