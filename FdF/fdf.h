@@ -22,6 +22,7 @@
 # include <math.h>
 
 # define KEY_ESC 53
+# define PI 3.14159265
 
 typedef struct s_data
 {
@@ -51,5 +52,6 @@ int				get_next_line(int fd, char **line);
 unsigned int	ft_atoi_base(char *nbr);
 t_fdf			*fdf_init(void);
 void			draw(t_data *data, t_map *map, t_fdf *fdf);
+void			print_keys(t_fdf *fdf);
 
 #endif

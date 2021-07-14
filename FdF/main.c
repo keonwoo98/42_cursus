@@ -20,11 +20,15 @@ int
     return (0);
 }
 
-int
-	deal_key(int key, t_fdf *fdf)
+void
+	print_keys(t_fdf *fdf)
 {
-	printf("%d\n", key);
-	return (0);
+	mlx_string_put(fdf->mlx, fdf->win, 20, 20, 0xffffff, "Reset the map : Space");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 40, 0xffffff, "Increase size : +");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 60, 0xffffff, "Decrease size : -");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 80, 0xffffff, "Increase zoom : Mouse wheel up");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 100, 0xffffff, "Decrease zoom : Mouse wheel down");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 120, 0xffffff, "Exit : Esc");
 }
 
 void
@@ -190,7 +194,7 @@ void
 			(*map)->color[i][j] = ft_atoi_base(temp + 3);
 		}
 		else
-			(*map)->color[i][j] = 0;
+			(*map)->color[i][j] = 16777215;
 	}
 	k = 0;
 	while (split[k])
@@ -250,12 +254,12 @@ int
 	// 	i++;
 	// }
 	// printf("---------------------------------------------\n");
-	// i = 0;
+	// int i = 0;
 	// while (i < data->height)
 	// {
 	// 	int j = 0;
 	// 	while (j < data->width)
-	// 		printf("%5d", map->color[i][j++]);
+	// 		printf("%10d", map->color[i][j++]);
 	// 	printf("\n");
 	// 	i++;
 	// }
