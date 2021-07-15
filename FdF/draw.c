@@ -21,8 +21,15 @@ float
 void
 	isometric(float *x, float *y, int z)
 {
-	*x = (*x - *y) * cos(PI / 4);
-	*y = (*x + *y) * sin(PI / 4) - z;
+	// *x = (*x - *y) * cos(PI / 4);
+	// *y = (*x + *y) * sin(PI / 4) - z;
+	float pre_x;
+	float pre_y;
+
+	pre_x = *x;
+	pre_y = *y;
+	*x = (pre_x * cos(PI / 6 * -1)) - (pre_y * sin(PI / 3 * -1));
+	*y = (pre_x * sin(PI / 6 * -1)) + (pre_y * cos(PI / 3 * -1)) - z;
 }
 
 void
@@ -86,14 +93,14 @@ void
 
 	print_keys(fdf);
 	y = 0;
-	while (y < data->height)
+	while (y < data->height - 1)
 	{
 		x = 0;
 		while (x < data->width)
 		{
 			if (x < data->width - 1)
 				dda_algorithm(x, y, x + 1, y, fdf, map);
-			if (y < data->height - 1)
+			if (y < data->height - 1 && x != 0)
 				dda_algorithm(x, y, x, y + 1, fdf, map);
 			x++;
 		}
