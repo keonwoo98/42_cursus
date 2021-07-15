@@ -67,7 +67,6 @@ void
 	z = map->z[(int)y][(int)x];
 	z1 = map->z[(int)y1][(int)x1];
 	color = map->color[(int)y][(int)x];
-	// color = (z) ? 0xe80c0c : 0xffffff;
 	zoom(&x, &y, &z);
 	zoom(&x1, &y1, &z1);
 	isometric(&x, &y, z);
