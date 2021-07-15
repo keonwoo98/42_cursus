@@ -33,29 +33,22 @@ void
 }
 
 void
-	zoom(float *x, float *y, int *z)
+	zoom(float *x, float *y, int *z, t_data *data)
 {
-	int		zoom;
-
-	zoom = 20;
-	*x *= zoom;
-	*y *= zoom;
-	*z *= zoom;
+	*x *= data->zoom;
+	*y *= data->zoom;
+	*z *= data->zoom;
 }
 
 void
-	move(float *x, float *y, int *z)
+	shift(float *x, float *y, t_data *data)
 {
-	int		move;
-
-	move = 400;
-	*x += move;
-	*y += move;
-	*z += move;
+	*x += data->shift_x;
+	*y += data->shift_y;
 }
 
 void
-	dda_algorithm(float x, float y, float x1, float y1, t_fdf *fdf, t_map *map)
+	dda_algorithm(float x, float y, float x1, float y1, t_data *data, t_map *map)
 {
 	float	x_inc;
 	float	y_inc;
@@ -67,30 +60,30 @@ void
 	z = map->z[(int)y][(int)x];
 	z1 = map->z[(int)y1][(int)x1];
 	color = map->color[(int)y][(int)x];
-	zoom(&x, &y, &z);
-	zoom(&x1, &y1, &z1);
+	zoom(&x, &y, &z, data);
+	zoom(&x1, &y1, &z1, data);
 	isometric(&x, &y, z);
 	isometric(&x1, &y1, z1);
-	move(&x, &y, &z);
-	move(&x1, &y1, &z1);
+	shift(&x, &y, data);
+	shift(&x1, &y1, data);
 	step = return_max(return_mod(x1 - x), return_mod(y1 - y));
 	x_inc = (x1 - x) / step;
 	y_inc = (y1 - y) / step;
 	while ((int)(x - x1) || (int)(y - y1))
 	{
-		mlx_pixel_put(fdf->mlx, fdf->win, x, y, color);
+		mlx_pixel_put(map->fdf->mlx, map->fdf->win, x, y, color);
 		x += x_inc;
 		y += y_inc;
 	}
 }
 
 void
-	draw(t_data *data, t_map *map, t_fdf *fdf)
+	draw(t_data *data, t_map *map)
 {
 	int		x;
 	int		y;
 
-	print_keys(fdf);
+	print_keys(map->fdf);
 	y = 0;
 	while (y < data->height - 1)
 	{
@@ -98,9 +91,9 @@ void
 		while (x < data->width)
 		{
 			if (x < data->width - 1)
-				dda_algorithm(x, y, x + 1, y, fdf, map);
+				dda_algorithm(x, y, x + 1, y, data, map);
 			if (y < data->height - 1 && x != 0)
-				dda_algorithm(x, y, x, y + 1, fdf, map);
+				dda_algorithm(x, y, x, y + 1, data, map);
 			x++;
 		}
 		y++;

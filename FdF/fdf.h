@@ -28,13 +28,12 @@ typedef struct s_data
 {
     int				width;
 	int				height;
+	int				win_width;
+	int				win_height;
+	int				zoom;
+	int				shift_x;
+	int				shift_y;
 }t_data;
-
-typedef struct s_map
-{
-	int				**z;
-	unsigned int	**color;
-}t_map;
 
 typedef struct s_fdf
 {
@@ -47,11 +46,20 @@ typedef struct s_fdf
 	int				endian;
 }t_fdf;
 
+typedef struct s_map
+{
+	int				**z;
+	unsigned int	**color;
+	t_fdf			*fdf;
+}t_map;
+
 void			print_error(char *msg);
 int				get_next_line(int fd, char **line);
 unsigned int	ft_atoi_base(char *nbr);
-t_fdf			*fdf_init(void);
-void			draw(t_data *data, t_map *map, t_fdf *fdf);
+void			win_size_init(t_data **data);
+void			zoom_shift_init(t_data **data);
+t_fdf			*fdf_init(t_data *data);
+void			draw(t_data *data, t_map *map);
 void			print_keys(t_fdf *fdf);
 
 #endif

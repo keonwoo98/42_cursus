@@ -232,7 +232,6 @@ int
 {
 	t_data	*data;
 	t_map	*map;
-	t_fdf	*fdf;
 
 	if (argc < 2)
 		print_error("Useage : ./fdf [File]");
@@ -264,14 +263,16 @@ int
 	// 	i++;
 	// }
 
-	fdf = fdf_init();
-	draw(data, map, fdf);
-	mlx_key_hook(fdf->win, key_press, NULL);
-    mlx_loop(fdf->mlx);
+	win_size_init(&data);
+	zoom_shift_init(&data);
+	map->fdf = fdf_init(data);
+	draw(data, map);
+	mlx_key_hook(map->fdf->win, key_press, NULL);
+    mlx_loop(map->fdf->mlx);
 
 	free_int(map->z, data->height);
 	free_uint(map->color, data->height);
+	free(map->fdf);
 	free(map);
 	free(data);
-	free(fdf);
 }

@@ -47,7 +47,7 @@
 **7. `mlx_new_image`**
 
 * **SYN** : `void *mlx_new_image(void *mlx_ptr, int width, int height)`
-* **DES** : Creates a new image in memory. It only needs the size of the image to be created, using the <U>width</U> and <U>height</U> parameters, and the <U>mlx_ptr</U>connection identifier.
+* **DES** : Creates a new image in memory. It only needs the size of the image to be created, using the <U>width</U> and <U>height</U> parameters, and the <U>mlx_ptr</U> connection identifier.
 * **RTN** : Returns a `void *identifier` needed to manipulate this image later.
 
 **8. `mlx_put_image_to_window`**
