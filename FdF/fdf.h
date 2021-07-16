@@ -21,7 +21,23 @@
 # include <errno.h>
 # include <math.h>
 
+# define WIN_WIDTH 1440
+# define WIN_HIEGHT 900
+
 # define KEY_ESC 53
+# define ARR_UP 126
+# define ARR_DOWN 125
+# define ARR_LEFT 123
+# define ARR_RIGHT 124
+# define NUM_1 18
+# define NUM_2 19
+# define NUM_3 20
+# define NUM_4 21
+# define NUM_5 23
+# define NUM_6 22
+# define PLUS 24
+# define MINUS 27
+
 # define PI 3.14159265
 
 typedef struct s_data
@@ -33,6 +49,7 @@ typedef struct s_data
 	int				zoom;
 	int				shift_x;
 	int				shift_y;
+	int				z_range;
 }t_data;
 
 typedef struct s_fdf
@@ -56,6 +73,7 @@ typedef struct s_map
 void			print_error(char *msg);
 int				get_next_line(int fd, char **line);
 unsigned int	ft_atoi_base(char *nbr);
+void			get_z_range(t_data **data, t_map *map);
 void			win_size_init(t_data **data);
 void			zoom_shift_init(t_data **data);
 t_fdf			*fdf_init(t_data *data);

@@ -13,21 +13,36 @@
 #include "fdf.h"
 
 int
-	key_press(int keycode, void *param)
+	key_press(int keycode, t_data **data)
 {
     if (keycode == KEY_ESC)
         exit(0);
+	if (keycode == ARR_UP)
+		(*data)->shift_y++;
+	else if (keycode == ARR_DOWN)
+		(*data)->shift_y--;
+	else if (keycode == ARR_LEFT)
+		(*data)->shift_x--;
+	else if (keycode == ARR_RIGHT)
+		(*data)->shift_x++;
+	else if (keycode == ARR_LEFT)
+		(*data)->shift_x--;
+	else if (keycode == PLUS)
+		(*data)->zoom++;
+	else if (keycode == MINUS)
+		(*data)->zoom--;
+
     return (0);
 }
 
 void
 	print_keys(t_fdf *fdf)
 {
-	mlx_string_put(fdf->mlx, fdf->win, 20, 20, 0xffffff, "Reset the map : Space");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 40, 0xffffff, "Increase size : +");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 60, 0xffffff, "Decrease size : -");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 80, 0xffffff, "Increase zoom : Mouse wheel up");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 100, 0xffffff, "Decrease zoom : Mouse wheel down");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 20, 0xffffff, "shift : ← ↑ → ↓");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 40, 0xffffff, "zoom : + / -");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 60, 0xffffff, "rotate x : 1 / 2");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 80, 0xffffff, "rotate y : 3 / 4");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 100, 0xffffff, "rotate z : 5 / 6");
 	mlx_string_put(fdf->mlx, fdf->win, 20, 120, 0xffffff, "Exit : Esc");
 }
 
@@ -63,19 +78,6 @@ void
 	while (i < height)
 		free(arr[i++]);
 	free(arr);
-}
-
-void
-	fdf(void)
-{
-    void    *mlx;
-    void    *win;
-    void    *param;
-
-    mlx = mlx_init();
-    win = mlx_new_window(mlx, 500, 500, "fdf");
-    mlx_key_hook(win, key_press, param);
-    mlx_loop(mlx);
 }
 
 void
@@ -263,11 +265,12 @@ int
 	// 	i++;
 	// }
 
-	win_size_init(&data);
+	get_z_range(&data, map);
+	// win_size_init(&data);
 	zoom_shift_init(&data);
 	map->fdf = fdf_init(data);
 	draw(data, map);
-	mlx_key_hook(map->fdf->win, key_press, NULL);
+	mlx_key_hook(map->fdf->win, key_press, &data);
     mlx_loop(map->fdf->mlx);
 
 	free_int(map->z, data->height);

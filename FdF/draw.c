@@ -47,6 +47,15 @@ void
 	*y += data->shift_y;
 }
 
+// void
+// 	my_pixel_put(int x, int y, int color, t_map *map)
+// {
+// 	char	*dst;
+
+// 	dst = map->fdf->data_addr + (y * map->fdf->size_line + x * (map->fdf->bits_per_pixel / 8));
+// 	*(unsigned int *)dst = color;
+// }
+
 void
 	dda_algorithm(float x, float y, float x1, float y1, t_data *data, t_map *map)
 {
@@ -71,6 +80,7 @@ void
 	y_inc = (y1 - y) / step;
 	while ((int)(x - x1) || (int)(y - y1))
 	{
+		// my_pixel_put(x, y, color, map);
 		mlx_pixel_put(map->fdf->mlx, map->fdf->win, x, y, color);
 		x += x_inc;
 		y += y_inc;
@@ -98,4 +108,5 @@ void
 		}
 		y++;
 	}
+	// mlx_put_image_to_window(map->fdf->mlx, map->fdf->win, map->fdf->img, 0, 0);
 }
