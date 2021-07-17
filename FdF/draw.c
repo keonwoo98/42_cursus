@@ -1,28 +1,8 @@
 #include "fdf.h"
 
-float
-	return_max(float a, float b)
-{
-	if (a > b)
-		return (a);
-	else
-		return (b);
-}
-
-float
-	return_mod(float a)
-{
-	if (a < 0)
-		return (-a);
-	else
-		return (a);
-}
-
 void
 	isometric(float *x, float *y, int z)
 {
-	// *x = (*x - *y) * cos(PI / 4);
-	// *y = (*x + *y) * sin(PI / 4) - z;
 	float pre_x;
 	float pre_y;
 
@@ -47,18 +27,11 @@ void
 	*y += data->shift_y;
 }
 
-// void
-// 	my_pixel_put(int x, int y, int color, t_map *map)
-// {
-// 	char	*dst;
-
-// 	dst = map->fdf->data_addr + (y * map->fdf->size_line + x * (map->fdf->bits_per_pixel / 8));
-// 	*(unsigned int *)dst = color;
-// }
-
 void
-	dda_algorithm(float x, float y, float x1, float y1, t_data *data, t_map *map)
+	dda_algorithm(float x, float y, int flag, t_map *map)
 {
+	float	x1;
+	float	y1;
 	float	x_inc;
 	float	y_inc;
 	int		step;
@@ -66,21 +39,26 @@ void
 	int		z1;
 	int		color;
 
+	x1 = x;
+	y1 = y;
+	if (flag == 0)
+		x1++;
+	else if (flag == 1)
+		y1++;
 	z = map->z[(int)y][(int)x];
 	z1 = map->z[(int)y1][(int)x1];
 	color = map->color[(int)y][(int)x];
-	zoom(&x, &y, &z, data);
-	zoom(&x1, &y1, &z1, data);
+	zoom(&x, &y, &z, map->data);
+	zoom(&x1, &y1, &z1, map->data);
 	isometric(&x, &y, z);
 	isometric(&x1, &y1, z1);
-	shift(&x, &y, data);
-	shift(&x1, &y1, data);
+	shift(&x, &y, map->data);
+	shift(&x1, &y1, map->data);
 	step = return_max(return_mod(x1 - x), return_mod(y1 - y));
 	x_inc = (x1 - x) / step;
 	y_inc = (y1 - y) / step;
 	while ((int)(x - x1) || (int)(y - y1))
 	{
-		// my_pixel_put(x, y, color, map);
 		mlx_pixel_put(map->fdf->mlx, map->fdf->win, x, y, color);
 		x += x_inc;
 		y += y_inc;
@@ -88,25 +66,31 @@ void
 }
 
 void
-	draw(t_data *data, t_map *map)
+	draw(t_map *map)
 {
 	int		x;
 	int		y;
+	int		flag;
 
 	print_keys(map->fdf);
 	y = 0;
-	while (y < data->height - 1)
+	while (y < map->data->height - 1)
 	{
 		x = 0;
-		while (x < data->width)
+		while (x < map->data->width)
 		{
-			if (x < data->width - 1)
-				dda_algorithm(x, y, x + 1, y, data, map);
-			if (y < data->height - 1 && x != 0)
-				dda_algorithm(x, y, x, y + 1, data, map);
+			if (x < map->data->width - 1)
+			{
+				flag = 0;
+				dda_algorithm(x, y, flag, map);
+			}
+			if (y < map->data->height - 1 && x != 0)
+			{
+				flag = 1;
+				dda_algorithm(x, y, flag, map);
+			}
 			x++;
 		}
 		y++;
 	}
-	// mlx_put_image_to_window(map->fdf->mlx, map->fdf->win, map->fdf->img, 0, 0);
 }

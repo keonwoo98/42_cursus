@@ -10,4 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fdf.h"
 
+void
+	free_int(int **arr, int height)
+{
+	int		i;
+
+	i = 0;
+	while (i < height)
+		free(arr[i++]);
+	free(arr);
+}
+
+void
+	free_uint(unsigned int **arr, int height)
+{
+	int		i;
+
+	i = 0;
+	while (i < height)
+		free(arr[i++]);
+	free(arr);
+}

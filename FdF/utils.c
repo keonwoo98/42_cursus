@@ -12,6 +12,24 @@
 
 #include "fdf.h"
 
+float
+	return_max(float a, float b)
+{
+	if (a > b)
+		return (a);
+	else
+		return (b);
+}
+
+float
+	return_mod(float a)
+{
+	if (a < 0)
+		return (-a);
+	else
+		return (a);
+}
+
 int
     is_in_base(char to_find)
 {

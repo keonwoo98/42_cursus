@@ -25,18 +25,6 @@
 # define WIN_HIEGHT 900
 
 # define KEY_ESC 53
-# define ARR_UP 126
-# define ARR_DOWN 125
-# define ARR_LEFT 123
-# define ARR_RIGHT 124
-# define NUM_1 18
-# define NUM_2 19
-# define NUM_3 20
-# define NUM_4 21
-# define NUM_5 23
-# define NUM_6 22
-# define PLUS 24
-# define MINUS 27
 
 # define PI 3.14159265
 
@@ -44,8 +32,6 @@ typedef struct s_data
 {
     int				width;
 	int				height;
-	int				win_width;
-	int				win_height;
 	int				zoom;
 	int				shift_x;
 	int				shift_y;
@@ -56,28 +42,33 @@ typedef struct s_fdf
 {
 	void			*mlx;
 	void			*win;
-	void			*img;
-	char			*data_addr;
-	int				bits_per_pixel;
-	int				size_line;
-	int				endian;
 }t_fdf;
 
 typedef struct s_map
 {
 	int				**z;
 	unsigned int	**color;
+	t_data			*data;
 	t_fdf			*fdf;
 }t_map;
 
 void			print_error(char *msg);
+float			return_max(float a, float b);
+float			return_mod(float a);
 int				get_next_line(int fd, char **line);
 unsigned int	ft_atoi_base(char *nbr);
-void			get_z_range(t_data **data, t_map *map);
+void			get_map_size(char **argv, t_data **data);
+void			fill_z(t_map **map, char *line, int i);
+void			get_z(char **argv, t_map **map);
+void			fill_color(t_map **map, char *line, int i);
+void			get_color(char **argv, t_map **map);
+void			get_z_range(t_map **map);
 void			win_size_init(t_data **data);
 void			zoom_shift_init(t_data **data);
 t_fdf			*fdf_init(t_data *data);
-void			draw(t_data *data, t_map *map);
+void			draw(t_map *map);
 void			print_keys(t_fdf *fdf);
+void			free_int(int **arr, int height);
+void			free_uint(unsigned int **arr, int height);
 
 #endif
