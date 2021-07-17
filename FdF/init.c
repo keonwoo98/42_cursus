@@ -1,6 +1,73 @@
 #include "fdf.h"
 
 void
+	zoom_init(t_map **map)
+{
+	float zoom_x;
+	float zoom_y;
+	int i;
+	int j;
+
+	(*map)->data->zoom = 1;
+	zoom_x = (*map)->data->width;
+	zoom_y = (*map)->data->height;
+	if ((*map)->data->z_range > zoom_y)
+		zoom_y += (*map)->data->z_max;
+	i = zoom_x;
+	j = zoom_y;
+	while (i < ((*map)->data->win_width / 2) && j < (*map)->data->win_height)
+	{
+		i += zoom_x;
+		j += zoom_y;
+		(*map)->data->zoom++;
+	}
+}
+
+void
+	shift_init(t_map **map)
+{
+	(*map)->data->shift_x = 0;
+	(*map)->data->shift_y = 0;
+	float center_y = (*map)->data->height - 1;
+	float center_x = 0;
+	float center_z = (*map)->z[(int)center_y][(int)center_x];
+	isometric(&center_x, &center_y, center_z);
+	(*map)->data->shift_x =
+		(*map)->data->win_width / 2 - center_x * (*map)->data->zoom;
+	(*map)->data->shift_y =
+		(*map)->data->win_height - center_y * (*map)->data->zoom;
+	if ((*map)->data->width == 500)
+		(*map)->data->shift_y += 100;
+}
+
+void
+	win_size_init(t_map **map)
+{
+	if ((*map)->data->width <= 11)
+	{
+		(*map)->data->win_width = 720;
+		(*map)->data->win_height = 480;
+	}
+	else if ((*map)->data->width <= 100)
+	{
+		(*map)->data->win_width = 960;
+		(*map)->data->win_height = 540;
+	}
+	else if ((*map)->data->width <= 200)
+	{
+		(*map)->data->win_width = 1280;
+		(*map)->data->win_height = 720;
+	}
+	else
+	{
+		(*map)->data->win_width = 1440;
+		(*map)->data->win_height = 900;
+	}
+	if ((*map)->data->z_range >= 20)
+		(*map)->data->win_height = 900;
+}
+
+void
 	get_z_range(t_map **map)
 {
 	int		x;
@@ -24,79 +91,20 @@ void
 		}
 		y++;
 	}
+	(*map)->data->z_max = max;
+	(*map)->data->z_min = min;
 	(*map)->data->z_range = max - min;
-}
-
-void
-	zoom_shift_z_init(t_data **data)
-{
-
-	if ((*data)->z_range >= 15 && (*data)->z_range < 50 && (*data)->width < 200)
-		(*data)->zoom = 20;
-	else if ((*data)->z_range >= 50 && (*data)->z_range < 100 && (*data)->width <= 200)
-	{
-		(*data)->zoom = 12;
-		(*data)->shift_y += 200;
-	}
-	else if ((*data)->z_range >= 100 && (*data)->z_range < 200 && (*data)->width <= 20)
-	{
-		(*data)->zoom = 7;
-		(*data)->shift_x += 250;
-		(*data)->shift_y -= 100;
-	}
-	else if ((*data)->z_range >= 100 && (*data)->z_range < 200 && (*data)->width == 100)
-	{
-		(*data)->zoom = 4;
-		(*data)->shift_x *= 2.5;
-		(*data)->shift_y += 250;
-	}
-	else if ((*data)->z_range >= 200)
-	{
-		(*data)->zoom = 2;
-		(*data)->shift_x *= 6;
-		(*data)->shift_y += 90;
-	}
-}
-
-void
-	zoom_shift_init(t_data **data)
-{
-	(*data)->shift_x = WIN_WIDTH / 4;
-	(*data)->shift_y = WIN_HIEGHT / 1.7;
-	if ((*data)->width <= 11)
-		(*data)->zoom = WIN_WIDTH / (*data)->width / 4;
-	else if ((*data)->width < 50)
-		(*data)->zoom = WIN_WIDTH / (*data)->width / 3;
-	else if ((*data)->width <= 100)
-	{
-		(*data)->zoom = WIN_WIDTH / (*data)->width / 2;
-		(*data)->shift_x = WIN_WIDTH / 10;
-		(*data)->shift_y = WIN_HIEGHT / 2;
-	}
-	else if ((*data)->width <= 200)
-	{
-		(*data)->zoom = WIN_WIDTH / (*data)->width / 1.3;
-		(*data)->shift_x = WIN_WIDTH / 25;
-		(*data)->shift_y = WIN_HIEGHT / 1.5;
-	}
-	else
-	{
-		(*data)->zoom = WIN_WIDTH / (*data)->width;
-		(*data)->shift_x = -120;
-		(*data)->shift_y = WIN_HIEGHT / 1.7;
-	}
-	zoom_shift_z_init(data);
 }
 
 t_fdf
 	*fdf_init(t_data *data)
 {
-    t_fdf	*fdf;
+	t_fdf	*fdf;
 
 	fdf = (t_fdf *)malloc(sizeof(t_fdf));
 	if (!fdf)
 		print_error("Malloc error");
 	fdf->mlx = mlx_init();
-	fdf->win = mlx_new_window(fdf->mlx, WIN_WIDTH, WIN_HIEGHT, "fdf");
+	fdf->win = mlx_new_window(fdf->mlx, data->win_width, data->win_height, "fdf");
 	return (fdf);
 }

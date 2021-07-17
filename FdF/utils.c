@@ -13,7 +13,7 @@
 #include "fdf.h"
 
 float
-	return_max(float a, float b)
+	ret_max(float a, float b)
 {
 	if (a > b)
 		return (a);
@@ -22,7 +22,7 @@ float
 }
 
 float
-	return_mod(float a)
+	ret_abs(float a)
 {
 	if (a < 0)
 		return (-a);
@@ -31,32 +31,32 @@ float
 }
 
 int
-    is_in_base(char to_find)
+	is_in_base(char to_find)
 {
-    int     i;
-    char    *base;
+	int		i;
+	char	*base;
 
-    i = 0;
-    base = "0123456789abcdef";
-    while (base[i])
-    {
-        if (ft_tolower(to_find) == base[i])
-            return (i);
-        i++;
-    }
-    return (-1);
+	i = 0;
+	base = "0123456789abcdef";
+	while (base[i])
+	{
+		if (ft_tolower(to_find) == base[i])
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 unsigned int
-    ft_atoi_base(char *nbr)
+	ft_atoi_base(char *nbr)
 {
-    unsigned int    num;
+	unsigned int	num;
 
-    num = 0;
-    while (*nbr && is_in_base(*nbr) != -1)
-    {
-        num *= 16;
-        num += is_in_base(*nbr);
-        nbr++;
-    }
-    return (num);
+	num = 0;
+	while (*nbr && is_in_base(*nbr) != -1)
+	{
+		num *= 16;
+		num += is_in_base(*nbr);
+		nbr++;
+	}
+	return (num);
 }

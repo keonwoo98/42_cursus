@@ -12,18 +12,12 @@
 
 #include "fdf.h"
 
-int
-	key_press(int keycode, void *param)
-{
-    if (keycode == KEY_ESC)
-        exit(0);
-    return (0);
-}
-
 void
 	print_keys(t_fdf *fdf)
 {
 	mlx_string_put(fdf->mlx, fdf->win, 20, 20, 0xffffff, "Exit : Esc");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 40, 0xffffff, "zoom : + / -");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 60, 0xffffff, "shift : Arrow Keys");
 }
 
 void
@@ -55,12 +49,21 @@ void
 	close(fd);
 }
 
+void
+	win_size(t_map **map)
+{
+	get_z_range(map);
+	win_size_init(map);
+	zoom_init(map);
+	shift_init(map);
+}
+
 int
 	main(int argc, char **argv)
 {
 	t_map	*map;
 
-	if (argc < 2)
+	if (argc != 2)
 		print_error("Useage : ./fdf [File]");
 	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
@@ -72,12 +75,11 @@ int
 	invalid_width(argv, map->data);
 	get_z(argv, &map);
 	get_color(argv, &map);
-	get_z_range(&map);
-	zoom_shift_init(&map->data);
+	win_size(&map);
 	map->fdf = fdf_init(map->data);
-	draw(map);
-	mlx_key_hook(map->fdf->win, key_press, NULL);
-    mlx_loop(map->fdf->mlx);
+	draw(&map);
+	mlx_key_hook(map->fdf->win, key_press, &map);
+	mlx_loop(map->fdf->mlx);
 	free_int(map->z, map->data->height);
 	free_uint(map->color, map->data->height);
 	free(map->fdf);
