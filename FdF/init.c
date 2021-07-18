@@ -63,7 +63,7 @@ void
 	else if ((*map)->data->width <= 100)
 	{
 		(*map)->data->win_width = 960;
-		(*map)->data->win_height = 540;
+		(*map)->data->win_height = 580;
 	}
 	else if ((*map)->data->width <= 200)
 	{

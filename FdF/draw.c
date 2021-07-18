@@ -13,19 +13,19 @@
 #include "fdf.h"
 
 void
-	init_dda(float x, float y, int flag, t_dda *dda)
+	init_dda(t_point point, t_dda *dda)
 {
-	dda->x = x;
-	dda->y = y;
-	if (flag == 0)
+	dda->x = point.x;
+	dda->y = point.y;
+	if (point.flag == 0)
 	{
-		dda->x1 = x + 1;
-		dda->y1 = y;
+		dda->x1 = point.x + 1;
+		dda->y1 = point.y;
 	}
-	if (flag == 1)
+	if (point.flag == 1)
 	{
-		dda->x1 = x;
-		dda->y1 = y + 1;
+		dda->x1 = point.x;
+		dda->y1 = point.y + 1;
 	}
 }
 
@@ -38,53 +38,67 @@ void
 }
 
 void
-	dda_algorithm(float x, float y, int flag, t_map **map)
+	dda_algorithm(t_dda *dda, t_map **map)
 {
-	t_dda	dda;
+	int		steps;
 
-	init_dda(x, y, flag, &dda);
-	get_data(&dda, map);
-	zoom(&dda, map);
-	isometric(&dda.x, &dda.y, dda.z);
-	isometric(&dda.x1, &dda.y1, dda.z1);
-	shift(&dda, map);
-	dda.step = ret_max(ret_abs(dda.x1 - dda.x), ret_abs(dda.y1 - dda.y));
-	dda.x_inc = (dda.x1 - dda.x) / dda.step;
-	dda.y_inc = (dda.y1 - dda.y) / dda.step;
-	while ((int)(dda.x - dda.x1) || (int)(dda.y - dda.y1))
+	steps = 0;
+	dda->step = ret_max(ret_abs(dda->x1 - dda->x), ret_abs(dda->y1 - dda->y));
+	dda->x_inc = (dda->x1 - dda->x) / dda->step;
+	dda->y_inc = (dda->y1 - dda->y) / dda->step;
+	while (steps <= dda->step)
 	{
-		mlx_pixel_put((*map)->fdf->mlx, (*map)->fdf->win, dda.x, dda.y, dda.color);
-		dda.x += dda.x_inc;
-		dda.y += dda.y_inc;
+		mlx_pixel_put((*map)->fdf->mlx, (*map)->fdf->win, dda->x, dda->y, dda->color);
+		dda->x += dda->x_inc;
+		dda->y += dda->y_inc;
+		steps++;
 	}
+}
+
+void
+	projection(t_point point, t_dda *dda, t_map **map)
+{
+	init_dda(point, dda);
+	get_data(dda, map);
+	zoom(dda, map);
+	rotate_x(dda, map);
+	rotate_y(dda, map);
+	rotate_z(dda, map);
+	if ((*map)->data->iso)
+	{
+		isometric(&dda->x, &dda->y, dda->z);
+		isometric(&dda->x1, &dda->y1, dda->z1);
+	}
+	shift(dda, map);
 }
 
 void
 	draw(t_map **map)
 {
-	int		x;
-	int		y;
-	int		flag;
+	t_point	point;
+	t_dda	dda;
 
 	print_keys((*map)->fdf);
-	y = 0;
-	while (y < (*map)->data->height - 1)
+	point.y = 0;
+	while (point.y < (*map)->data->height - 1)
 	{
-		x = 0;
-		while (x < (*map)->data->width)
+		point.x = 0;
+		while (point.x < (*map)->data->width)
 		{
-			if (x < (*map)->data->width - 1)
+			if (point.x < (*map)->data->width - 1)
 			{
-				flag = 0;
-				dda_algorithm(x, y, flag, map);
+				point.flag = 0;
+				projection(point, &dda, map);
+				dda_algorithm(&dda, map);
 			}
-			if (y < (*map)->data->height - 1 && x != 0)
+			if (point.y < (*map)->data->height - 1 && point.x != 0)
 			{
-				flag = 1;
-				dda_algorithm(x, y, flag, map);
+				point.flag = 1;
+				projection(point, &dda, map);
+				dda_algorithm(&dda, map);
 			}
-			x++;
+			point.x++;
 		}
-		y++;
+		point.y++;
 	}
 }

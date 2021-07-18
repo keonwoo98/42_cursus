@@ -16,8 +16,13 @@ void
 	print_keys(t_fdf *fdf)
 {
 	mlx_string_put(fdf->mlx, fdf->win, 20, 20, 0xffffff, "Exit : Esc");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 40, 0xffffff, "zoom : + / -");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 60, 0xffffff, "shift : Arrow Keys");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 40, 0xffffff, "Zoom : + / -");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 60, 0xffffff, "Shift : Arrow Keys");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 80, 0xffffff, "Rotate x : 1 / 2");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 100, 0xffffff, "Rotate y : 3 / 4");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 120, 0xffffff, "Rotate z : 5 / 6");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 140, 0xffffff, "Isometric : I");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 160, 0xffffff, "Parallel : P");
 }
 
 void
@@ -50,12 +55,22 @@ void
 }
 
 void
+	reset_value(t_map **map)
+{
+	(*map)->data->alpha = 0;
+	(*map)->data->beta = 0;
+	(*map)->data->gamma = 0;
+	(*map)->data->iso = 1;
+}
+
+void
 	win_size(t_map **map)
 {
 	get_z_range(map);
 	win_size_init(map);
 	zoom_init(map);
 	shift_init(map);
+	reset_value(map);
 }
 
 int

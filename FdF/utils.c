@@ -46,6 +46,7 @@ int
 	}
 	return (-1);
 }
+
 unsigned int
 	ft_atoi_base(char *nbr)
 {
