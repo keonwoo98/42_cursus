@@ -127,6 +127,7 @@ void			projection_control(int keycode, t_map **map);
 void			reset_value(t_map **map);
 void			print_keys(t_fdf *fdf);
 int				key_press(int keycode, t_map **map);
+void			free_all(t_map **map);
 void			free_int(int **arr, int height);
 void			free_uint(unsigned int **arr, int height);
 

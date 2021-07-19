@@ -8,7 +8,7 @@
 디스플레이와 소프트웨어의 연결을 생성하기 위한 initialize
 * **SYN** : `void *mlx_init()`
 * **DES** : Creates connection between display and software.
-* **RTN** : Returns `void *identifier`, used for further calls to the library routines.
+* **RTN** : Returns `void *identifier`, used for further calls to the library routines or return NULL if failes.
 
 **2. `mlx_new_window`**
 

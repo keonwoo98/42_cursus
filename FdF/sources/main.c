@@ -83,9 +83,6 @@ int
 	draw(&map);
 	mlx_key_hook(map->fdf->win, key_press, &map);
 	mlx_loop(map->fdf->mlx);
-	free_int(map->z, map->data->height);
-	free_uint(map->color, map->data->height);
-	free(map->fdf);
-	free(map->data);
-	free(map);
+	free_all(&map);
+	return (0);
 }

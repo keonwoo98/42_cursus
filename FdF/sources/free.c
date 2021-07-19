@@ -33,3 +33,15 @@ void
 		free(arr[i++]);
 	free(arr);
 }
+
+void
+	free_all(t_map **map)
+{
+	free_int((*map)->z, (*map)->data->height);
+	free_uint((*map)->color, (*map)->data->height);
+	free((*map)->fdf->mlx);
+	free((*map)->fdf->win);
+	free((*map)->fdf);
+	free((*map)->data);
+	free(*map);
+}

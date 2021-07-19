@@ -121,7 +121,11 @@ t_fdf
 	if (!fdf)
 		print_error("Malloc error");
 	fdf->mlx = mlx_init();
+	if (fdf->mlx == NULL)
+		print_error("Mlx error");
 	fdf->win = mlx_new_window(fdf->mlx, \
 		data->win_width, data->win_height, "fdf");
+	if (fdf->win == NULL)
+		print_error("Mlx error");
 	return (fdf);
 }

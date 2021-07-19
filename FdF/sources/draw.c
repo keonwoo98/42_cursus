@@ -80,11 +80,11 @@ void
 	t_dda	dda;
 
 	print_keys((*map)->fdf);
-	point.y = 0;
-	while (point.y < (*map)->data->height - 1)
+	point.y = -1;
+	while (++point.y < (*map)->data->height - 1)
 	{
-		point.x = 0;
-		while (point.x < (*map)->data->width)
+		point.x = -1;
+		while (++point.x < (*map)->data->width)
 		{
 			if (point.x < (*map)->data->width - 1)
 			{
@@ -98,8 +98,6 @@ void
 				projection(point, &dda, map);
 				dda_algorithm(&dda, map);
 			}
-			point.x++;
 		}
-		point.y++;
 	}
 }
