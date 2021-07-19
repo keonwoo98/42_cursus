@@ -96,8 +96,8 @@ void
 	char	**split;
 
 	split = ft_split(line, ' ');
-	(*map)->color[i] =
-        (unsigned int *)malloc(sizeof(unsigned int) * (*map)->data->width);
+	(*map)->color[i] = \
+		(unsigned int *)malloc(sizeof(unsigned int) * (*map)->data->width);
 	if (!((*map)->color[i]))
 		print_error("Malloc error");
 	j = -1;
@@ -127,8 +127,8 @@ void
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		print_error("Open fail");
-	(*map)->color =
-        (unsigned int **)malloc(sizeof(unsigned int *) * (*map)->data->height);
+	(*map)->color = \
+		(unsigned int **)malloc(sizeof(unsigned int *) * (*map)->data->height);
 	if (!(*map)->color)
 		print_error("Malloc error");
 	i = 0;

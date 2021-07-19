@@ -48,7 +48,8 @@ void
 	dda->y_inc = (dda->y1 - dda->y) / dda->step;
 	while (steps <= dda->step)
 	{
-		mlx_pixel_put((*map)->fdf->mlx, (*map)->fdf->win, dda->x, dda->y, dda->color);
+		mlx_pixel_put((*map)->fdf->mlx, (*map)->fdf->win, \
+			dda->x, dda->y, dda->color);
 		dda->x += dda->x_inc;
 		dda->y += dda->y_inc;
 		steps++;

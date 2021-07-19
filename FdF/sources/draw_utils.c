@@ -22,8 +22,6 @@ void
 	pre_y = *y;
 	*x = (pre_x * cos(PI / 6 * -1)) - (pre_y * sin(PI / 3 * -1));
 	*y = (pre_x * sin(PI / 6 * -1)) + (pre_y * cos(PI / 3 * -1)) - z;
-	// *x = (pre_x * cos(0.4636 * -1)) - (pre_y * sin(1.1071 * -1));
-	// *y = (pre_x * sin(0.4636 * -1)) + (pre_y * cos(1.1071 * -1)) - z;
 }
 
 void

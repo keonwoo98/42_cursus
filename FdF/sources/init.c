@@ -48,9 +48,9 @@ void
 	center_y = (*map)->data->height - 1;
 	center_z = (*map)->z[(int)center_y][(int)center_x];
 	isometric(&center_x, &center_y, center_z);
-	(*map)->data->shift_x =
+	(*map)->data->shift_x = \
 		(*map)->data->win_width / 2 - center_x * (*map)->data->zoom;
-	(*map)->data->shift_y =
+	(*map)->data->shift_y = \
 		(*map)->data->win_height - center_y * (*map)->data->zoom;
 	if ((*map)->data->width == 500)
 		(*map)->data->shift_y += 100;
@@ -121,6 +121,7 @@ t_fdf
 	if (!fdf)
 		print_error("Malloc error");
 	fdf->mlx = mlx_init();
-	fdf->win = mlx_new_window(fdf->mlx, data->win_width, data->win_height, "fdf");
+	fdf->win = mlx_new_window(fdf->mlx, \
+		data->win_width, data->win_height, "fdf");
 	return (fdf);
 }

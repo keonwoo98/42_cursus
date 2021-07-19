@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   control2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/19 12:12:34 by keokim            #+#    #+#             */
+/*   Updated: 2021/07/19 12:12:36 by keokim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void
@@ -42,9 +54,9 @@ void
 		reset_value(map);
 		(*map)->data->iso = 0;
 		zoom_init(map);
-		(*map)->data->shift_x =
-			(*map)->data->win_width / 2 - (*map)->data->width * (*map)->data->zoom / 2;
-		(*map)->data->shift_y =
-			(*map)->data->win_height / 2 - (*map)->data->height * (*map)->data->zoom / 2;
+		(*map)->data->shift_x = (*map)->data->win_width / 2 - \
+			(*map)->data->width * (*map)->data->zoom / 2;
+		(*map)->data->shift_y = (*map)->data->win_height / 2 - \
+			(*map)->data->height * (*map)->data->zoom / 2;
 	}
 }
