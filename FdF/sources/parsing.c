@@ -66,7 +66,6 @@ void
 {
 	int		fd;
 	int		i;
-	int		j;
 	char	*line;
 
 	fd = open(argv[1], O_RDONLY);
