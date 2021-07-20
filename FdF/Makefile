@@ -65,6 +65,8 @@ $(MINILIBX):
 	@echo "$(NAME): $(GREEN)Creating $(MINILIBX)...$(RESET)"
 	@$(MAKE) -sC $(MINILIBX_DIRECTORY)
 
+bonus: all
+
 clean:
 	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
 	@$(MAKE) -sC $(MINILIBX_DIRECTORY) clean
