@@ -54,6 +54,14 @@ void
 		(*map)->data->win_height - center_y * (*map)->data->zoom;
 	if ((*map)->data->width == 500)
 		(*map)->data->shift_y += 100;
+	if ((*map)->data->width <= 100 && (*map)->data->z_min < 0)
+		(*map)->data->shift_y -= 30;
+	if ((*map)->data->width == 200 && (*map)->data->z_range < 20)
+		(*map)->data->shift_x -= 120;
+	if ((*map)->data->width == 27 && (*map)->data->z_min < 0)
+		(*map)->data->shift_y -= 180;
+	if ((*map)->data->height % 10 == 4 && (*map)->data->z_min == 0)
+		(*map)->data->shift_x += 60;
 }
 
 void

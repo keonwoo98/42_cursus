@@ -29,14 +29,12 @@ HEADERS_DIRECTORY = ./includes/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = ./sources/
-SOURCES_LIST = main.c control.c control2.c draw.c draw_utils.c free.c get_next_line.c init.c parsing.c rotate.c utils.c
+SOURCES_LIST = main.c control.c control2.c draw.c draw_utils.c get_next_line.c init.c parsing.c rotate.c utils.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
 OBJECTS_LIST = $(patsubst %.c, %.o, $(SOURCES_LIST))
 OBJECTS	= $(addprefix $(OBJECTS_DIRECTORY), $(OBJECTS_LIST))
-
-# COLORS
 
 GREEN = \033[0;32m
 RED = \033[0;31m

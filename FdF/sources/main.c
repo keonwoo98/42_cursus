@@ -83,6 +83,5 @@ int
 	draw(&map);
 	mlx_key_hook(map->fdf->win, key_press, &map);
 	mlx_loop(map->fdf->mlx);
-	free_all(&map);
-	return (0);
+	print_error("Mlx error");
 }
