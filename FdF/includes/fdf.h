@@ -42,7 +42,7 @@
 
 typedef struct s_data
 {
-    int				width;
+	int				width;
 	int				height;
 	int				win_width;
 	int				win_height;
@@ -62,6 +62,11 @@ typedef struct s_fdf
 {
 	void			*mlx;
 	void			*win;
+	void			*img;
+	char			*addr;
+	int				bpp;
+	int				line_length;
+	int				endian;
 }t_fdf;
 
 typedef struct s_map
@@ -109,6 +114,7 @@ void			shift_init(t_map **map);
 void			get_z_range(t_map **map);
 void			win_size_init(t_map **map);
 t_fdf			*fdf_init(t_data *data);
+void			my_mlx_pixel_put(t_fdf *fdf, int x, int y, int color);
 void			draw(t_map **map);
 void			zoom(t_dda *dda, t_map **map);
 void			shift(t_dda *dda, t_map **map);

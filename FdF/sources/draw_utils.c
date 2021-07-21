@@ -13,6 +13,15 @@
 #include "fdf.h"
 
 void
+	my_mlx_pixel_put(t_fdf *fdf, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = fdf->addr + (y * fdf->line_length + x * (fdf->bpp / 8));
+	*(unsigned int *)dst = color;
+}
+
+void
 	isometric(float *x, float *y, int z)
 {
 	float	pre_x;

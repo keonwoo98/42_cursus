@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "./Libft/libft.h"
 
 int
 	key_press(int keycode, t_map **map)
@@ -18,6 +19,8 @@ int
 	if (keycode == ESC)
 		exit(0);
 	mlx_clear_window((*map)->fdf->mlx, (*map)->fdf->win);
+	ft_bzero((*map)->fdf->addr, (*map)->data->win_width * \
+		(*map)->data->win_height * ((*map)->fdf->bpp / 8));
 	if (keycode == PLUS || keycode == MINUS)
 		zoom_control(keycode, map);
 	if (keycode == UP || keycode == DOWN)
@@ -33,6 +36,7 @@ int
 	if (keycode == ISO || keycode == PAR)
 		projection_control(keycode, map);
 	draw(map);
+	print_keys((*map)->fdf);
 	return (0);
 }
 

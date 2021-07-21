@@ -81,6 +81,7 @@ int
 	win_size(&map);
 	map->fdf = fdf_init(map->data);
 	draw(&map);
+	print_keys(map->fdf);
 	mlx_key_hook(map->fdf->win, key_press, &map);
 	mlx_loop(map->fdf->mlx);
 	print_error("Mlx error");

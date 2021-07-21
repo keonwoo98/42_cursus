@@ -135,5 +135,12 @@ t_fdf
 		data->win_width, data->win_height, "fdf");
 	if (fdf->win == NULL)
 		print_error("Mlx error");
+	fdf->img = mlx_new_image(fdf->mlx, data->win_width, data->win_height);
+	if (fdf->img == NULL)
+		print_error("Mlx error");
+	fdf->addr = mlx_get_data_addr(fdf->img, &fdf->bpp, \
+		&fdf->line_length, &fdf->endian);
+	if (fdf->addr == NULL)
+		print_error("Mlx error");
 	return (fdf);
 }

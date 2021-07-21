@@ -48,8 +48,9 @@ void
 	dda->y_inc = (dda->y1 - dda->y) / dda->step;
 	while (steps <= dda->step)
 	{
-		mlx_pixel_put((*map)->fdf->mlx, (*map)->fdf->win, \
-			dda->x, dda->y, dda->color);
+		if (dda->x >= 0 && dda->x <= (*map)->data->win_width \
+			&& dda->y >= 0 && dda->y <= (*map)->data->win_height)
+			my_mlx_pixel_put((*map)->fdf, dda->x, dda->y, dda->color);
 		dda->x += dda->x_inc;
 		dda->y += dda->y_inc;
 		steps++;
@@ -79,7 +80,6 @@ void
 	t_point	point;
 	t_dda	dda;
 
-	print_keys((*map)->fdf);
 	point.y = -1;
 	while (++point.y < (*map)->data->height - 1)
 	{
@@ -100,4 +100,6 @@ void
 			}
 		}
 	}
+	mlx_put_image_to_window((*map)->fdf->mlx, \
+		(*map)->fdf->win, (*map)->fdf->img, 0, 0);
 }
