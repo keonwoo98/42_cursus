@@ -56,12 +56,13 @@ void
 void
 	print_keys(t_fdf *fdf)
 {
-	mlx_string_put(fdf->mlx, fdf->win, 20, 20, 0xffffff, "Exit : Esc");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 40, 0xffffff, "Zoom : + / -");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 60, 0xffffff, "Shift : Arrow Keys");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 80, 0xffffff, "Rotate x : 1 / 2");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 100, 0xffffff, "Rotate y : 3 / 4");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 120, 0xffffff, "Rotate z : 5 / 6");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 140, 0xffffff, "Isometric : I");
-	mlx_string_put(fdf->mlx, fdf->win, 20, 160, 0xffffff, "Parallel : P");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 20, 0x00cc00, "keokim's FdF");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 60, 0xffff00, "Exit : Esc");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 80, 0xffff00, "Zoom : + / -");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 100, 0xffff00, "Shift : Arrow Keys");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 120, 0xffff00, "Rotate x : 1 / 2");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 140, 0xffff00, "Rotate y : 3 / 4");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 160, 0xffff00, "Rotate z : 5 / 6");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 180, 0xffff00, "Isometric : I");
+	mlx_string_put(fdf->mlx, fdf->win, 20, 200, 0xffff00, "Parallel : P");
 }

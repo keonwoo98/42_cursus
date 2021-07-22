@@ -67,28 +67,8 @@ void
 void
 	win_size_init(t_map **map)
 {
-	if ((*map)->data->width <= 11)
-	{
-		(*map)->data->win_width = 720;
-		(*map)->data->win_height = 480;
-	}
-	else if ((*map)->data->width <= 100)
-	{
-		(*map)->data->win_width = 960;
-		(*map)->data->win_height = 580;
-	}
-	else if ((*map)->data->width <= 200)
-	{
-		(*map)->data->win_width = 1280;
-		(*map)->data->win_height = 720;
-	}
-	else
-	{
-		(*map)->data->win_width = 1440;
-		(*map)->data->win_height = 900;
-	}
-	if ((*map)->data->z_range >= 20)
-		(*map)->data->win_height = 900;
+	(*map)->data->win_width = 1440;
+	(*map)->data->win_height = 850;
 }
 
 void
