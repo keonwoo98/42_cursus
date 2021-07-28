@@ -2,19 +2,25 @@
 # define PUSH_SWAP_H
 
 # include "./Libft/libft.h"
+# include <stdio.h>
 
-typedef struct s_list
+typedef struct s_node
 {
-	int			value;
-	t_list		*prev;
-	t_list		*next;
-}t_list;
+	int			num;
+	struct s_node		*prev;
+	struct s_node		*next;
+}t_node;
 
 typedef struct s_stack
 {
 	int			size;
-	t_stack		*top;
-	t_stack		*bottom;
+	t_node		*top;
+	t_node		*bottom;
 }t_stack;
+
+t_stack			*init_stack(void);
+t_node			*init_node(int num);
+void			push(t_stack **stack, int num);
+void			validate(char **argv, t_stack **a);
 
 #endif

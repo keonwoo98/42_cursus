@@ -10,10 +10,24 @@ void
 int
 	main(int argc, char **argv)
 {
-		if (argc >= 2)
-		{
+	t_stack		*a;
+	t_stack		*b;
 
-		}
-		else
-			print_error();
+	if (argc >= 2)
+	{
+		a = init_stack();
+		validate(argv, &a);
+	}
+	else if (argc == 1)
+		return (0);
+	else
+		print_error();
+
+	printf("size : %d\n", a->size);
+	while (a->top != NULL)
+	{
+		printf("%d\n", a->top->num);
+		a->top = a->top->next;
+	}
+	printf("%d\n", a->top->prev->num);
 }
