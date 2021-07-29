@@ -20,7 +20,7 @@ void
 {
 	int			i;
 	int			j;
-	int			num[a->size];
+	int			num[50];
 
 	i = 0;
 	while (a->top)
@@ -45,21 +45,30 @@ void
 }
 
 int
+	pos_neg(int *sign, char *str)
+{
+	int			i;
+
+	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			*sign *= -1;
+		i++;
+	}
+	return (i);
+}
+
+int
 	validate(char *str)
 {
 	int			i;
 	int			sign;
 	long		nbr;
 
-	i = 0;
 	sign = 1;
 	nbr = 0;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
-	}
+	i = pos_neg(&sign, str);
 	if (ft_strlen(&str[i]) > 10)
 		print_error_msg("over int range");
 	while (str[i])
@@ -78,7 +87,7 @@ int
 }
 
 void
-	create_list(char **argv, t_stack **a)
+	create_list(char **argv, t_stack *a)
 {
 	int			i;
 	int			j;
@@ -94,20 +103,14 @@ void
 			split = ft_split(argv[i], ' ');
 			j = -1;
 			while (split[++j])
-			{
 				num = validate(split[j]);
-				push(a, num);
-			}
 			k = -1;
 			while (split[++k])
 				free(split[k]);
 			free(split);
-			split = NULL;
 		}
 		else
-		{
 			num = validate(argv[i]);
-			push(a, num);
-		}
+		push(a, num);
 	}
 }

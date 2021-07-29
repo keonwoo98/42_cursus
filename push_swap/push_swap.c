@@ -23,7 +23,7 @@ int
 	if (argc >= 2)
 	{
 		a = init_stack();
-		create_list(argv, &a);
+		create_list(argv, a);
 		is_duplicate(a);
 	}
 	else if (argc == 1)
@@ -39,6 +39,16 @@ int
 			break ;
 		a->top = a->top->next;
 	}
+	printf("\n");
+	while (a->bottom)
+	{
+		printf("%d\n", a->bottom->num);
+		if (a->bottom->prev == NULL)
+			break ;
+		a->bottom = a->bottom->prev;
+	}
+	while (a->bottom)
+		a->bottom = a->bottom->next;
 	while (a->top)
 	{
 		free(a->top);
