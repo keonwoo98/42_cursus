@@ -7,6 +7,13 @@ void
 	exit(1);
 }
 
+void
+	print_error_msg(char *msg)
+{
+	ft_putendl_fd(msg, 2);
+	exit(1);
+}
+
 int
 	main(int argc, char **argv)
 {
@@ -16,7 +23,8 @@ int
 	if (argc >= 2)
 	{
 		a = init_stack();
-		validate(argv, &a);
+		create_list(argv, &a);
+		is_duplicate(a);
 	}
 	else if (argc == 1)
 		return (0);
@@ -24,10 +32,17 @@ int
 		print_error();
 
 	printf("size : %d\n", a->size);
-	while (a->top != NULL)
+	while (a->top)
 	{
 		printf("%d\n", a->top->num);
+		if (a->top->next == NULL)
+			break ;
 		a->top = a->top->next;
 	}
-	printf("%d\n", a->top->prev->num);
+	while (a->top)
+	{
+		free(a->top);
+		a->top = a->top->prev;
+	}
+	free(a);
 }
