@@ -103,14 +103,19 @@ void
 			split = ft_split(argv[i], ' ');
 			j = -1;
 			while (split[++j])
+			{
 				num = validate(split[j]);
+				push(a, num);
+			}
 			k = -1;
 			while (split[++k])
 				free(split[k]);
 			free(split);
 		}
 		else
+		{
 			num = validate(argv[i]);
-		push(a, num);
+			push(a, num);
+		}
 	}
 }

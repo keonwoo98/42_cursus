@@ -14,6 +14,19 @@ void
 	exit(1);
 }
 
+void
+	free_stack(t_stack *stack)
+{
+	while (stack->top->prev)
+		stack->top = stack->top->prev;
+	while (stack->top)
+	{
+		free(stack->top);
+		stack->top = stack->top->next;
+	}
+	free(stack);
+}
+
 int
 	main(int argc, char **argv)
 {
@@ -25,13 +38,24 @@ int
 		a = init_stack();
 		create_list(argv, a);
 		is_duplicate(a);
+		b = init_stack();
 	}
 	else if (argc == 1)
 		return (0);
 	else
 		print_error();
 
-	printf("size : %d\n", a->size);
+	push_pop(a, b);
+	push_pop(a, b);
+	push_pop(a, b);
+	reverse_rotate(a);
+	reverse_rotate(b);
+	swap(a->top, a->top->next, a);
+	swap(b->top, b->top->next, b);
+	rotate(a);
+	rotate(b);
+
+	printf("a size : %d\n", a->size);
 	while (a->top)
 	{
 		printf("%d\n", a->top->num);
@@ -47,12 +71,25 @@ int
 			break ;
 		a->bottom = a->bottom->prev;
 	}
-	while (a->bottom)
-		a->bottom = a->bottom->next;
-	while (a->top)
+	printf("\n");
+
+	printf("b size : %d\n", b->size);
+	while (b->top)
 	{
-		free(a->top);
-		a->top = a->top->prev;
+		printf("%d\n", b->top->num);
+		if (b->top->next == NULL)
+			break ;
+		b->top = b->top->next;
 	}
-	free(a);
+	printf("\n");
+	while (b->bottom)
+	{
+		printf("%d\n", b->bottom->num);
+		if (b->bottom->prev == NULL)
+			break ;
+		b->bottom = b->bottom->prev;
+	}
+
+	free_stack(a);
+	free_stack(b);
 }
