@@ -87,11 +87,21 @@ int
 }
 
 void
+	free_arr(char **str)
+{
+	int			i;
+
+	i = -1;
+	while (str[++i])
+		free(str[i]);
+	free(str);
+}
+
+void
 	create_list(char **argv, t_stack *a)
 {
 	int			i;
 	int			j;
-	int			k;
 	int			num;
 	char		**split;
 
@@ -107,10 +117,7 @@ void
 				num = validate(split[j]);
 				push(a, num);
 			}
-			k = -1;
-			while (split[++k])
-				free(split[k]);
-			free(split);
+			free_arr(split);
 		}
 		else
 		{

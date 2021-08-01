@@ -21,46 +21,6 @@ void
 }
 
 void
-	pop(t_stack *stack)
-{
-	t_node		*cur_top;
-	t_node		*new_top;
-
-	cur_top = stack->top;
-	if (!cur_top)
-		return ;
-	else
-	{
-		new_top = stack->top->prev;
-		new_top->next = NULL;
-		stack->top = new_top;
-	}
-	stack->size--;
-	free(cur_top);
-}
-
-t_node
-	*ret_top(t_stack *stack)
-{
-	return (stack->top);
-}
-
-void
-	destroy(t_stack *stack)
-{
-	t_node		*del_node;
-
-	del_node = stack->top;
-	while (del_node != NULL)
-	{
-		stack->top = stack->top->prev;
-		free(del_node);
-		del_node = stack->top;
-	}
-	free(stack);
-}
-
-void
 	swap(t_node *left, t_node *right, t_stack *stack)
 {
 	if (stack->size < 2)

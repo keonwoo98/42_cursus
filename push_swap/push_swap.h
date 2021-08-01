@@ -32,4 +32,7 @@ void			push_pop(t_stack *from, t_stack *to);
 void			rotate(t_stack *stack);
 void			reverse_rotate(t_stack *stack);
 
+void			quick_sort(t_node *head);
+void			print_list(t_node *head);
+
 #endif
