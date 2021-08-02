@@ -28,16 +28,46 @@ void
 }
 
 int
+	get_mid_value(t_node *node, int len)
+{
+	int			i;
+	int			mid_value;
+
+	i = -1;
+	while (++i < len / 2)
+		node = node->next;
+	mid_value = node->num;
+	return (mid_value);
+}
+
+// int
+// 	get_mid_value(t_stack *stack)
+// {
+// 	int			i;
+// 	int			mid_value;
+
+// 	i = -1;
+// 	while (++i < stack->size / 2)
+// 		stack->top = stack->top->next;
+// 	mid_value = stack->top->num;
+// 	return (mid_value);
+// }
+
+int
 	main(int argc, char **argv)
 {
 	t_stack		*a;
 	t_stack		*b;
+	t_stack		*sorted;
+	int			mid_value;
 
 	if (argc >= 2)
 	{
 		a = init_stack();
 		create_list(argv, a);
 		is_duplicate(a);
+		sorted = init_stack();
+		create_list(argv, sorted);
 		// b = init_stack();
 	}
 	else if (argc == 1)
@@ -90,10 +120,25 @@ int
 	// 	b->bottom = b->bottom->prev;
 	// }
 
-	quick_sort(a->top);
-	print_list(a->top);
+	// quick_sort(sorted->top);
+	// // print_list(sorted->top);
+	// mid_value = get_mid_value(sorted->top, sorted->size);
+	// // mid_value = get_mid_value(sorted);
+	// printf("%d\n", mid_value);
+	// printf("%d\n", sorted->top->num);
+	three_elements_a(a);
+	printf("a size : %d\n", a->size);
+	while (a->top)
+	{
+		printf("%d\n", a->top->num);
+		if (a->top->next == NULL)
+			break ;
+		a->top = a->top->next;
+	}
+	printf("\n");
 
 	free_stack(a);
 	// free_stack(b);
+	// free_stack(sorted);
 	// system("leaks a.out");
 }

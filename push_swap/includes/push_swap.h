@@ -1,7 +1,7 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include "./Libft/libft.h"
+# include "../sources/Libft/libft.h"
 # include <stdio.h>
 
 typedef struct s_node	t_node;
@@ -27,10 +27,15 @@ t_node			*init_node(int num);
 void			push(t_stack *stack, int num);
 void			create_list(char **argv, t_stack *a);
 void			is_duplicate(t_stack *a);
-void			swap(t_node *left, t_node *right, t_stack *stack);
-void			push_pop(t_stack *from, t_stack *to);
-void			rotate(t_stack *stack);
-void			reverse_rotate(t_stack *stack);
+void			swap(t_stack *stack, int flag);
+void			push_pop(t_stack *from, t_stack *to, int flag);
+void			rotate(t_stack *stack, int flag);
+void			reverse_rotate(t_stack *stack, int flag);
+
+void			two_elements_a(t_stack *a);
+void			two_elements_b(t_stack *b);
+void			three_elements_a(t_stack *a);
+void			three_elements_b(t_stack *b);
 
 void			quick_sort(t_node *head);
 void			print_list(t_node *head);
