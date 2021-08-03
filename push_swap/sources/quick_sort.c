@@ -1,81 +1,67 @@
 #include "push_swap.h"
 
 void
-	swap_int(int *a, int *b)
+	swap_int(int *arr, int a, int b)
 {
-	int			t;
+	int			temp;
 
-	t = *a;
-	*a = *b;
-	*b = t;
+	temp = arr[a];
+	arr[a] = arr[b];
+	arr[b] = temp;
 }
 
-t_node
-	*last_node(t_node *root)
-{
-	while (root && root->next)
-		root = root->next;
-	return (root);
-}
-
-t_node
-	*partition(t_node *tail, t_node *head)
+int
+	partition(int *arr, int left, int right)
 {
 	int			pivot;
-	t_node		*i;
-	t_node		*j;
+	int			low;
+	int			high;
 
-	pivot = head->num;
-	i = tail->prev;
-	j = tail;
-	while (j != head)
+	pivot = arr[left];
+	low = left + 1;
+	high = right;
+	while (low <= high)
 	{
-		if (j->num <= pivot)
-		{
-			if (i == NULL)
-				i = tail;
-			else
-				i = i->next;
-			swap_int(&(i->num), &(j->num));
-		}
-		j = j->next;
+		while (low <= right && pivot >= arr[low])
+			low++;
+		while (high >= (left + 1) && pivot <= arr[high])
+			high--;
+		if (low <= high)
+			swap_int(arr, low, high);
 	}
-	if (i == NULL)
-		i = tail;
-	else
-		i = i->next;
-	swap_int(&(i->num), &(head->num));
-	return (i);
+	swap_int(arr, left, high);
+	return (high);
 }
 
 void
-	_quick_sort(t_node *tail, t_node *head)
+	quick_sort_arr(int *arr, int left, int right)
 {
-	t_node		*pivot;
+	int			pivot;
 
-	if (head != NULL && tail != head && tail != head->next)
+	if (left <= right)
 	{
-		pivot = partition(tail, head);
-		_quick_sort(tail, pivot->prev);
-		_quick_sort(pivot->next, head);
+		pivot = partition(arr, left, right);
+		quick_sort_arr(arr, left, pivot - 1);
+		quick_sort_arr(arr, pivot + 1, right);
 	}
 }
 
-void
-	quick_sort(t_node *head)
+int
+	get_mid_num(t_node *head, int size)
 {
-	t_node		*tail;
+	int			i;
+	int			mid_num;
+	int			*arr;
 
-	tail = last_node(head);
-	_quick_sort(head, tail);
-}
-
-void
-	print_list(t_node *head)
-{
-	while (head)
+	i = 0;
+	arr = (int *)malloc(sizeof(int) * size);
+	while (head && i < size)
 	{
-		printf("%d\n", head->num);
+		arr[i++] = head->num;
 		head = head->next;
 	}
+	quick_sort_arr(arr, 0, size - 1);
+	mid_num = arr[size / 2];
+	free (arr);
+	return (mid_num);
 }

@@ -37,7 +37,9 @@ void			two_elements_b(t_stack *b);
 void			three_elements_a(t_stack *a);
 void			three_elements_b(t_stack *b);
 
-void			quick_sort(t_node *head);
-void			print_list(t_node *head);
+int				get_mid_num(t_node *head, int size);
+
+void			a_to_b(t_stack *a, t_stack *b, int cnt);
+void			b_to_a(t_stack *a, t_stack *b, int cnt);
 
 #endif

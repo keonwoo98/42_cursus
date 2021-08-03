@@ -13,7 +13,7 @@ HEADERS_DIRECTORY = ./includes/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = ./sources/
-SOURCES_LIST = push_swap.c init.c parsing.c stack.c quick_sort.c under_three.c
+SOURCES_LIST = push_swap.c init.c parsing.c stack.c quick_sort.c under_three.c sort.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
