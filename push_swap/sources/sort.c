@@ -23,6 +23,11 @@ void
 		three_elements_a(a);
 		return ;
 	}
+	else if (cnt == 5)
+	{
+		five_elements_a(a, b);
+		return ;
+	}
 	pivot = get_mid_num(a->top, cnt);
 	while (++i < cnt)
 	{
@@ -60,6 +65,19 @@ void
 		push_pop(b, a, 4);
 		return ;
 	}
+	else if (cnt == 2)
+	{
+		two_elements_b(a, b);
+		return ;
+	}
+	// else if (cnt == 3)
+	// {
+	// 	three_elements_b(a, b);
+	// 	push_pop(b, a, 4);
+	// 	push_pop(b, a, 4);
+	// 	push_pop(b, a, 4);
+	// 	return ;
+	// }
 	pivot = get_mid_num(b->top, cnt);
 	while (++i < cnt)
 	{

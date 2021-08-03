@@ -32,9 +32,10 @@ void			rotate(t_stack *stack, int flag);
 void			reverse_rotate(t_stack *stack, int flag);
 
 void			two_elements_a(t_stack *a);
-void			two_elements_b(t_stack *b);
+void			two_elements_b(t_stack *a, t_stack *b);
 void			three_elements_a(t_stack *a);
-void			three_elements_b(t_stack *b);
+void			three_elements_b(t_stack *a, t_stack *b);
+void			five_elements_a(t_stack *a, t_stack *b);
 
 int				get_mid_num(t_node *head, int size);
 
