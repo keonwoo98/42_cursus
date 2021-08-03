@@ -8,29 +8,34 @@ void
 }
 
 void
-	print_error_msg(char *msg)
-{
-	ft_putendl_fd(msg, 2);
-	exit(1);
-}
-
-void
 	free_stack(t_stack *stack)
 {
-	// while (stack->top->prev)
-	// 	stack->top = stack->top->prev;
-	// while (stack->top)
-	// {
-	// 	free(stack->top);
-	// 	stack->top = stack->top->next;
-	// }
-	// free(stack);
 	while (stack->bottom)
 	{
 		free(stack->bottom);
 		stack->bottom = stack->bottom->prev;
 	}
 	free(stack);
+}
+
+int
+	is_sorted(t_stack *stack)
+{
+	int			sort;
+
+	sort = 0;
+	while (stack->top->next)
+	{
+		if (stack->top->num < stack->top->next->num)
+			stack->top = stack->top->next;
+		else
+			break;
+	}
+	if (stack->top->next == NULL)
+		sort = 1;
+	while (stack->top->prev)
+		stack->top = stack->top->prev;
+	return (sort);
 }
 
 int
@@ -44,6 +49,8 @@ int
 		a = init_stack();
 		create_list(argv, a);
 		is_duplicate(a);
+		if (is_sorted(a))
+			return (0);
 		b = init_stack();
 		a_to_b(a, b, a->size);
 	}
@@ -51,12 +58,6 @@ int
 		return (0);
 	else
 		print_error();
-
-	// for (int i = 0; i < a->size; i++)
-	// {
-	// 	printf("%d\n", a->top->num);
-	// 	a->top = a->top->next;
-	// }
 	free_stack(a);
 	free_stack(b);
 	// system("leaks push_swap");

@@ -20,7 +20,7 @@ void
 {
 	int			i;
 	int			j;
-	int			num[50];
+	int			num[500];
 
 	i = 0;
 	while (a->top)
@@ -37,7 +37,7 @@ void
 		j = i + 1;
 		while (j < a->size)
 			if (num[i] == num[j++])
-				print_error_msg("duplicated");
+				print_error();
 		i++;
 	}
 	while (a->top->prev)
@@ -70,19 +70,19 @@ int
 	nbr = 0;
 	i = pos_neg(&sign, str);
 	if (ft_strlen(&str[i]) > 10)
-		print_error_msg("over int range");
+		print_error();
 	while (str[i])
 	{
 		if (str[i] >= '0' && str[i] <= '9')
 			nbr = (nbr * 10) + (str[i] - '0');
 		else
-			print_error_msg("invalid parameter");
+			print_error();
 		i++;
 	}
 	if (sign == 1 && nbr > 2147483647)
-		print_error_msg("overflow");
+		print_error();
 	if (sign == -1 && nbr > 2147483648)
-		print_error_msg("underflow");
+		print_error();
 	return ((int)nbr * sign);
 }
 

@@ -21,7 +21,6 @@ typedef struct s_stack
 }t_stack;
 
 void			print_error(void);
-void			print_error_msg(char *msg);
 t_stack			*init_stack(void);
 t_node			*init_node(int num);
 void			push(t_stack *stack, int num);
