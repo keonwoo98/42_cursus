@@ -50,15 +50,19 @@ int
 		create_list(argv, a);
 		is_duplicate(a);
 		if (is_sorted(a))
+		{
+			free_stack(a);
 			return (0);
+		}
 		b = init_stack();
 		a_to_b(a, b, a->size);
+		free_stack(a);
+		free_stack(b);
 	}
 	else if (argc == 1)
 		return (0);
 	else
 		print_error();
-	free_stack(a);
-	free_stack(b);
 	// system("leaks push_swap");
+	return (0);
 }

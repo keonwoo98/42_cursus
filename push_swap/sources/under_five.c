@@ -8,16 +8,7 @@ void
 }
 
 void
-	two_elements_b(t_stack *a, t_stack *b)
-{
-	if (b->top->num < b->top->next->num)
-		swap(b, 2);
-	push_pop(b, a, 4);
-	push_pop(b, a, 4);
-}
-
-void
-	three_elements(t_stack *a)
+	three_elements_a_else(t_stack *a)
 {
 	if (a->top->num < a->top->next->num)
 	{
@@ -55,7 +46,7 @@ void
 			swap(a, 1);
 	}
 	else
-		three_elements(a);
+		three_elements_a_else(a);
 }
 
 void
@@ -91,8 +82,17 @@ void
 	two_elements_a(a);
 }
 
+void
+	two_elements_b(t_stack *a, t_stack *b)
+{
+	if (b->top->num < b->top->next->num)
+		swap(b, 2);
+	push_pop(b, a, 4);
+	push_pop(b, a, 4);
+}
+
 // void
-// 	three_elements_bb(t_stack *a)
+// 	three_elements_b_else(t_stack *a)
 // {
 // 	if (a->top->num > a->top->next->num)
 // 	{
@@ -121,7 +121,12 @@ void
 // 		if (b->top->num > b->top->next->num)
 // 		{
 // 			if (b->top->next->num > b->top->next->next->num)
+// 			{
+// 				push_pop(b, a, 4);
+// 				push_pop(b, a, 4);
+// 				push_pop(b, a, 4);
 // 				return ;
+// 			}
 // 			reverse_rotate(b, 10);
 // 		}
 // 		else if (b->top->num < b->top->next->next->num)
@@ -130,8 +135,39 @@ void
 // 			swap(b, 2);
 // 	}
 // 	else
-// 		three_elements_bb(b);
-// 	// push_pop(b, a, 4);
-// 	// push_pop(b, a, 4);
-// 	// push_pop(b, a, 4);
+// 		three_elements_b_else(b);
+// 	push_pop(b, a, 4);
+// 	push_pop(b, a, 4);
+// 	push_pop(b, a, 4);
+// }
+
+// void
+// 	five_elements_b(t_stack *a, t_stack *b)
+// {
+// 	int			pivot;
+// 	int			pa;
+// 	int			rb;
+
+// 	pivot = get_mid_num(b->top, 5);
+// 	pa = 0;
+// 	rb = 0;
+// 	while (1)
+// 	{
+// 		if (b->top->num > pivot)
+// 		{
+// 			push_pop(b, a, 4);
+// 			pa++;
+// 		}
+// 		else
+// 		{
+// 			rotate(b, 7);
+// 			rb++;
+// 		}
+// 		if (pa == 2)
+// 			break;
+// 	}
+// 	while (rb--)
+// 		reverse_rotate(b, 10);
+// 	two_elements_a(a);
+// 	three_elements_b(a, b);
 // }
