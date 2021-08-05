@@ -44,6 +44,8 @@ int
 	t_stack		*a;
 	t_stack		*b;
 
+	command = init_stack();
+
 	if (argc >= 2)
 	{
 		a = init_stack();
@@ -56,6 +58,14 @@ int
 		}
 		b = init_stack();
 		a_to_b(a, b, a->size);
+		// while (a->top->prev)
+		// 	a->top = a->top->prev;
+		// while (a->top->next)
+		// {
+		// 	printf("%d ", a->top->num);
+		// 	a->top = a->top->next;
+		// }
+		// printf("%d\n", a->top->num);
 		free_stack(a);
 		free_stack(b);
 	}
@@ -64,5 +74,7 @@ int
 	else
 		print_error();
 	// system("leaks push_swap");
+	print(command);
+	free_stack(command);
 	return (0);
 }

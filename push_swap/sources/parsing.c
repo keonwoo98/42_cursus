@@ -20,9 +20,10 @@ void
 {
 	int			i;
 	int			j;
-	int			num[500];
+	int			*num;
 
 	i = 0;
+	num = (int *)malloc(sizeof(int) * a->size);
 	while (a->top)
 	{
 		num[i] = a->top->num;
@@ -42,6 +43,7 @@ void
 	}
 	while (a->top->prev)
 		a->top = a->top->prev;
+	free(num);
 }
 
 int

@@ -1,33 +1,33 @@
 #include "push_swap.h"
 
-void
-	print_command(int flag)
-{
-	if (flag == 0)
-		return ;
-	else if (flag == 1)
-		ft_putstr_fd("sa\n", 1);
-	else if (flag == 2)
-		ft_putstr_fd("sb\n", 1);
-	else if (flag == 3)
-		ft_putstr_fd("ss\n", 1);
-	else if (flag == 4)
-		ft_putstr_fd("pa\n", 1);
-	else if (flag == 5)
-		ft_putstr_fd("pb\n", 1);
-	else if (flag == 6)
-		ft_putstr_fd("ra\n", 1);
-	else if (flag == 7)
-		ft_putstr_fd("rb\n", 1);
-	else if (flag == 8)
-		ft_putstr_fd("rr\n", 1);
-	else if (flag == 9)
-		ft_putstr_fd("rra\n", 1);
-	else if (flag == 10)
-		ft_putstr_fd("rrb\n", 1);
-	else if (flag == 11)
-		ft_putstr_fd("rrr\n", 1);
-}
+// void
+// 	print_command(int flag)
+// {
+// 	if (flag == 0)
+// 		return ;
+// 	else if (flag == 1)
+// 		ft_putstr_fd("sa\n", 1);
+// 	else if (flag == 2)
+// 		ft_putstr_fd("sb\n", 1);
+// 	else if (flag == 3)
+// 		ft_putstr_fd("ss\n", 1);
+// 	else if (flag == 4)
+// 		ft_putstr_fd("pa\n", 1);
+// 	else if (flag == 5)
+// 		ft_putstr_fd("pb\n", 1);
+// 	else if (flag == 6)
+// 		ft_putstr_fd("ra\n", 1);
+// 	else if (flag == 7)
+// 		ft_putstr_fd("rb\n", 1);
+// 	else if (flag == 8)
+// 		ft_putstr_fd("rr\n", 1);
+// 	else if (flag == 9)
+// 		ft_putstr_fd("rra\n", 1);
+// 	else if (flag == 10)
+// 		ft_putstr_fd("rrb\n", 1);
+// 	else if (flag == 11)
+// 		ft_putstr_fd("rrr\n", 1);
+// }
 
 void
 	push(t_stack *stack, int num)

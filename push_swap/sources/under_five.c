@@ -50,6 +50,33 @@ void
 }
 
 void
+	four_elements_a(t_stack *a, t_stack *b)
+{
+	int			pivot;
+	int			ra;
+
+	ra = 0;
+	pivot = get_min_num(a->top, 4);
+	while (1)
+	{
+		if (a->top->num == pivot)
+		{
+			push_pop(a, b, 5);
+			break;
+		}
+		else
+		{
+			rotate(a, 6);
+			ra++;
+		}
+	}
+	while (ra-- && a->size != 4)
+		reverse_rotate(a, 9);
+	three_elements_a(a);
+	push_pop(b, a, 4);
+}
+
+void
 	five_elements_a(t_stack *a, t_stack *b)
 {
 	int			pivot;
@@ -74,12 +101,10 @@ void
 		if (pb == 2)
 			break;
 	}
-	while (ra--)
+	while (ra-- && a->size != 3)
 		reverse_rotate(a, 9);
 	three_elements_a(a);
-	while (pb--)
-		push_pop(b, a, 4);
-	two_elements_a(a);
+	two_elements_b(a, b);
 }
 
 void
@@ -153,7 +178,7 @@ void
 // 	rb = 0;
 // 	while (1)
 // 	{
-// 		if (b->top->num > pivot)
+// 		if (b->top->num >= pivot)
 // 		{
 // 			push_pop(b, a, 4);
 // 			pa++;
@@ -163,11 +188,11 @@ void
 // 			rotate(b, 7);
 // 			rb++;
 // 		}
-// 		if (pa == 2)
+// 		if (pa == 3)
 // 			break;
 // 	}
-// 	while (rb--)
+// 	while (rb-- && b->size != 2)
 // 		reverse_rotate(b, 10);
-// 	two_elements_a(a);
-// 	three_elements_b(a, b);
+// 	three_elements_a(a);
+// 	two_elements_b(a, b);
 // }
