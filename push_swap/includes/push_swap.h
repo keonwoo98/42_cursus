@@ -20,6 +20,12 @@ typedef struct s_stack
 	t_node		*bottom;
 }t_stack;
 
+t_stack			*command;
+
+void			print_command(int flag);
+void			print_command2(int flag);
+void			print(t_stack *command);
+
 void			print_error(void);
 t_stack			*init_stack(void);
 t_node			*init_node(int num);
@@ -34,13 +40,19 @@ void			reverse_rotate(t_stack *stack, int flag);
 void			two_elements_a(t_stack *a);
 void			two_elements_b(t_stack *a, t_stack *b);
 void			three_elements_a(t_stack *a);
+void			four_elements_a(t_stack *a, t_stack *b);
 void			five_elements_a(t_stack *a, t_stack *b);
 
 // void			three_elements_b(t_stack *a, t_stack *b);
 // void			five_elements_b(t_stack *a, t_stack *b);
 
 int				get_mid_num(t_node *head, int size);
-
+int				get_min_num(t_node *head, int size);
+int				get_max_num(t_node *head, int size);
+int				get_small_pivot(t_node *head, int size);
+int				get_big_pivot(t_node *head, int size);
+int				is_a_sorted(t_stack *stack, int cnt);
+int				is_b_sorted(t_stack *a, t_stack *b, int cnt);
 void			a_to_b(t_stack *a, t_stack *b, int cnt);
 void			b_to_a(t_stack *a, t_stack *b, int cnt);
 
