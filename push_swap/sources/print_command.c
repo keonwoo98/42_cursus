@@ -40,54 +40,6 @@ void
 {
 	while (command->top->next)
 	{
-		// if (command->top->next->next)
-		// {
-		// 	if (command->top->next->next->next)
-		// 	{
-		// 		if ((command->top->num == 4 && command->top->next->num == 4 && command->top->next->next->num == 5 && command->top->next->next->next->num == 5))
-		// 		{
-		// 			command->top->num = 0;
-		// 			command->top->next->num = 0;
-		// 			command->top->next->next->num = 0;
-		// 			command->top->next->next->next->num = 0;
-		// 		}
-		// 		else if ((command->top->num == 5 && command->top->next->num == 5 && command->top->next->next->num == 4 && command->top->next->next->next->num == 4))
-		// 		{
-		// 			command->top->num = 0;
-		// 			command->top->next->num = 0;
-		// 			command->top->next->next->num = 0;
-		// 			command->top->next->next->next->num = 0;
-		// 		}
-		// 		else if ((command->top->num == 6 && command->top->next->num == 6 && command->top->next->next->num == 9 && command->top->next->next->next->num == 9))
-		// 		{
-		// 			command->top->num = 0;
-		// 			command->top->next->num = 0;
-		// 			command->top->next->next->num = 0;
-		// 			command->top->next->next->next->num = 0;
-		// 		}
-		// 		else if ((command->top->num == 9 && command->top->next->num == 9 && command->top->next->next->num == 6 && command->top->next->next->next->num == 6))
-		// 		{
-		// 			command->top->num = 0;
-		// 			command->top->next->num = 0;
-		// 			command->top->next->next->num = 0;
-		// 			command->top->next->next->next->num = 0;
-		// 		}
-		// 		else if ((command->top->num == 7 && command->top->next->num == 7 && command->top->next->next->num == 10 && command->top->next->next->next->num == 10))
-		// 		{
-		// 			command->top->num = 0;
-		// 			command->top->next->num = 0;
-		// 			command->top->next->next->num = 0;
-		// 			command->top->next->next->next->num = 0;
-		// 		}
-		// 		else if ((command->top->num == 10 && command->top->next->num == 10 && command->top->next->next->num == 7 && command->top->next->next->next->num == 7))
-		// 		{
-		// 			command->top->num = 0;
-		// 			command->top->next->num = 0;
-		// 			command->top->next->next->num = 0;
-		// 			command->top->next->next->next->num = 0;
-		// 		}
-		// 	}
-		// }
 		if ((command->top->num == 6 && command->top->next->num == 7) || (command->top->num == 7 && command->top->next->num == 6))
 		{
 			command->top->num = 8;

@@ -89,17 +89,6 @@ int
 }
 
 void
-	free_arr(char **str)
-{
-	int			i;
-
-	i = -1;
-	while (str[++i])
-		free(str[i]);
-	free(str);
-}
-
-void
 	create_list(char **argv, t_stack *a)
 {
 	int			i;

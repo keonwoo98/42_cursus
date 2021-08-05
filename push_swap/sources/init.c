@@ -7,7 +7,7 @@ t_stack
 
 	stack = (t_stack *)malloc(sizeof(t_stack));
 	if (!stack)
-		return (NULL);
+		print_error();
 	stack->size = 0;
 	stack->top = NULL;
 	stack->bottom = NULL;
@@ -21,9 +21,24 @@ t_node
 
 	node = (t_node *)malloc(sizeof(t_node));
 	if (!node)
-		return (NULL);
+		print_error();
 	node->num = num;
 	node->prev = NULL;
 	node->next = NULL;
 	return (node);
+}
+
+t_cmd
+	*init_cmd(void)
+{
+	t_cmd		*cmd;
+
+	cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	if (!cmd)
+		print_error();
+	cmd->ra = 0;
+	cmd->rb = 0;
+	cmd->pa = 0;
+	cmd->pb = 0;
+	return (cmd);
 }
