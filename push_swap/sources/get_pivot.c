@@ -10,39 +10,23 @@ void
 	arr[b] = temp;
 }
 
-int
-	partition(int *arr, int left, int right)
-{
-	int			pivot;
-	int			low;
-	int			high;
-
-	pivot = arr[left];
-	low = left + 1;
-	high = right;
-	while (low <= high)
-	{
-		while (low <= right && pivot >= arr[low])
-			low++;
-		while (high >= (left + 1) && pivot <= arr[high])
-			high--;
-		if (low <= high)
-			swap_int(arr, low, high);
-	}
-	swap_int(arr, left, high);
-	return (high);
-}
-
 void
-	quick_sort_arr(int *arr, int left, int right)
+	sort_arr(int *arr, int size)
 {
-	int			pivot;
+	int			i;
+	int			j;
 
-	if (left <= right)
+	i = 0;
+	while (i < size)
 	{
-		pivot = partition(arr, left, right);
-		quick_sort_arr(arr, left, pivot - 1);
-		quick_sort_arr(arr, pivot + 1, right);
+		j = i + 1;
+		while (j < size)
+		{
+			if (arr[i] > arr[j])
+				swap_int(arr, i, j);
+			j++;
+		}
+		i++;
 	}
 }
 
@@ -62,7 +46,7 @@ int
 		arr[i++] = head->num;
 		head = head->next;
 	}
-	quick_sort_arr(arr, 0, size - 1);
+	sort_arr(arr, size);
 	mid_num = arr[size / 2];
 	free (arr);
 	return (mid_num);
@@ -81,7 +65,7 @@ int
 		if (head->next)
 			head = head->next;
 		else
-			break;
+			break ;
 	}
 	return (min);
 }
@@ -99,7 +83,7 @@ int
 		if (head->next)
 			head = head->next;
 		else
-			break;
+			break ;
 	}
 	return (max);
 }

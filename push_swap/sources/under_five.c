@@ -1,36 +1,36 @@
 #include "push_swap.h"
 
 void
-	two_elements_a(t_stack *a)
+	two_elements_a(t_stack *a, t_stack *command)
 {
 	if (a->top->num > a->top->next->num)
-		swap(a, 1);
+		swap(a, command, 1);
 }
 
 void
-	three_elements_a_else(t_stack *a)
+	three_elements_a_else(t_stack *a, t_stack *command)
 {
 	if (a->top->num < a->top->next->num)
 	{
 		if (a->top->next->num < a->top->next->next->num)
 			return ;
-		rotate(a, 6);
-		swap(a, 1);
-		reverse_rotate(a, 9);
+		rotate(a, command, 6);
+		swap(a, command, 1);
+		reverse_rotate(a, command, 9);
 	}
 	else if (a->top->num > a->top->next->next->num)
 	{
-		swap(a, 1);
-		rotate(a, 6);
-		swap(a, 1);
-		reverse_rotate(a, 9);
+		swap(a, command, 1);
+		rotate(a, command, 6);
+		swap(a, command, 1);
+		reverse_rotate(a, command, 9);
 	}
 	if (a->top->num > a->top->next->num)
-		swap(a, 1);
+		swap(a, command, 1);
 }
 
 void
-	three_elements_a(t_stack *a)
+	three_elements_a(t_stack *a, t_stack *command)
 {
 	if (a->size == 3)
 	{
@@ -38,80 +38,52 @@ void
 		{
 			if (a->top->next->num < a->top->next->next->num)
 				return ;
-			reverse_rotate(a, 9);
+			reverse_rotate(a, command, 9);
 		}
 		else if (a->top->num > a->top->next->next->num)
-			rotate(a, 6);
+			rotate(a, command, 6);
 		if (a->top->num > a->top->next->num)
-			swap(a, 1);
+			swap(a, command, 1);
 	}
 	else
-		three_elements_a_else(a);
+		three_elements_a_else(a, command);
 }
 
 void
-	four_elements_a(t_stack *a, t_stack *b)
+	five_elements_a(t_stack *a, t_stack *b, t_stack *command)
 {
 	int			pivot;
-	int			ra;
+	t_cmd		*cmd;
 
-	ra = 0;
-	pivot = get_min_num(a->top, 4);
-	while (1)
-	{
-		if (a->top->num == pivot)
-		{
-			push_pop(a, b, 5);
-			break;
-		}
-		else
-		{
-			rotate(a, 6);
-			ra++;
-		}
-	}
-	while (ra-- && a->size != 4)
-		reverse_rotate(a, 9);
-	three_elements_a(a);
-	push_pop(b, a, 4);
-}
-
-void
-	five_elements_a(t_stack *a, t_stack *b)
-{
-	int			pivot;
-	int			pb;
-	int			ra;
-
+	cmd = init_cmd(0);
 	pivot = get_mid_num(a->top, 5);
-	pb = 0;
-	ra = 0;
 	while (1)
 	{
 		if (a->top->num < pivot)
 		{
-			push_pop(a, b, 5);
-			pb++;
+			push_pop(a, b, command, 5);
+			cmd->pb++;
 		}
 		else
 		{
-			rotate(a, 6);
-			ra++;
+			rotate(a, command, 6);
+			cmd->ra++;
 		}
-		if (pb == 2)
-			break;
+		if (cmd->pb == 2)
+			break ;
 	}
-	while (ra-- && a->size != 3)
-		reverse_rotate(a, 9);
-	three_elements_a(a);
-	two_elements_b(a, b);
+	while (cmd->ra-- && a->size != 3)
+		reverse_rotate(a, command, 9);
+	three_elements_a(a, command);
+	two_elements_b(a, b, command);
+	free(cmd);
 }
 
 void
-	two_elements_b(t_stack *a, t_stack *b)
+	two_elements_b(t_stack *a, t_stack *b, t_stack *command)
 {
 	if (b->top->num < b->top->next->num)
-		swap(b, 2);
-	push_pop(b, a, 4);
-	push_pop(b, a, 4);
+		swap(b, command, 2);
+	push_pop(b, a, command, 4);
+	push_pop(b, a, command, 4);
 }

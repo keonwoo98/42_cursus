@@ -1,7 +1,7 @@
 #include "push_swap.h"
 
 int
-	is_b_sorted(t_stack *a, t_stack *b, int cnt)
+	is_b_sorted(t_stack *a, t_stack *b, t_stack *command, int cnt)
 {
 	int			i;
 	int			sort;
@@ -13,7 +13,7 @@ int
 		if (b->top->num > b->top->next->num)
 			b->top = b->top->next;
 		else
-			break;
+			break ;
 	}
 	while (b->top->prev)
 		b->top = b->top->prev;
@@ -21,72 +21,73 @@ int
 	{
 		sort = 1;
 		while (i--)
-			push_pop(b, a, 4);
+			push_pop(b, a, command, 4);
 	}
 	return (sort);
 }
 
 int
-	under_five_b(t_stack *a, t_stack *b, int cnt)
+	under_five_b(t_stack *a, t_stack *b, t_stack *command, int cnt)
 {
 	if (cnt == 0)
 		return (1);
 	else if (cnt == 1)
 	{
-		push_pop(b, a, 4);
+		push_pop(b, a, command, 4);
 		return (1);
 	}
 	else if (cnt == 2)
 	{
-		two_elements_b(a, b);
+		two_elements_b(a, b, command);
 		return (1);
 	}
-	if (is_b_sorted(a, b, cnt))
+	if (is_b_sorted(a, b, command, cnt))
 		return (1);
 	return (0);
 }
 
-void
-	sort_b(t_stack *a, t_stack *b, t_cmd *cmd, int cnt)
+t_cmd
+	*sort_b(t_stack *a, t_stack *b, t_stack *command, int cnt)
 {
-	int			i;
-	int			s_pivot;
-	int			b_pivot;
+	t_cmd		*cmd;
 
-	i = -1;
-	b_pivot = ((get_min_num(b->top, cnt) + get_max_num(b->top, cnt)) / 2);
-	s_pivot = ((get_min_num(b->top, cnt) + b_pivot) / 2);
-	while (++i < cnt)
+	cmd = init_cmd(cnt);
+	cmd->b_pivot = ((get_min_num(b->top, cnt) + get_max_num(b->top, cnt)) / 2);
+	cmd->s_pivot = ((get_min_num(b->top, cnt) + cmd->b_pivot) / 2);
+	while (cnt--)
 	{
-		if (b->top->num <= s_pivot)
+		if (b->top->num <= cmd->s_pivot)
 		{
-			rotate(b, 7);
+			rotate(b, command, 7);
 			cmd->rb++;
 		}
 		else
 		{
-			push_pop(b, a, 4);
+			push_pop(b, a, command, 4);
 			cmd->pa++;
-			if (a->top->num <= b_pivot)
+			if (a->top->num <= cmd->b_pivot)
 			{
-				rotate(a, 6);
+				rotate(a, command, 6);
 				cmd->ra++;
 			}
 		}
 	}
+	return (cmd);
 }
 
 void
-	b_to_a(t_stack *a, t_stack *b, int cnt)
+	b_to_a(t_stack *a, t_stack *b, t_stack *command, int cnt)
 {
 	t_cmd		*cmd;
+	int			first_cnt;
 
-	cmd = init_cmd();
-	if (under_five_b(a, b, cnt))
+	first_cnt = cnt;
+	if (under_five_b(a, b, command, cnt))
 		return ;
-	sort_b(a, b, cmd, cnt);
-	a_to_b(a, b, cmd->pa - cmd->ra);
-	rrr(a, b, cmd);
-	a_to_b(a, b, cmd->ra);
-	b_to_a(a, b, cmd->rb);
+	cmd = sort_b(a, b, command, cnt);
+	a_to_b(a, b, command, cmd->pa - cmd->ra);
+	rrr(a, b, command, cmd);
+	a_to_b(a, b, command, cmd->ra);
+	b_to_a(a, b, command, cmd->rb);
+	free(cmd);
 }

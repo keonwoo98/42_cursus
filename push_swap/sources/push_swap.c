@@ -7,18 +7,40 @@ void
 	exit(1);
 }
 
+void
+	push(t_stack *stack, int num)
+{
+	t_node		*new_node;
+
+	new_node = init_node(num);
+	if (stack->top == NULL)
+	{
+		stack->top = new_node;
+		stack->bottom = new_node;
+	}
+	else
+	{
+		stack->bottom->next = new_node;
+		new_node->prev = stack->bottom;
+		stack->bottom = stack->bottom->next;
+	}
+	stack->size++;
+}
+
 int
 	is_sorted(t_stack *stack)
 {
 	int			sort;
 
 	sort = 0;
+	while (stack->top->prev)
+		stack->top = stack->top->prev;
 	while (stack->top->next)
 	{
 		if (stack->top->num < stack->top->next->num)
 			stack->top = stack->top->next;
 		else
-			break;
+			break ;
 	}
 	if (stack->top->next == NULL)
 		sort = 1;
@@ -32,7 +54,7 @@ int
 {
 	t_stack		*a;
 	t_stack		*b;
-	// t_stack		*command;
+	t_stack		*command;
 
 	if (argc >= 2)
 	{
@@ -46,7 +68,7 @@ int
 			return (0);
 		}
 		b = init_stack();
-		a_to_b(a, b, a->size);
+		a_to_b(a, b, command, a->size);
 		print(command);
 		free_all(a, b, command);
 	}
@@ -54,6 +76,5 @@ int
 		return (0);
 	else
 		print_error();
-	// system("leaks push_swap");
 	return (0);
 }

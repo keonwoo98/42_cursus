@@ -15,7 +15,7 @@ int
 		if (stack->top->num < stack->top->next->num)
 			stack->top = stack->top->next;
 		else
-			break;
+			break ;
 	}
 	if (i == cnt)
 		sort = 1;
@@ -25,63 +25,57 @@ int
 }
 
 int
-	under_five_a(t_stack *a, t_stack *b, int cnt)
+	under_five_a(t_stack *a, t_stack *b, t_stack *command, int cnt)
 {
 	if (cnt == 2)
 	{
-		two_elements_a(a);
+		two_elements_a(a, command);
 		return (1);
 	}
 	else if (cnt == 3)
 	{
-		three_elements_a(a);
-		return (1);
-	}
-	else if (cnt == 4)
-	{
-		four_elements_a(a, b);
+		three_elements_a(a, command);
 		return (1);
 	}
 	else if (cnt == 5)
 	{
-		five_elements_a(a, b);
+		five_elements_a(a, b, command);
 		return (1);
 	}
 	return (0);
 }
 
-void
-	sort_a(t_stack *a, t_stack *b, t_cmd *cmd, int cnt)
+t_cmd
+	*sort_a(t_stack *a, t_stack *b, t_stack *command, int cnt)
 {
-	int			i;
-	int			s_pivot;
-	int			b_pivot;
+	t_cmd		*cmd;
 
-	i = -1;
-	b_pivot = ((get_min_num(a->top, cnt) + get_max_num(a->top, cnt)) / 2);
-	s_pivot = ((get_min_num(a->top, cnt) + b_pivot) / 2);
-	while (++i < cnt)
+	cmd = init_cmd(cnt);
+	cmd->b_pivot = ((get_min_num(a->top, cnt) + get_max_num(a->top, cnt)) / 2);
+	cmd->s_pivot = ((get_min_num(a->top, cnt) + cmd->b_pivot) / 2);
+	while (cnt--)
 	{
-		if (a->top->num > b_pivot)
+		if (a->top->num > cmd->b_pivot)
 		{
-			rotate(a, 6);
+			rotate(a, command, 6);
 			cmd->ra++;
 		}
 		else
 		{
-			push_pop(a, b, 5);
+			push_pop(a, b, command, 5);
 			cmd->pb++;
-			if (b->top->num > s_pivot)
+			if (b->top->num > cmd->s_pivot)
 			{
-				rotate(b, 7);
+				rotate(b, command, 7);
 				cmd->rb++;
 			}
 		}
 	}
+	return (cmd);
 }
 
 void
-	rrr(t_stack *a, t_stack *b, t_cmd *cmd)
+	rrr(t_stack *a, t_stack *b, t_stack *command, t_cmd *cmd)
 {
 	int				i;
 
@@ -90,38 +84,37 @@ void
 	{
 		while (++i < cmd->rb)
 		{
-			reverse_rotate(a, 11);
-			reverse_rotate(b, 0);
+			reverse_rotate(a, command, 11);
+			reverse_rotate(b, command, 0);
 		}
-		while (i++ < cmd->ra)
-			reverse_rotate(a, 9);
+		while (i++ < cmd->ra && cmd->cnt < a->size)
+			reverse_rotate(a, command, 9);
 	}
 	else
 	{
 		while (++i < cmd->ra)
 		{
-			reverse_rotate(a, 11);
-			reverse_rotate(b, 0);
+			reverse_rotate(a, command, 11);
+			reverse_rotate(b, command, 0);
 		}
-		while (i++ < cmd->rb)
-			reverse_rotate(b, 10);
+		while (i++ < cmd->rb && cmd->cnt < b->size)
+			reverse_rotate(b, command, 10);
 	}
 }
 
 void
-	a_to_b(t_stack *a, t_stack *b, int cnt)
+	a_to_b(t_stack *a, t_stack *b, t_stack *command, int cnt)
 {
 	t_cmd		*cmd;
 
-	cmd = init_cmd();
 	if (is_a_sorted(a, cnt))
 		return ;
-	if (under_five_a(a, b, cnt))
+	if (under_five_a(a, b, command, cnt))
 		return ;
-	sort_a(a, b, cmd, cnt);
-	rrr(a, b, cmd);
-	a_to_b(a, b, cmd->ra);
-	b_to_a(a, b, cmd->rb);
-	b_to_a(a, b, cmd->pb - cmd->rb);
+	cmd = sort_a(a, b, command, cnt);
+	rrr(a, b, command, cmd);
+	a_to_b(a, b, command, cmd->ra);
+	b_to_a(a, b, command, cmd->rb);
+	b_to_a(a, b, command, cmd->pb - cmd->rb);
 	free(cmd);
 }

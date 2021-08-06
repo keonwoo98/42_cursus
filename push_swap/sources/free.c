@@ -21,6 +21,7 @@ void
 	}
 	free(stack);
 }
+
 void
 	free_all(t_stack *a, t_stack *b, t_stack *command)
 {

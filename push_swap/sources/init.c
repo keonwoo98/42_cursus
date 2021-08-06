@@ -29,7 +29,7 @@ t_node
 }
 
 t_cmd
-	*init_cmd(void)
+	*init_cmd(int cnt)
 {
 	t_cmd		*cmd;
 
@@ -40,5 +40,8 @@ t_cmd
 	cmd->rb = 0;
 	cmd->pa = 0;
 	cmd->pb = 0;
+	cmd->s_pivot = 0;
+	cmd->b_pivot = 0;
+	cmd->cnt = cnt;
 	return (cmd);
 }

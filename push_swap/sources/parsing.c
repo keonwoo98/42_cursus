@@ -24,25 +24,23 @@ void
 
 	i = 0;
 	num = (int *)malloc(sizeof(int) * a->size);
+	if (!num)
+		print_error();
 	while (a->top)
 	{
-		num[i] = a->top->num;
+		num[i++] = a->top->num;
 		if (a->top->next == NULL)
 			break ;
 		a->top = a->top->next;
-		i++;
 	}
-	i = 0;
-	while (i < a->size)
+	i = -1;
+	while (++i < a->size)
 	{
 		j = i + 1;
 		while (j < a->size)
 			if (num[i] == num[j++])
 				print_error();
-		i++;
 	}
-	while (a->top->prev)
-		a->top = a->top->prev;
 	free(num);
 }
 
