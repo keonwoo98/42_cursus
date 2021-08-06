@@ -69,8 +69,6 @@ int
 	sign = 1;
 	nbr = 0;
 	i = pos_neg(&sign, str);
-	if (ft_strlen(&str[i]) > 10)
-		print_error();
 	while (str[i])
 	{
 		if (str[i] >= '0' && str[i] <= '9')
@@ -83,6 +81,8 @@ int
 		print_error();
 	if (sign == -1 && nbr > 2147483648)
 		print_error();
+	// if (ft_strlen(&str[i]) > 10)
+	// 	print_error();
 	return ((int)nbr * sign);
 }
 
