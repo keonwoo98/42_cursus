@@ -81,8 +81,6 @@ int
 		print_error();
 	if (sign == -1 && nbr > 2147483648)
 		print_error();
-	// if (ft_strlen(&str[i]) > 10)
-	// 	print_error();
 	return ((int)nbr * sign);
 }
 
