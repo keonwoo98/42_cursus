@@ -2,7 +2,6 @@
 # define PUSH_SWAP_H
 
 # include "../sources/Libft/libft.h"
-# include <stdio.h>
 
 typedef struct s_node	t_node;
 
@@ -40,6 +39,7 @@ t_node			*init_node(int num);
 t_cmd			*init_cmd(int cnt);
 void			push(t_stack *stack, int num);
 void			create_list(char **argv, t_stack *a);
+long long		ft_atoi_long(const char *str);
 void			is_duplicate(t_stack *a);
 void			swap(t_stack *stack, t_stack *command, int flag);
 void			push_pop(t_stack *from, \

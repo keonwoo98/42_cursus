@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "checker.h"
 
 int
 	my_strchr(const char *s, int c)
