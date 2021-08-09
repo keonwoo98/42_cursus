@@ -45,6 +45,8 @@ void
 void
 	do_push_pop(t_stack *from, t_stack *to)
 {
+	if (from->size == 0)
+		return ;
 	if (from->size == 1)
 		do_size_one(from, to);
 	else
