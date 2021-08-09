@@ -26,24 +26,28 @@ long long
 {
 	long long	result;
 	int			sign;
+	int			i;
 
+	i = 0;
 	sign = 1;
 	result = 0;
-	while (*str && is_space(*str))
-		str++;
-	if (*str == '-' || *str == '+')
+	while (str[i] && is_space(str[i]))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (*str == '-')
+		if (str[i] == '-')
 			sign = -1;
-		str++;
+		i++;
 	}
-	while (*str == 0)
-		str++;
-	while (*str >= '0' && *str <= '9')
+	while (str[i] == '0')
+		i++;
+	if (ft_strlen(&str[i]) >= 20)
+		print_error();
+	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result *= 10;
-		result += *str - '0';
-		str++;
+		result += str[i] - '0';
+		i++;
 	}
 	return (result * sign);
 }

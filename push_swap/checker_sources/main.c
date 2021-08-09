@@ -70,13 +70,16 @@ void
 	{
 		do_operation(line, a, b);
 		free(line);
+		line = NULL;
 	}
 	if (*line)
 	{
 		do_operation(line, a, b);
 		free(line);
+		line = NULL;
 	}
-	free(line);
+	if (line != NULL)
+		free(line);
 	if (is_sorted(a) && b->size == 0)
 		ft_putendl_fd("OK", 1);
 	else
@@ -91,6 +94,9 @@ int
 
 	if (argc >= 2)
 	{
+		if (!ft_strncmp(argv[1], "-", ft_strlen(argv[1])) || \
+			!ft_strncmp(argv[1], "+", ft_strlen(argv[1])))
+			print_error();
 		a = init_stack();
 		b = init_stack();
 		create_list(argv, a);
