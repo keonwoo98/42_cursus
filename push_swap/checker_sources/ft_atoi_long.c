@@ -46,8 +46,7 @@ long long
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result *= 10;
-		result += str[i] - '0';
-		i++;
+		result += str[i++] - '0';
 	}
 	return (result * sign);
 }
