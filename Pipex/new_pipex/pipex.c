@@ -36,8 +36,8 @@ static void		child_process(int fd[2], char **argv, char **envp)
 
 static void		parent_process(int fd[2], int argc, char **argv, char **envp)
 {
-	wait(0);
 	redirect_out(argv[argc - 1]);
+	wait(0);
 	connect_pipe(fd, STDIN_FILENO);
 	exe_cmd(3, argv, envp);
 }
