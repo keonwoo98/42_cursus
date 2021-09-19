@@ -24,11 +24,11 @@ Replace the contents of rl_line_buffer with text. The point and mark are preserv
 * 헤더 : `#include <readline/readline.h>`
 * 형식 : `void rl_replace_line (const char *text, int clear_undo)`
 
-**`rl_redisplay_function`**
+**`rl_redisplay`**
 
 If non-zero, Readline will call indirectly through this pointer to update the display with the current contents of the editing buffer. By default, it is set to rl_redisplay, the default Readline redisplay function (see section 2.4.6 Redisplay).
 * 헤더 : `#include <realine/readline.h>`
-* 형식 : `l_voidfunc_t * rl_redisplay_function`
+* 형식 : `void rl_redisplay(void)`
   
 
 **`add_history`**

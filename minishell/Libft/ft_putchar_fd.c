@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: minjkim2 <minjkim2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/07 16:29:45 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/07 16:32:02 by keokim           ###   ########.fr       */
+/*   Created: 2021/05/10 10:08:04 by minjkim2          #+#    #+#             */
+/*   Updated: 2021/05/10 10:08:05 by minjkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <unistd.h>
 
-void
-	ft_putchar_fd(char c, int fd)
+void	ft_putchar_fd(char c, int fd)
 {
 	if (fd < 0)
 		return ;

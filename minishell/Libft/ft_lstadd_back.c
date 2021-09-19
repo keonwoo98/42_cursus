@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: minjkim2 <minjkim2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/10 16:48:39 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/10 16:51:59 by keokim           ###   ########.fr       */
+/*   Created: 2021/05/10 10:05:44 by minjkim2          #+#    #+#             */
+/*   Updated: 2021/05/10 10:05:46 by minjkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void
 	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	if (lst == NULL || new == NULL)
+	if (!lst || !new)
 		return ;
 	if (*lst == NULL)
 		*lst = new;

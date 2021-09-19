@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: minjkim2 <minjkim2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/07 16:00:06 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/07 16:13:27 by keokim           ###   ########.fr       */
+/*   Created: 2021/05/10 10:08:43 by minjkim2          #+#    #+#             */
+/*   Updated: 2021/05/10 10:10:41 by minjkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-char
-	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	size_t	len;
-	size_t	i;
-	char	*str;
+	char			*ret;
+	unsigned int	length;
+	unsigned int	index;
 
-	i = 0;
 	if (!s || !f)
 		return (0);
-	len = ft_strlen(s);
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (!str)
-		return (0);
-	while (i < len)
+	length = ft_strlen(s);
+	index = 0;
+	ret = (char *)malloc(sizeof(char) * (length + 1));
+	if (!ret)
+		return (NULL);
+	while (index < length)
 	{
-		str[i] = f(i, s[i]);
-		i++;
+		ret[index] = f(index, s[index]);
+		index++;
 	}
-	str[i] = '\0';
-	return (str);
+	ret[index] = '\0';
+	return (ret);
 }

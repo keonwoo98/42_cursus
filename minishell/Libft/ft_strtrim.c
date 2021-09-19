@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keokim <keokim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: minjkim2 <minjkim2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/06 13:43:46 by keokim            #+#    #+#             */
-/*   Updated: 2021/05/10 13:56:18 by keokim           ###   ########.fr       */
+/*   Created: 2021/05/10 10:15:01 by minjkim2          #+#    #+#             */
+/*   Updated: 2021/05/10 10:15:21 by minjkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
-char
-	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	start;
 	size_t	end;
-	char	*str;
+	char	*ret;
 
 	if (!s1)
 		return (NULL);
 	if (!set)
 		return (ft_strdup(s1));
 	start = 0;
-	end = ft_strlen(s1);
-	while (start <= end && ft_strchr(set, s1[start]))
+	end = ft_strlen(s1) - 1;
+	while (s1[start] && ft_strchr(set, s1[start]))
 		start++;
-	while (start <= end && ft_strchr(set, s1[end - 1]))
+	while (ft_strchr(set, s1[end]) && end >= start && s1[end])
 		end--;
 	if (start >= end)
 		return (ft_strdup(""));
-	str = (char *)malloc(sizeof(char) * (end - start + 1));
-	if (!str)
+	ret = (char *)malloc(sizeof(char) * (end - start + 2));
+	if (!ret)
 		return (NULL);
-	ft_strlcpy(str, s1 + start, end - start + 1);
-	return (str);
+	ft_strlcpy(ret, s1 + start, end - start + 2);
+	return (ret);
 }
