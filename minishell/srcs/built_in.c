@@ -34,12 +34,12 @@ static int
 
 	if (node->next && node->next->type == ARG)
 	{
-		ft_putstr_fd("pwd: too many arguments\n", 2);
+		print_errmsg("pwd", "too many arguments");
 		return (EXIT_FAILURE);
 	}
 	else if (!getcwd(buf, 1024))
 	{
-		ft_putstr_fd("getcwd fail\n", 2);
+		print_errmsg("pwd", "getcwd fail");
 		return (EXIT_FAILURE);
 	}
 	else
@@ -55,7 +55,7 @@ static int
 	i = -1;
 	if (node->next && node->next->type == ARG)
 	{
-		ft_putstr_fd("env: too many arguments\n", 2);
+		print_errmsg("env", "too many arguments");
 		return (EXIT_FAILURE);
 	}
 	while (g_state.env[++i])

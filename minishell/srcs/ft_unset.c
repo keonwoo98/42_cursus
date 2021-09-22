@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-void
+static void
 	delete_env(char *key)
 {
 	int			i;
@@ -38,7 +38,7 @@ int
 	{
 		if (!is_key_valid(node->contents))
 		{
-			printf("unset : `%s': not a valid identifier\n", node->contents);
+			print_error_util("unset", node->contents, "not a valid identifier");
 			return (EXIT_FAILURE);
 		}
 		else

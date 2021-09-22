@@ -46,7 +46,7 @@ int
 	return (i);
 }
 
-void
+static void
 	find_key(char *key, char **split, int *i)
 {
 	while (g_state.env[*i])

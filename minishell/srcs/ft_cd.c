@@ -27,7 +27,7 @@ static int
 	user_home = ft_strjoin("/Users/", log_name);
 	if (chdir(user_home) < 0)
 	{
-		printf("Minishell: cd: %s\n", strerror(errno));
+		print_errmsg("cd", strerror(errno));
 		free(user_home);
 		free(log_name);
 		return (EXIT_FAILURE);
@@ -53,7 +53,7 @@ static int
 	{
 		if (*home && (chdir(home) < 0))
 		{
-			printf("Minishell: cd: %s\n", strerror(errno));
+			print_errmsg("cd", strerror(errno));
 			return (EXIT_FAILURE);
 		}
 	}
@@ -75,7 +75,7 @@ static int
 	}
 	if (chdir(oldpwd) < 0)
 	{
-		printf("Minishell: cd: %s\n", strerror(errno));
+		print_errmsg("cd", strerror(errno));
 		free(oldpwd);
 		return (EXIT_FAILURE);
 	}
@@ -99,8 +99,7 @@ static int
 	{
 		if (chdir(node->next->contents) < 0)
 		{
-			printf("Minishell: cd: %s: %s\n", \
-			node->next->contents, strerror(errno));
+			print_errmsg2("cd", node->next->contents, strerror(errno));
 			return (EXIT_FAILURE);
 		}
 	}

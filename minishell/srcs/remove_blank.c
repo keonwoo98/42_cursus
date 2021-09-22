@@ -13,14 +13,14 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-void
+static void
 	free_node(t_node *node)
 {
 	free(node->contents);
 	free(node);
 }
 
-void
+static void
 	delete_node(t_cmd **cmd, t_node *node)
 {
 	t_node	*temp;

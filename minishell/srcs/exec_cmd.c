@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <sys/stat.h>
 
-void
+static void
 	free_all(char **path, char *cmd_path, char **cmd)
 {
 	int	i;
@@ -32,14 +32,14 @@ void
 	free(cmd_path);
 }
 
-void
+static void
 	no_such_error(char *contents)
 {
-	printf("Minishell: %s: No such file or directory\n", contents);
+	print_errmsg(contents, "No such file or directory");
 	exit(127);
 }
 
-void
+static void
 	exec_file(t_node *node)
 {
 	char		*cmd[2];
@@ -53,7 +53,7 @@ void
 		{
 			if (!(sb.st_mode & S_IXUSR))
 			{
-				printf("Minishell: %s: Permission denied\n", node->contents);
+				print_errmsg(node->contents, "Permission denied");
 				exit(126);
 			}
 			if (execve(node->contents, cmd, g_state.env) == -1)
@@ -61,7 +61,7 @@ void
 		}
 		else if (S_ISDIR(sb.st_mode))
 		{
-			printf("Minishell: %s: is a directory\n", node->contents);
+			print_errmsg(node->contents, "is a directory");
 			exit(126);
 		}
 	}
@@ -78,6 +78,11 @@ int
 	int		exec;
 
 	path = split_path(g_state.env);
+	if (path == NULL)
+	{
+		print_errmsg(node->contents, "No such file or directory");
+		exit(127);
+	}
 	cmd = get_cmd(node);
 	cmd_path = get_path(path, cmd[0]);
 	exec = execve(cmd_path, cmd, g_state.env);
@@ -86,7 +91,7 @@ int
 	if (exec == -1)
 	{
 		free_all(path, cmd_path, cmd);
-		printf("Minishell: %s: command not found\n", node->contents);
+		print_errmsg(node->contents, "command not found");
 		exit(127);
 	}
 	free_all(path, cmd_path, cmd);

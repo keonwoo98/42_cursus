@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <readline/readline.h>
 
-void
+static void
 	is_sigint(int pid, int status)
 {
 	if (pid == -1 && !WEXITSTATUS(status))
@@ -32,7 +32,7 @@ void
 	}
 }
 
-void
+static void
 	is_sigquit(int pid, int status)
 {
 	if (pid == -1 && !WEXITSTATUS(status))
@@ -44,7 +44,7 @@ void
 	}
 }
 
-void
+static void
 	handle_signal(int signo)
 {
 	pid_t	pid;

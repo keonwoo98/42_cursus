@@ -16,7 +16,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void
+static void
 	display_prompt(char **line)
 {
 	*line = readline("\033[32mMinishell>\033[0m ");
@@ -31,7 +31,7 @@ void
 		add_history(*line);
 }
 
-void
+static void
 	allocate_env(int argc, char **argv, char **envp)
 {
 	int			i;
@@ -48,6 +48,26 @@ void
 	g_state.env[i] = NULL;
 }
 
+static int
+	check_valid(t_cmd **cmd, char **line)
+{
+	display_prompt(line);
+	if (**line == '\0')
+		return (EXIT_FAILURE);
+	if (parse_line(cmd, *line))
+	{
+		error_return(*cmd, *line);
+		return (EXIT_FAILURE);
+	}
+	if (!(*cmd)->size)
+	{
+		ft_putstr_fd("Minishell: : command not found\n", 2);
+		error_return(*cmd, *line);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
 int
 	main(int argc, char **argv, char **envp)
 {
@@ -60,8 +80,9 @@ int
 	ft_putendl_fd("\033[36m-----------Welcome to Minishell-----------\033[0m", 1);
 	while (1)
 	{
-		display_prompt(&line);
-		if (parse_line(&cmd, line) || !cmd->size || check_redir(cmd))
+		if (check_valid(&cmd, &line))
+			continue ;
+		if (check_redir(cmd))
 		{
 			error_return(cmd, line);
 			continue ;

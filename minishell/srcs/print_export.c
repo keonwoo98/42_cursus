@@ -25,7 +25,7 @@ void
 	free(str);
 }
 
-char
+static char
 	**copy_env(void)
 {
 	int		i;
@@ -48,7 +48,7 @@ char
 	return (temp);
 }
 
-void
+static void
 	sort_env(char ***temp)
 {
 	int		i;

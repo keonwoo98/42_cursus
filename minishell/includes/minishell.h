@@ -57,6 +57,112 @@ typedef struct s_state
 t_state				g_state;
 
 /*
+** assign_util.c
+*/
+int		check_type(int type);
+int		check_syntax(t_node *node);
+/*
+**	built_in.c
+*/
+int		is_builtin(char *str);
+void	exec_builtin(t_node *node);
+/*
+**	check_assign.c
+*/
+int		check_redir(t_cmd *cmd);
+// int		check_type(int type);
+void	assign_arg(t_cmd *cmd);
+/*
+**	env.c
+*/
+int		environ_len(char **envp);
+int		env_len(void);
+int		get_env_last(void);
+int		is_exist(char *key);
+/*
+** error_util.c
+*/
+void	print_errmsg(char *str, char *msg);
+void	print_errmsg2(char *str, char *contents, char *msg);
+void	print_error_util(char *str, char *contents, char *msg);
+/*
+**	error.c
+*/
+void	error_return(t_cmd *cmd, char *line);
+void	error_exit(char *str);
+void	syntax_error(char c);
+/*
+**	exec_cmd_utils.c
+*/
+char	**split_path(char **envp);
+char	**get_cmd(t_node *node);
+char	*get_path(char **path, char *cmd);
+/*
+**	exec_cmd.c
+*/
+int		exec_cmd(t_node *node);
+/*
+**	execute_utils.c
+*/
+void	connect_redirect(t_node *node);
+void	set_pipe(void);
+void	pre_execute(t_node *node);
+void	backup_execute(int *stdin, int *stdout);
+void	execute_node(t_node *node);
+/*
+**	execute.c
+*/
+void	builtin(t_node *node);
+void	execute_cmd(t_node *node);
+void	execute(t_node *node);
+/*
+**	expansion.c
+*/
+void	expansion(t_cmd **cmd);
+/*
+** ft_cd_utils.c
+*/
+void	add_oldpwd(char *path);
+int		ft_cd_cdpath(char **cd_path, t_node *node);
+int		ft_cd_none(char *home);
+int		is_home_exist(char *home);
+char	**put_slash(void);
+/*
+**	ft_cd.c
+*/
+int		ft_cd(t_node *node);
+/*
+** ft_echo.c
+*/
+int		ft_echo(t_node *node);
+/*
+**	ft_exit.c
+*/
+void	ft_exit(t_node *node);
+/*
+** ft_export_util.c
+*/
+void	add_env_arg(t_node *node, int i);
+void	add_env_quote(t_node *node, int i);
+/*
+**	ft_export.c
+*/
+int		ft_export(t_node *node);
+int		is_key_valid(char *key);
+/*
+**	ft_unset.c
+*/
+int		ft_unset(t_node *node);
+/*
+** get_env.c
+*/
+int		get_env(char *str);
+char	*get_env_str(char *str);
+/*
+**	get_next_line.c
+*/
+int		get_next_line(int fd, char **line);
+/*
 **	list_func.c
 */
 t_cmd	*init_cmd_list(void);
@@ -68,49 +174,10 @@ void	free_list(t_cmd *cmd);
 */
 int		parse_line(t_cmd **cmd, char *line);
 /*
-**	signal.c
+**	print_export.c
 */
-void	set_signal(void);
-void	handle_signal(int signo);
-/*
-**	exec_cmd.c
-*/
-int		exec_cmd(t_node *node);
-/*
-**	exec_cmd_utils.c
-*/
-char	*get_path(char **path, char *cmd);
-char	**get_cmd(t_node *node);
-char	**split_path(char **envp);
-/*
-**	check_assign.c
-*/
-int		check_type(int type);
-int		check_redir(t_cmd *cmd);
-void	assign_arg(t_cmd *cmd);
-/*
-** assign_util.c
-*/
-int		check_type(int type);
-int		check_syntax(t_node *node);
-/*
-**	expansion.c
-*/
-void	expansion(t_cmd **cmd);
-/*
-**	execute.c
-*/
-void	builtin(t_node *node);
-void	execute_cmd(t_node *node);
-void	execute(t_node *node);
-/*
-**	execute.c
-*/
-void	connect_redirect(t_node *node);
-void	set_pipe(void);
-void	pre_execute(t_node *node);
-void	backup_execute(int *stdin, int *stdout);
-void	execute_node(t_node *node);
+void	print_export(void);
+void	free_str(char **str);
 /*
 **	redirect.c
 */
@@ -120,74 +187,11 @@ int		redirect_out_append(char *file);
 void	here_doc(t_node *node);
 void	connect_pipe(int fd[2], int io);
 /*
-**	get_next_line.c
-*/
-int		get_next_line(int fd, char **line);
-/*
-**	error.c
-*/
-void	error_return(t_cmd *cmd, char *line);
-void	error_exit(char *str);
-void	syntax_error(char c);
-/*
-**	built_in.c
-*/
-int		is_builtin(char *str);
-void	exec_builtin(t_node *node);
-/*
-**	ft_cd.c
-*/
-int		ft_cd(t_node *node);
-/*
-** ft_cd_utils.c
-*/
-int		ft_cd_cdpath(char **cd_path, t_node *node);
-int		ft_cd_none(char *home);
-int		is_home_exist(char *home);
-char	**put_slash(void);
-/*
-**	env.c
-*/
-int		environ_len(char **envp);
-int		env_len(void);
-int		get_env_last(void);
-int		is_exist(char *key);
-/*
-**	print_export.c
-*/
-void	print_export(void);
-void	free_str(char **str);
-/*
-** ft_export_util.c
-*/
-void	add_env_arg(t_node *node, int i);
-void	add_env_quote(t_node *node, int i);
-/*
-**	ft_export.c
-*/
-int		ft_export(t_node *node);
-void	add_oldpwd(char *path);
-int		is_key_valid(char *key);
-/*
-**	ft_unset.c
-*/
-int		ft_unset(t_node *node);
-/*
-**	ft_exit.c
-*/
-void	ft_exit(t_node *node);
-/*
-** ft_echo.c
-*/
-int		ft_echo(t_node *node);
-/*
-** get_env.c
-*/
-int		get_env(char *str);
-char	*get_env_str(char *str);
-/*
 ** remove_blank.c
 */
 void	remove_blank(t_cmd **cmd);
-
+/*
+**	signal.c
+*/
+void	set_signal(void);
 #endif

@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <unistd.h>
 
-void
+static void
 	fork_builtin(t_node *node)
 {
 	pid_t	pid;
@@ -62,7 +62,7 @@ void
 	}
 }
 
-void
+static void
 	cmd_child(t_node *node)
 {
 	if (g_state.exit_status == 1 && g_state.ac == 1 \

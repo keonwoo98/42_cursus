@@ -40,8 +40,8 @@ void
 	syntax_error(char c)
 {
 	if (c == '\\')
-		printf("Minishell: syntax error near unexpected token `\\'\n");
+		ft_putstr_fd("Minishell: syntax error near unexpected token `\\'\n", 2);
 	else
-		printf("Minishell: syntax error near unexpected token `;'\n");
+		ft_putstr_fd("Minishell: syntax error near unexpected token `;'\n", 2);
 	g_state.exit_status = 258;
 }

@@ -24,7 +24,7 @@ int
 	g_state.redir_in = open(file, O_RDONLY);
 	if (g_state.redir_in < 0)
 	{
-		printf("Minishell: %s: %s\n", file, strerror(errno));
+		print_errmsg(file, strerror(errno));
 		g_state.exit_status = 1;
 		return (EXIT_FAILURE);
 	}
@@ -37,7 +37,7 @@ int
 	g_state.redir_out = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (g_state.redir_out < 0)
 	{
-		printf("Minishell: %s: %s\n", file, strerror(errno));
+		print_errmsg(file, strerror(errno));
 		g_state.exit_status = 1;
 		return (EXIT_FAILURE);
 	}
@@ -50,7 +50,7 @@ int
 	g_state.redir_out = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (g_state.redir_out < 0)
 	{
-		printf("Minishell: %s: %s\n", file, strerror(errno));
+		print_errmsg(file, strerror(errno));
 		g_state.exit_status = 1;
 		return (EXIT_FAILURE);
 	}

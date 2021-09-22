@@ -53,7 +53,8 @@ SOURCES_LIST = minishell.c\
 				remove_blank.c\
 				get_env.c\
 				ft_export_util.c\
-				assign_util.c
+				assign_util.c\
+				error_util.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = ./objects/

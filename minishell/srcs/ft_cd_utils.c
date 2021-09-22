@@ -93,7 +93,7 @@ int
 		free(temp);
 		i++;
 	}
-	printf("Minishell: cd: %s\n", strerror(errno));
+	print_errmsg("cd", strerror(errno));
 	free_str(cd_path);
 	return (EXIT_FAILURE);
 }
@@ -103,14 +103,14 @@ int
 {
 	if (!is_home_exist(home))
 	{
-		ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
+		print_errmsg("cd", "HOME not set");
 		return (EXIT_FAILURE);
 	}
 	if (!*home)
 		return (EXIT_FAILURE);
 	if (chdir(home) < 0)
 	{
-		printf("Minishell: cd: %s\n", strerror(errno));
+		print_errmsg("cd", strerror(errno));
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

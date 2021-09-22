@@ -90,8 +90,8 @@ int
 			{
 				if (!is_key_valid(temp->contents))
 				{
-					printf("export : `%s': not a valid identifier\n" \
-					, temp->contents);
+					print_error_util("export", \
+					temp->contents, "not a valid identifier");
 					return (EXIT_FAILURE);
 				}
 				else

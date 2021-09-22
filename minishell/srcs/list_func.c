@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 #include "libft.h"
-// #include <stdlib.h>
 
 t_cmd
 	*init_cmd_list(void)

@@ -38,12 +38,14 @@ static void
 		printf("exit\n");
 	if (str[0] == '|')
 		return ;
-	printf("Minishell: exit: %s: numeric argument required\n", str);
+	ft_putstr_fd("Minishell: exit: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
 	if (g_state.ac == 1)
 		exit(255);
 }
 
-void
+static void
 	ft_exit_arg(t_node *node)
 {
 	int	ret;
@@ -64,7 +66,7 @@ void
 		{
 			g_state.exit_status = 1;
 			g_state.fork = 0;
-			printf("Minishell: exit: too many arguments\n");
+			ft_putstr_fd("Minishell: exit: too many arguments\n", 2);
 		}
 	}
 }

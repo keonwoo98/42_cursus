@@ -36,7 +36,7 @@ char
 	return (NULL);
 }
 
-void
+static void
 	get_arg(int *flag, char **cmd_arg, t_node *node)
 {
 	if (*flag == 0)
