@@ -42,6 +42,8 @@ void
 {
 	while (node->next && node->type != BUILTIN)
 		node = node->next;
+	if (node->prev && node->prev->type == CMD)
+		return ;
 	if (!ft_strcmp(node->contents, "pwd") || \
 		!ft_strcmp(node->contents, "echo") || \
 		!ft_strcmp(node->contents, "env"))

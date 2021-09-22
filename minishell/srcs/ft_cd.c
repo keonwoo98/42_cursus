@@ -99,7 +99,8 @@ static int
 	{
 		if (chdir(node->next->contents) < 0)
 		{
-			printf("Minishell: cd: %s\n", strerror(errno));
+			printf("Minishell: cd: %s: %s\n", \
+			node->next->contents, strerror(errno));
 			return (EXIT_FAILURE);
 		}
 	}

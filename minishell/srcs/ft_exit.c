@@ -60,7 +60,7 @@ void
 			g_state.exit_status = (ret & 255);
 			exit(ret & 255);
 		}
-		else
+		else if (g_state.ac == 1)
 		{
 			g_state.exit_status = 1;
 			g_state.fork = 0;
