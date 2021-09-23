@@ -53,7 +53,10 @@ static int
 {
 	display_prompt(line);
 	if (**line == '\0')
+	{
+		free(*line);
 		return (EXIT_FAILURE);
+	}
 	if (parse_line(cmd, *line))
 	{
 		error_return(*cmd, *line);
@@ -93,6 +96,7 @@ int
 		execute(cmd->first);
 		free_list(cmd);
 		free(line);
+		system("leaks minishell");
 	}
 	free_str(g_state.env);
 }
