@@ -28,35 +28,78 @@
 
 **`memset`**
 
+`malloc()`이나 `calloc()`에서 할당 받은 메모리를 특정 값으로 초기화한다. 보통 어떤 작업을 하기 전에 `NULL`로 초기화할 때 많이 사용한다.
+* 헤더 : `#include <string.h>`
+* 형식 : `void *memset(void *s, int c, size_t n)`
+* 인자 :
+	* `void *s` : 초기화하고자 하는 메모리 시작 주소
+	* `int c` : 초기화 값
+	* `size_t size` : 초기화 크기
+* 반환 : 성공 시 `void *s`에 대한 포인터 반환, 실패 시 NULL 반환
+
 **`printf`**
+
+C언어의 표준 출력 함수로, 여러 중류의 data를 다양한 서식에 맞춰 출력할 수 있게 해준다.
+* 헤더 : `#include <stdio.h>`
+* 형식 : `int printf(const char *format, ...)`
+* 인자 : %[플래그(flag)][폭(width)][.정밀도][크기(length)]서식 문자(specifier)
+* 반환 : 성공 시 출력된 전체 문자의 개수, 실패 시 음수 반환
 
 **`malloc`**
 
 메모리를 동적으로 할당받는다.
 * 헤더 : `#include <stdlib.h>`
 * 형식 : `void *malloc(size_t size)`
-* 인수 : 필요한 메모리 바이트 크기
-* 반환 : `void *` 메모리가 할당된 포인터, 실패 시 NULL 반환
+* 인자 : 필요한 메모리 바이트 크기
+* 반환 : 성공 시`void *` 메모리가 할당된 포인터, 실패 시 NULL 반환
 
 **`free`**
 
 `malloc()` 이나 `calloc()`에서 할당받은 메모리를 시스템에 반환한다.
 * 헤더 : `#include <stdlib.h>`
 * 형식 : `void free(void *ptr)`
-* 인수 : 메모리를 해제할 포인터
+* 인자 : 메모리를 해제할 포인터
 
 **`write`**
 
 `open()` 함수로 열기를 한 파일에 쓰기를 한다.
 * 헤더 : `#include <unistd.h>`
 * 형식 : `ssize_t write(int fd, const void *buf, size_t n)`
-* 인수 :
-    * int fd : 파일 디스크립터
-    * void *buf : 파일에 쓰기를 할 내용을 담은 버퍼
-    * size_t n : 쓰기할 파이트 수
+* 인자 :
+    * `int fd` : 파일 디스크립터
+    * `void *buf` : 파일에 쓰기를 할 내용을 담은 버퍼
+    * `size_t n` : 쓰기할 파이트 수
 * 반환 : 성공 시 쓰기한 바이트 수, 실패 시 -1 반환
 
 **`usleep`**
+
+지정한 마이크로 초 동안 대기 상태 유지
+* 헤더 : `#include <unistd.h>`
+* 형식 : `int usleep(useconds_t microseconds)`
+* 인자 : 대기 마이크로 초
+* 반환 :
+	* -1 : 실패 (errno 설정)
+	* 0 : 성공
+
+> 밀리 초 : 1/1000초  
+> 마이크로 초 : 1/1000000초  
+> `useconds_t` : [0, 1000000] 범위의 정수를 담을 수 있는 부호 없는 정수 타입
+
+**`gettimeofday`**
+
+**`pthread_create`**
+
+**`pthread_detach`**
+
+**`pthread_join`**
+
+**`pthread_mutex_init`**
+
+**`pthread_mutex_destroy`**
+
+**`pthread_mutex_lock`**
+
+**`pthread_mutex_unlock`**
 
 ### **Bonus**
 
@@ -77,8 +120,8 @@
 * 헤더 : `#include <signal.h>`
 * 형식 : `int kill(pid_t pid, int sig)`
 * 인자 :
-  * pid_t pid : process id
-  * int sig : 시그널 번호
+  * `pid_t pid` : process id
+  * `int sig` : 시그널 번호
 * 반환값 : 성공시 0, 실패시 -1
 
 |pid|의미|
@@ -93,7 +136,31 @@
 프로세스를 종료한다.
 * 헤더 : `#include <stdlib.h>`
 * 형식 : `void exit(int status)`
-* 인수 : `int main()` 함수의 반환값에 해당하는 정수
+* 인자 : `int main()` 함수의 반환값에 해당하는 정수
+
+**`waitpid`**
+
+`wait()`함수처럼 자식 프로세스가가 종료될 때까지 대기한다. 차이점은 `wait()`함수가 자식 프로세스 중 어느 하나라도 종료되면 대기에서 풀리지만 `waitpid()`는 특정 자식 프로세스가 종료될 때까지 대기한다.
+* 헤더 : `#include <sys/wait.h>`
+* 형식 : `pid_t waitpid(pid_t pid, int *status, int options)`
+* 인자 :
+    * `pid_t pid` : 감시할 자식 프로세스 PID
+    * `int *status` : 자식 프로세스 종료 상태 정보
+    * `int options` : 대기를 위한 옵션
+* 반환 :
+    * 0 : WNOHANG를 사용했고 자식 프로세스가 종료되지 않았을 때
+    * -1 : 실패
+    * 자식 프로세스의 PID : 자식 프로세스 종료
+
+**`sem_open`**
+
+**`sem_close`**
+
+**`sem_post`**
+
+**`sem_wait`**
+
+**`sem_unlink`**
 
 &nbsp;
 
