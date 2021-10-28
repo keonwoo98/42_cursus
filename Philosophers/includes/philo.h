@@ -69,4 +69,10 @@ int			dining(t_arg *arg);
 
 long long	get_time(void);
 
+void		*routine(void *philo);
+
+void		*monitoring(void *arg);
+
+void		print_message(t_philo *p, char *str);
+
 #endif

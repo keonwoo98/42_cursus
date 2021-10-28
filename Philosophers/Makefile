@@ -11,7 +11,9 @@ SOURCES_DIRECTORY = ./sources/
 SOURCES_LIST =	main.c\
 				init.c\
 				utils.c\
-				dining.c
+				dining.c\
+				routine.c\
+				monitoring.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = ./objects/
