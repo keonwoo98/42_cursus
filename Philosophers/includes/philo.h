@@ -46,8 +46,8 @@ typedef struct s_arg
 	int					time_to_eat;		// 밀리세컨 단위, 철학자가 식사하는 시간, 포크 두 개 소유
 	int					time_to_sleep;		// 밀리세컨 단위, 철학자가 자는 시간
 	int					num_of_must_eat;	// 모든 철학자들이 이 횟수만큼 식사를 하게되면 프로그램 종료, 인자가 안들어오면 누군가 죽게되면 종료
-	int					num_of_full;
-	int					end;
+	int					num_of_ate;
+	int					all_ate;
 	long long			start_time;
 	pthread_mutex_t		main_mutex;
 	pthread_mutex_t		dead_mutex;

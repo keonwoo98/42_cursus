@@ -26,7 +26,7 @@ void
 	if (p->eat_cnt == p->arg->num_of_must_eat && p->starve == 0)
 	{
 		p->starve = 1;
-		(p->arg->num_of_full)++;
+		(p->arg->num_of_ate)++;
 	}
 	pthread_mutex_unlock(p->left_fork);
 	pthread_mutex_unlock(p->right_fork);
@@ -58,7 +58,7 @@ void
 
 	p = (t_philo *)philo;
 	p->die_start_time = p->arg->start_time;
-	while (p->arg->end != 1)
+	while (p->arg->all_ate != 1)
 	{
 		take_forks(p);
 		p_eat(p);

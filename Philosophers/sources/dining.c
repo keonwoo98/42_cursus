@@ -3,7 +3,7 @@
 void
 	print_message(t_philo *p, char *str)
 {
-	if (p->arg->end)
+	if (p->arg->all_ate)
 		return ;
 	if (pthread_mutex_lock(&(p->arg->print_mutex)) == 0)
 	{

@@ -3,7 +3,7 @@
 int
 	monitor_cnt_eat(t_arg *arg)
 {
-	if (arg->num_of_full == arg->num_of_philo)
+	if (arg->num_of_ate == arg->num_of_philo)
 	{
 		if (pthread_mutex_lock(&(arg->print_mutex)) == 0)
 		{
@@ -26,7 +26,7 @@ int
 		{
 			arg->philo[i].stat = 4;
 			print_message(&(arg->philo[i]), "dead\t\t");
-			arg->end = 1;
+			arg->all_ate = 1;
 			usleep(100);
 			pthread_mutex_unlock(&(arg->main_mutex));
 			return (EXIT_SUCCESS);
@@ -46,7 +46,7 @@ void
 	i = 0;
 	while (1)
 	{
-		if (a->end)
+		if (a->all_ate)
 			return (EXIT_SUCCESS);
 		if (i == a->num_of_philo)
 			i = 0;
