@@ -14,28 +14,27 @@ long long
 }
 
 void
-	print_state(long long timestamp, int id, char *state)
+	print_philo(t_philo *philo, t_arg *arg, char *msg)
 {
-	long long	time;
-
-	time = -1;
-	time = get_time() - timestamp;
-	if (time >= 0 && time <= 2147483647)
-		printf("%lld %d %s\n", time, id, state);
+	pthread_mutex_lock(&arg->print_mutex);
+	printf(GREEN"%lldms\t"RESET, get_time() - philo->arg->start_time);
+	printf("%d\t", philo->id + 1);
+	printf("%s\t", msg);
+	printf("(%d)\n", philo->eat_cnt);
+	pthread_mutex_unlock(&arg->print_mutex);
 }
 
 void
-	destroy_mutex(t_arg *arg)
+	end_dining(t_arg *arg)
 {
-	int			i;
+	int				i;
 
-	pthread_mutex_unlock(&(arg->dead_mutex));
 	i = 0;
 	while (i < arg->num_of_philo)
 		pthread_mutex_destroy(&(arg->forks_mutex[i++]));
-	pthread_mutex_destroy(&(arg->main_mutex));
-	pthread_mutex_destroy(&(arg->dead_mutex));
+	pthread_mutex_destroy(&(arg->philo_mutex));
 	pthread_mutex_destroy(&(arg->print_mutex));
+	pthread_mutex_destroy(&(arg->eat_mutex));
 	free(arg->forks_mutex);
 	free(arg->philo);
 }
@@ -43,7 +42,7 @@ void
 int
 	main(int argc, char **argv)
 {
-	t_arg		arg;
+	t_arg			arg;
 
 	if (argc != 5 && argc != 6)
 		return (error_msg("Wrong amount of arguments"));
@@ -55,8 +54,7 @@ int
 		return (error_msg("Initialize error"));
 	if (dining(&arg))
 		return (error_msg("Thread error"));
-	if (pthread_mutex_lock(&(arg.main_mutex)) == 0)
-		if (pthread_mutex_unlock(&(arg.main_mutex)) == 0)
-			destroy_mutex(&arg);
+	pthread_mutex_lock(&arg.philo_mutex);
+	end_dining(&arg);
 	return (0);
 }

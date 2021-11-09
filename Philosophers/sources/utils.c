@@ -8,9 +8,9 @@ int
 	len = 0;
 	while (msg[len])
 		len++;
-	write(2, RED"Error: "RESET, 7);
+	write(2, RED"Error: ", 12);
 	write(2, msg, len);
-	write(2, "\n", 1);
+	write(2, "\n"RESET, 5);
 	return (1);
 }
 

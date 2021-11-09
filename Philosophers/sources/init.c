@@ -20,8 +20,9 @@ int
 	if (arg->num_of_philo <= 0 || arg->time_to_die <= 0 || \
 		arg->time_to_eat <= 0 || arg->time_to_sleep <= 0)
 		return (EXIT_FAILURE);
-	arg->num_of_ate = 0;
-	arg->all_ate = 0;
+	arg->num_of_end = 0;
+	arg->end = 0;
+	arg->dead = 0;
 	return (EXIT_SUCCESS);
 }
 
@@ -49,10 +50,11 @@ int
 	i = 0;
 	while (i < arg->num_of_philo)
 	{
-		arg->philo[i].num = i + 1;
+		arg->philo[i].id = i;
+		arg->philo[i].state = THINKING;
 		arg->philo[i].eat_cnt = 0;
-		arg->philo[i].stat = 0;
-		arg->philo[i].starve = 0;
+		arg->philo[i].last_ate = 0;
+		arg->philo[i].is_dead = 0;
 		arg->philo[i].arg = arg;
 		arg->philo[i].right_fork = &(arg->forks_mutex[i]);
 		arg->philo[i].left_fork = &(arg->forks_mutex[(i + 1) % arg->num_of_philo]);
@@ -73,12 +75,11 @@ int
 			return (EXIT_FAILURE);
 		i++;
 	}
-	if (pthread_mutex_init(&(arg->main_mutex), NULL) != 0)
+	if (pthread_mutex_init(&arg->philo_mutex, NULL) != 0)
 		return (EXIT_FAILURE);
-	if (pthread_mutex_init(&(arg->dead_mutex), NULL) != 0)
+	if (pthread_mutex_init(&arg->print_mutex, NULL) != 0)
 		return (EXIT_FAILURE);
-	if (pthread_mutex_init(&(arg->print_mutex), NULL) != 0)
+	if (pthread_mutex_init(&arg->eat_mutex, NULL) != 0)
 		return (EXIT_FAILURE);
-	pthread_mutex_lock(&(arg->main_mutex));
 	return (EXIT_SUCCESS);
 }
