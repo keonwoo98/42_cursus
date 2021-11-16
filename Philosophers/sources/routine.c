@@ -78,14 +78,14 @@ void
 	a = p->arg;
 	while (1)
 	{
-		pthread_mutex_lock(&a->eat_mutex);
+		pthread_mutex_lock(&a->monitor_mutex);
 		if (a->num_of_must_eat > 0 && a->num_of_end >= a->num_of_philo)
 		{
 			a->end = 1;
 			pthread_mutex_lock(&a->print_mutex);
 			printf(CYAN"All philosophers have finished their meals\n"RESET);
 			pthread_mutex_unlock(&a->print_mutex);
-			pthread_mutex_unlock(&a->eat_mutex);
+			pthread_mutex_unlock(&a->monitor_mutex);
 			pthread_mutex_unlock(&a->philo_mutex);
 			return ((void *)EXIT_SUCCESS);
 		}
@@ -93,11 +93,11 @@ void
 		{
 			a->dead = 1;
 			print_philo(p, a, "dead");
-			pthread_mutex_unlock(&a->eat_mutex);
+			pthread_mutex_unlock(&a->monitor_mutex);
 			pthread_mutex_unlock(&a->philo_mutex);
 			return ((void *)EXIT_SUCCESS);
 		}
-		pthread_mutex_unlock(&a->eat_mutex);
+		pthread_mutex_unlock(&a->monitor_mutex);
 		ft_usleep(1000);
 	}
 }
@@ -126,7 +126,7 @@ void
 		eating(p, a);
 		sleeping(p, a);
 		thinking(p, a);
-		usleep(100);
+		// usleep(100);
 	}
 	return ((void *)EXIT_SUCCESS);
 }

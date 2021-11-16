@@ -68,7 +68,7 @@ typedef struct s_arg
 	pthread_mutex_t		*forks_mutex;
 	pthread_mutex_t		philo_mutex;
 	pthread_mutex_t		print_mutex;
-	pthread_mutex_t		eat_mutex;
+	pthread_mutex_t		monitor_mutex;
 	t_philo				*philo;
 }t_arg;
 

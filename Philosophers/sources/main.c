@@ -34,7 +34,7 @@ void
 		pthread_mutex_destroy(&(arg->forks_mutex[i++]));
 	pthread_mutex_destroy(&(arg->philo_mutex));
 	pthread_mutex_destroy(&(arg->print_mutex));
-	pthread_mutex_destroy(&(arg->eat_mutex));
+	pthread_mutex_destroy(&(arg->monitor_mutex));
 	free(arg->forks_mutex);
 	free(arg->philo);
 }

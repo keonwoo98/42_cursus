@@ -79,7 +79,7 @@ int
 		return (EXIT_FAILURE);
 	if (pthread_mutex_init(&arg->print_mutex, NULL) != 0)
 		return (EXIT_FAILURE);
-	if (pthread_mutex_init(&arg->eat_mutex, NULL) != 0)
+	if (pthread_mutex_init(&arg->monitor_mutex, NULL) != 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
