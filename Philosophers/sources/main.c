@@ -28,6 +28,8 @@ long long
 void
 	print_philo(t_philo *philo, t_arg *arg, char *msg)
 {
+	if (arg->end || arg->dead)
+		return ;
 	pthread_mutex_lock(&arg->print_mutex);
 	printf(GREEN"%lldms\t"RESET, get_time() - philo->arg->start_time);
 	printf("%d\t", philo->id + 1);

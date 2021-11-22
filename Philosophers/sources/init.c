@@ -63,13 +63,13 @@ int
 	while (i < arg->num_of_philo)
 	{
 		arg->philo[i].id = i;
-		arg->philo[i].state = THINKING;
 		arg->philo[i].eat_cnt = 0;
 		arg->philo[i].last_ate = 0;
 		arg->philo[i].is_dead = 0;
 		arg->philo[i].arg = arg;
 		arg->philo[i].right_fork = &(arg->forks_mutex[i]);
-		arg->philo[i].left_fork = &(arg->forks_mutex[(i + 1) % arg->num_of_philo]);
+		arg->philo[i].left_fork = \
+			&(arg->forks_mutex[(i + 1) % arg->num_of_philo]);
 		i++;
 	}
 	return (EXIT_SUCCESS);

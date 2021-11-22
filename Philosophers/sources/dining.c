@@ -12,30 +12,73 @@
 
 #include "philo.h"
 
-int
-	start_thread(t_arg *arg, int num)
+void
+	philo_fin(t_arg *a)
 {
-	pthread_t		t_id;
+	a->end++;
+	usleep(100);
+	pthread_mutex_unlock(&a->monitor_mutex);
+	pthread_mutex_unlock(&a->philo_mutex);
+	pthread_mutex_lock(&a->print_mutex);
+	printf(CYAN"All philosophers have finished their meals\n"RESET);
+	pthread_mutex_unlock(&a->print_mutex);
+}
 
-	while (num < arg->num_of_philo)
+void
+	philo_dead(t_arg *a, t_philo *p)
+{
+	a->dead++;
+	usleep(100);
+	pthread_mutex_unlock(&a->monitor_mutex);
+	pthread_mutex_unlock(&a->philo_mutex);
+	pthread_mutex_lock(&a->print_mutex);
+	printf(GREEN"%lldms\t"RESET, get_time() - p->arg->start_time);
+	printf("%d\t%s\t(%d)\n", p->id + 1, "dead", p->eat_cnt);
+	pthread_mutex_unlock(&a->print_mutex);
+}
+
+void
+	*monitor(void *philo)
+{
+	t_arg		*a;
+	t_philo		*p;
+
+	p = (t_philo *)philo;
+	a = p->arg;
+	while (!(a->dead || a->end))
 	{
-		if (pthread_create(&t_id, NULL, &routine, &arg->philo[num]) != 0)
-			return (EXIT_FAILURE);
-		if (pthread_detach(t_id) != 0)
-			return (EXIT_FAILURE);
-		num += 2;
+		pthread_mutex_lock(&a->monitor_mutex);
+		if (a->num_of_must_eat > 0 && a->num_of_end >= a->num_of_philo)
+		{
+			philo_fin(a);
+			return ((void *)EXIT_SUCCESS);
+		}
+		if (get_time() > p->is_dead)
+		{
+			philo_dead(a, p);
+			return ((void *)EXIT_SUCCESS);
+		}
+		pthread_mutex_unlock(&a->monitor_mutex);
 	}
-	if (num % 2 == 0)
-		usleep(500 * arg->time_to_eat);
-	return (EXIT_SUCCESS);
+	return ((void *)EXIT_SUCCESS);
 }
 
 int
 	dining(t_arg *arg)
 {
+	int			i;
+	pthread_t	t_id;
+
+	i = 0;
 	pthread_mutex_lock(&arg->philo_mutex);
 	arg->start_time = get_time();
-	if (start_thread(arg, EVEN) || start_thread(arg, ODD))
-		return (EXIT_FAILURE);
+	while (i < arg->num_of_philo)
+	{
+		if (pthread_create(&t_id, NULL, &routine, &arg->philo[i]) != 0)
+			return (EXIT_FAILURE);
+		if (pthread_detach(t_id) != 0)
+			return (EXIT_FAILURE);
+		i++;
+	}
 	return (EXIT_SUCCESS);
 }
