@@ -34,11 +34,13 @@ typedef struct s_philo
 {
 	int					id;
 	int					eat_cnt;
+	int					left_fork;
+	int					right_fork;
 	long long			last_ate;
 	long long			is_dead;
-	pthread_t			monitor;
-	pthread_mutex_t		*left_fork;
-	pthread_mutex_t		*right_fork;
+	pthread_t			philo_tid;
+	pthread_t			monitor_tid;
+	pthread_mutex_t		philo_mutex;
 	struct s_arg		*arg;
 }t_philo;
 
@@ -51,32 +53,42 @@ typedef struct s_arg
 	int					num_of_must_eat;
 	int					num_of_end;
 	int					end;
-	int					dead;
 	long long			start_time;
 	pthread_mutex_t		*forks_mutex;
-	pthread_mutex_t		philo_mutex;
 	pthread_mutex_t		print_mutex;
-	pthread_mutex_t		monitor_mutex;
 	t_philo				*philo;
 }t_arg;
 
+/*
+** utils.c
+*/
 int			ft_atoi(const char *str);
 int			is_num(char **argv);
 int			error_msg(char *msg);
-
+/*
+** init.c
+*/
 int			init_arg(t_arg *arg, int argc, char **argv);
 int			malloc_arg(t_arg *arg);
 int			init_mutex(t_arg *arg);
 int			init_philo(t_arg *arg);
-
+/*
+** dining.c
+*/
 int			dining(t_arg *arg);
-
-long long	get_time(void);
-
 void		*routine(void *philo);
-
 void		*monitor(void *philo);
-
+/*
+** main.c
+*/
+long long	get_time(void);
 void		print_philo(t_philo *philo, t_arg *arg, char *msg);
+/*
+** routine.c
+*/
+void		taking_forks(t_philo *p, t_arg *a);
+void		eating(t_philo *p, t_arg *a);
+void		sleeping(t_philo *p, t_arg *a);
+void		thinking(t_philo *p, t_arg *a);
 
 #endif

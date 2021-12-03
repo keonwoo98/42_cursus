@@ -34,7 +34,6 @@ int
 		return (EXIT_FAILURE);
 	arg->num_of_end = 0;
 	arg->end = 0;
-	arg->dead = 0;
 	return (EXIT_SUCCESS);
 }
 
@@ -67,9 +66,10 @@ int
 		arg->philo[i].last_ate = 0;
 		arg->philo[i].is_dead = 0;
 		arg->philo[i].arg = arg;
-		arg->philo[i].right_fork = &(arg->forks_mutex[i]);
-		arg->philo[i].left_fork = \
-			&(arg->forks_mutex[(i + 1) % arg->num_of_philo]);
+		arg->philo[i].left_fork = i;
+		arg->philo[i].right_fork = (i + 1) % arg->num_of_philo;
+		if (pthread_mutex_init(&arg->philo[i].philo_mutex, NULL) != 0)
+			return (EXIT_FAILURE);
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -83,15 +83,11 @@ int
 	i = 0;
 	while (i < arg->num_of_philo)
 	{
-		if (pthread_mutex_init(&(arg->forks_mutex[i]), NULL) != 0)
+		if (pthread_mutex_init(&arg->forks_mutex[i], NULL) != 0)
 			return (EXIT_FAILURE);
 		i++;
 	}
-	if (pthread_mutex_init(&arg->philo_mutex, NULL) != 0)
-		return (EXIT_FAILURE);
 	if (pthread_mutex_init(&arg->print_mutex, NULL) != 0)
-		return (EXIT_FAILURE);
-	if (pthread_mutex_init(&arg->monitor_mutex, NULL) != 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

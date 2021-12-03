@@ -28,7 +28,7 @@ long long
 void
 	print_philo(t_philo *philo, t_arg *arg, char *msg)
 {
-	if (arg->end || arg->dead)
+	if (arg->end)
 		return ;
 	pthread_mutex_lock(&arg->print_mutex);
 	printf(GREEN"%lldms\t"RESET, get_time() - philo->arg->start_time);
@@ -45,10 +45,12 @@ void
 
 	i = 0;
 	while (i < arg->num_of_philo)
-		pthread_mutex_destroy(&(arg->forks_mutex[i++]));
-	pthread_mutex_destroy(&(arg->philo_mutex));
+	{
+		pthread_mutex_destroy(&(arg->forks_mutex[i]));
+		pthread_mutex_destroy(&(arg->philo[i].philo_mutex));
+		i++;
+	}
 	pthread_mutex_destroy(&(arg->print_mutex));
-	pthread_mutex_destroy(&(arg->monitor_mutex));
 	free(arg->forks_mutex);
 	free(arg->philo);
 }
@@ -68,7 +70,6 @@ int
 		return (error_msg("Initialize error"));
 	if (dining(&arg))
 		return (error_msg("Thread error"));
-	pthread_mutex_lock(&arg.philo_mutex);
 	end_dining(&arg);
 	return (0);
 }

@@ -13,28 +13,42 @@
 #include "philo.h"
 
 void
-	philo_fin(t_arg *a)
+	finished_meal(t_arg *a)
 {
-	a->end++;
-	usleep(100);
-	pthread_mutex_unlock(&a->monitor_mutex);
-	pthread_mutex_unlock(&a->philo_mutex);
+	a->end = 1;
+	usleep(1000);
 	pthread_mutex_lock(&a->print_mutex);
 	printf(CYAN"All philosophers have finished their meals\n"RESET);
 	pthread_mutex_unlock(&a->print_mutex);
 }
 
 void
-	philo_dead(t_arg *a, t_philo *p)
+	*routine(void *philo)
 {
-	a->dead++;
-	usleep(100);
-	pthread_mutex_unlock(&a->monitor_mutex);
-	pthread_mutex_unlock(&a->philo_mutex);
-	pthread_mutex_lock(&a->print_mutex);
-	printf(GREEN"%lldms\t"RESET, get_time() - p->arg->start_time);
-	printf("%d\t%s\t(%d)\n", p->id + 1, "dead", p->eat_cnt);
-	pthread_mutex_unlock(&a->print_mutex);
+	t_philo		*p;
+	t_arg		*a;
+
+	p = (t_philo *)philo;
+	a = p->arg;
+	if (p->id % 2 == 0 && a->num_of_philo != 1)
+		usleep(1000 * a->time_to_eat);
+	while (!a->end)
+	{
+		taking_forks(p, a);
+		eating(p, a);
+		if (a->end)
+			break ;
+		if (a->num_of_must_eat > 0 && a->num_of_end >= a->num_of_philo)
+		{
+			finished_meal(a);
+			break ;
+		}
+		sleeping(p, a);
+		if (a->end)
+			break ;
+		thinking(p, a);
+	}
+	return ((void *)EXIT_SUCCESS);
 }
 
 void
@@ -45,20 +59,21 @@ void
 
 	p = (t_philo *)philo;
 	a = p->arg;
-	while (!(a->dead || a->end))
+	while (!a->end)
 	{
-		pthread_mutex_lock(&a->monitor_mutex);
-		if (a->num_of_must_eat > 0 && a->num_of_end >= a->num_of_philo)
+		pthread_mutex_lock(&p->philo_mutex);
+		if (get_time() - p->last_ate >= a->time_to_die)
 		{
-			philo_fin(a);
+			a->end = 1;
+			pthread_mutex_lock(&a->print_mutex);
+			printf(GREEN"%lldms\t"RESET, get_time() - p->arg->start_time);
+			printf("%d\t%s\t(%d)\n", p->id + 1, "dead", p->eat_cnt);
+			pthread_mutex_unlock(&p->philo_mutex);
+			pthread_mutex_unlock(&p->philo_mutex);
 			return ((void *)EXIT_SUCCESS);
 		}
-		if (get_time() > p->is_dead)
-		{
-			philo_dead(a, p);
-			return ((void *)EXIT_SUCCESS);
-		}
-		pthread_mutex_unlock(&a->monitor_mutex);
+		pthread_mutex_unlock(&p->philo_mutex);
+		usleep(100);
 	}
 	return ((void *)EXIT_SUCCESS);
 }
@@ -67,16 +82,26 @@ int
 	dining(t_arg *arg)
 {
 	int			i;
-	pthread_t	t_id;
 
 	i = 0;
-	pthread_mutex_lock(&arg->philo_mutex);
 	arg->start_time = get_time();
 	while (i < arg->num_of_philo)
 	{
-		if (pthread_create(&t_id, NULL, &routine, &arg->philo[i]) != 0)
+		arg->philo[i].last_ate = get_time();
+		if (pthread_create(&arg->philo[i].philo_tid, \
+			NULL, routine, &arg->philo[i]) != 0)
 			return (EXIT_FAILURE);
-		if (pthread_detach(t_id) != 0)
+		if (pthread_create(&arg->philo[i].monitor_tid, \
+			NULL, monitor, &arg->philo[i]) != 0)
+			return (EXIT_FAILURE);
+		i++;
+	}
+	i = 0;
+	while (i < arg->num_of_philo)
+	{
+		if (pthread_join(arg->philo[i].philo_tid, NULL) != 0)
+			return (EXIT_FAILURE);
+		if (pthread_join(arg->philo[i].monitor_tid, NULL) != 0)
 			return (EXIT_FAILURE);
 		i++;
 	}
