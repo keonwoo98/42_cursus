@@ -40,10 +40,8 @@ void
 	}
 	else
 	{
-		pthread_mutex_lock(&p->philo_mutex);
 		print_philo(p, a, "is eating");
 		p->last_ate = get_time();
-		pthread_mutex_unlock(&p->philo_mutex);
 		while (get_time() - p->last_ate <= a->time_to_eat)
 			usleep(1000);
 		p->eat_cnt++;

@@ -40,7 +40,6 @@ typedef struct s_philo
 	long long			is_dead;
 	pthread_t			philo_tid;
 	pthread_t			monitor_tid;
-	pthread_mutex_t		philo_mutex;
 	struct s_arg		*arg;
 }t_philo;
 

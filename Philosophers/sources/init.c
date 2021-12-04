@@ -68,8 +68,6 @@ int
 		arg->philo[i].arg = arg;
 		arg->philo[i].left_fork = i;
 		arg->philo[i].right_fork = (i + 1) % arg->num_of_philo;
-		if (pthread_mutex_init(&arg->philo[i].philo_mutex, NULL) != 0)
-			return (EXIT_FAILURE);
 		i++;
 	}
 	return (EXIT_SUCCESS);

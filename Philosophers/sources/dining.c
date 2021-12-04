@@ -61,18 +61,14 @@ void
 	a = p->arg;
 	while (!a->end)
 	{
-		pthread_mutex_lock(&p->philo_mutex);
 		if (get_time() - p->last_ate >= a->time_to_die)
 		{
 			a->end = 1;
 			pthread_mutex_lock(&a->print_mutex);
 			printf(GREEN"%lldms\t"RESET, get_time() - p->arg->start_time);
 			printf("%d\t%s\t(%d)\n", p->id + 1, "dead", p->eat_cnt);
-			pthread_mutex_unlock(&p->philo_mutex);
-			pthread_mutex_unlock(&p->philo_mutex);
 			return ((void *)EXIT_SUCCESS);
 		}
-		pthread_mutex_unlock(&p->philo_mutex);
 		usleep(100);
 	}
 	return ((void *)EXIT_SUCCESS);

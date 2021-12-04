@@ -47,7 +47,6 @@ void
 	while (i < arg->num_of_philo)
 	{
 		pthread_mutex_destroy(&(arg->forks_mutex[i]));
-		pthread_mutex_destroy(&(arg->philo[i].philo_mutex));
 		i++;
 	}
 	pthread_mutex_destroy(&(arg->print_mutex));
