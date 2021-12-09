@@ -17,11 +17,11 @@ typedef struct s_canva
 typedef struct s_shape
 {
 	char		type;
-	char		background;
 	float		x;
 	float		y;
 	float		width;
 	float		height;
+	char		background;
 }t_shape;
 
 #endif

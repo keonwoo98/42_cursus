@@ -19,10 +19,10 @@ int
 char
 	**background_draw(t_canva canva_dim)
 {
-	int		i = 0;
-	int		j = 0;
+	int		i;
+	int		j;
 	int		k;
-	char		**buffer;
+	char	**buffer;
 
 	buffer = malloc(sizeof(*buffer) * canva_dim.height + 1);
 	for (k = 0; k < canva_dim.height; k++)
@@ -56,7 +56,7 @@ void
 			y++;
 		}
 	}
-	if (shape_dim.type == 'r')
+	else if (shape_dim.type == 'r')
 	{
 		while (y < canva.height)
 		{
@@ -84,7 +84,7 @@ int
 	while ((ret = fscanf(file, "%c %f %f %f %f %c\n", \
 	&shape_dim->type, &shape_dim->x, &shape_dim->y, &shape_dim->width, &shape_dim->height, &shape_dim->background)) == 6)
 	{
-		if (shape_dim->width < 0.0 || shape_dim->height <= 0.0)
+		if (shape_dim->width <= 0.0 || shape_dim->height <= 0.0)
 			return (0);
 		if (shape_dim->type != 'R' && shape_dim->type != 'r')
 			return (0);
@@ -99,8 +99,8 @@ int
 	main(int argc, char **argv)
 {
 	FILE		*file;
-	t_canva	canva_dim;
-	t_shape	shape_dim;
+	t_canva		canva_dim;
+	t_shape		shape_dim;
 	char		**buffer;
 
 	if (argc != 2)
