@@ -8,8 +8,8 @@ int
 	ret = fscanf(file, "%d %d %c\n", &canva_dim->width, &canva_dim->height, &canva_dim->background);
 	if (ret != 3)
 		return (0);
-	if (canva_dim->width < 0 || canva_dim->width > 300 \
-	|| canva_dim->height < 0 || canva_dim->height > 300)
+	if (canva_dim->width <= 0 || canva_dim->width > 300 \
+	|| canva_dim->height <= 0 || canva_dim->height > 300)
 		return (0);
 	if (ret == -1)
 		return (0);
@@ -95,6 +95,14 @@ int
 	return (1);
 }
 
+void
+	free_buffer(t_canva canva_dim, char **buffer)
+{
+	for (int i = 0; i < canva_dim.height; i++)
+		free(buffer[i]);
+	free(buffer);
+}
+
 int
 	main(int argc, char **argv)
 {
@@ -123,6 +131,7 @@ int
 	if (!final_draw_check(&shape_dim, file, buffer, canva_dim))
 	{
 		write(1, "Error: Operation file corrupted\n", 32);
+		free_buffer(canva_dim, buffer);
 		fclose(file);
 		return (1);
 	}
@@ -132,6 +141,7 @@ int
 			printf("%c", buffer[i][j]);
 		printf("\n");
 	}
+	free_buffer(canva_dim, buffer);
 	fclose(file);
 	return (0);
 }
