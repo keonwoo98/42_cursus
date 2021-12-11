@@ -8,8 +8,7 @@ int
 	ret = fscanf(file, "%d %d %c\n", &canva->width, &canva->height, &canva->background);
 	if (ret != 3)
 		return (0);
-	if (canva->width <= 0 || canva->width > 300 \
-	|| canva->height <= 0 || canva->height > 300)
+	if (canva->width <= 0 || canva->width > 300 || canva->height <= 0 || canva->height > 300)
 		return (0);
 	if (ret == -1)
 		return (0);
