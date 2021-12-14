@@ -137,8 +137,8 @@ int
 	for (int i = 0; i < canva.height; i++)
 	{
 		for (int j = 0; j < canva.width; j++)
-			printf("%c", buffer[i][j]);
-		printf("\n");
+			write(1, &buffer[i][j], 1);
+		write(1, "\n", 1);
 	}
 	free_buffer(canva, buffer);
 	fclose(file);
