@@ -131,6 +131,7 @@ int
 	if (!draw_check(&shape, file, buffer, canva))
 	{
 		write(1, "Error: Operation file corrupted\n", 32);
+		free_buffer(canva, buffer);
 		fclose(file);
 		return (1);
 	}
