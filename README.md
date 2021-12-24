@@ -2,6 +2,10 @@
 
 <a href="버튼을 눌렀을 때 이동할 링크" target="_blank"><img src="https://img.shields.io/badge/42Seoul-0?style=flat&logo=42&logoColor=000000"/></a>
 
+**Cadet**
+
+**2021.05.03 ~**
+
 &nbsp;
 
 ![keokim's 42 stats](https://badge42.herokuapp.com/api/stats/keokim)
@@ -13,7 +17,7 @@
 | CIRCLE | PROJECT                                                                         | LANGUAGE    | TOPICS                                                                                                                 | EXPERIENCE | STATUS                                                                                                                                           | Date of Completion |
 | ------ | ------------------------------------------------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
 | 00     | [Libft](./Libft)                                                             | C           | `Library` `Makefile` `Linked list`                                                                                     | 462 XP     | ![Project Score - Libft](https://badge42.herokuapp.com/api/project/keokim/Libft)                     | 2021-05-13         |
-| 01     | [netwhat](./Netwhat)                                                         | Network     | `network` `IP` `network layers` `DHCP`                                                                                 | 462 XP     | ![Project Score - netwhat](https://badge42.herokuapp.com/api/project/keokim/netwhat)                 | 2021-05-??         |
+| 01     | [netwhat](./Netwhat)                                                         | Network     | `network` `IP` `network layers` `DHCP`                                                                                 | 462 XP     | ![Project Score - netwhat](https://badge42.herokuapp.com/api/project/keokim/netwhat)                 | 2021-05-18         |
 | 01     | [get_next_line](./Get_Next_Line)                                             | C           | `file descriptor`                                                                                                      | 882 XP     | ![Project Score - get_next_line](https://badge42.herokuapp.com/api/project/keokim/get_next_line)     | 2021-05-26         |
 | 01     | [ft_printf](./ft_printf)                                                     | C           | `variadic arguments` `character parsing` `unicode encoding` `IEEE 754` `BigInt` `Library` `Makefile`                   | 882 XP     | ![Project Score - ft_printf](https://badge42.herokuapp.com/api/project/keokim/ft_printf)             | 2021-06-16         |
 | 01     | [Born2beroot](./Born2beRoot)                                                     | C           || 577 XP     | ![Project Score - Born2beroot](https://badge42.herokuapp.com/api/project/keokim/Born2beroot)             | 2021-06-05         |
