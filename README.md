@@ -8,7 +8,7 @@
 
 &nbsp;
 
-![keokim's 42 stats]([![keokim's 42 stats](https://badge42.vercel.app/api/v2/cl1nbj3l1004509l91qsvger1/stats?cursusId=21&coalitionId=88)](https://github.com/JaeSeoKim/badge42))
+[![keokim's 42 stats](https://badge42.vercel.app/api/v2/cl1nbj3l1004509l91qsvger1/stats?cursusId=21&coalitionId=88)](https://github.com/JaeSeoKim/badge42)
 
 &nbsp;
 
