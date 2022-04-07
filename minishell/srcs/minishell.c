@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minjkim2 <minjkim2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keokim <keokim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:41:20 by minjkim2          #+#    #+#             */
-/*   Updated: 2021/09/19 23:41:21 by minjkim2         ###   ########.fr       */
+/*   Updated: 2022/04/07 20:17:12 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int
 		execute(cmd->first);
 		free_list(cmd);
 		free(line);
-		system("leaks minishell");
 	}
 	free_str(g_state.env);
 }
