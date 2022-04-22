@@ -1,20 +1,8 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: keokim <keokim@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/04/07 20:34:37 by keokim            #+#    #+#              #
-#    Updated: 2022/04/08 17:20:50 by keokim           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = phonebook
 CC = clang++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
-SRCS =	main.cpp PhoneBook.cpp Contact.cpp
+SRCS =	main.cpp PhoneBook.cpp Contact.cpp Table.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

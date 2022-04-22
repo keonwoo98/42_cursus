@@ -1,22 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: keokim <keokim@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 17:10:29 by keokim            #+#    #+#             */
-/*   Updated: 2022/04/08 19:28:29 by keokim           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "PhoneBook.hpp"
 
 int main(void)
 {
+	int contacts;
 	Phonebook book;
 	std::string cmd;
 
+	contacts = 0;
 	std::cout << "-----Welcome to Awesome PhoneBook!!!-----\n" << std::endl;
 	while (1)
 	{
@@ -24,9 +14,14 @@ int main(void)
 		std::cin >> cmd;
 		std::cout << std::endl;
 		if (cmd == "ADD")
-			book.AddContact();
+		{
+			book.AddContact(contacts);
+			contacts++;
+			if (contacts == 8)
+				contacts = 0;
+		}
 		else if (cmd == "SEARCH")
-			book.ShowContact();
+			book.SearchContact();
 		else if (cmd == "EXIT")
 			break ;
 		else

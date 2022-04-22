@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   Contact.cpp                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: keokim <keokim@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 13:02:17 by keokim            #+#    #+#             */
-/*   Updated: 2022/04/08 19:57:41 by keokim           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "Contact.hpp"
 
 void Contact::GetContactInfo()
@@ -28,7 +16,7 @@ void Contact::GetContactInfo()
 	std::cout << std::endl;
 }
 
-void Contact::SearchContact(int idx)
+void Contact::ShowContact(int idx)
 {
 	std::cout << std::setw(10) << "Contact : " << idx << std::endl;
 	std::cout << std::setw(10) << "First Name : " << first_name << std::endl;
@@ -52,9 +40,4 @@ std::string Contact::GetLastName()
 std::string Contact::GetNickname()
 {
 	return (nickname);
-}
-
-std::string Contact::GetPhoneNum()
-{
-	return (phone_number);
 }
