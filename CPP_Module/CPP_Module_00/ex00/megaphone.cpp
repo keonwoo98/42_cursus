@@ -1,5 +1,5 @@
 #include <iostream>
-#include <ctype.h>
+#include <cctype>
 
 int		main(int argc, char **argv)
 {
