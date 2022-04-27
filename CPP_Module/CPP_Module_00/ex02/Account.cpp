@@ -1,10 +1,25 @@
 #include "Account.hpp"
 #include <iostream>
+#include <ctime>
 
 int	Account::_nbAccounts = 0;
 int	Account::_totalAmount = 0;
 int	Account::_totalNbDeposits = 0;
 int	Account::_totalNbWithdrawals = 0;
+
+Account::Account(void)
+{
+	_accountIndex = _nbAccounts;
+	_amount = 0;
+	_nbDeposits = 0;
+	_nbWithdrawals = 0;
+	_nbAccounts++;
+
+	Account::_displayTimestamp();
+	std::cout << "index:" << _accountIndex << ';';
+	std::cout << "amount:" << _amount << ';';
+	std::cout << "created" << std::endl;
+}
 
 Account::Account(int initial_deposit)
 {
@@ -94,7 +109,14 @@ void Account::displayAccountsInfos(void)
 
 void Account::_displayTimestamp(void)
 {
-	std::cout << "[19920104_091532] ";
+	char buf[18];
+	time_t curtime;
+	struct tm *timeinfo;
+
+	time(&curtime);
+	timeinfo = localtime(&curtime);
+	strftime(buf, 18, "[%Y%m%d_%H%M%S]", timeinfo);
+	std::cout << buf << ' ';
 }
 
 int Account::getNbAccounts(void)

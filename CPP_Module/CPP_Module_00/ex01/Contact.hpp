@@ -14,6 +14,7 @@ private :
 	std::string nickname;
 	std::string phone_number;
 	std::string darkest_secret;
+
 public :
 	void GetContactInfo();
 	void ShowContact(int idx);
