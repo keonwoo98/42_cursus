@@ -1,6 +1,6 @@
 #include "PhoneBook.hpp"
 
-int main(void)
+int main()
 {
 	int contacts;
 	Phonebook book;
