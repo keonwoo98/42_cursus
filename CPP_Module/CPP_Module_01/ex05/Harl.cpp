@@ -39,7 +39,7 @@ Harl::~Harl(void)
 
 void Harl::complain(std::string level)
 {
-	void (Harl::*func[4])(void) = {
+	void (Harl::*func_pointer[4])(void) = {
 		&Harl::debug, &Harl::info, &Harl::warning, &Harl::error
 	};
 
@@ -49,7 +49,7 @@ void Harl::complain(std::string level)
 	{
 		if (level == msg[i])
 		{
-			(this->*func[i])();
+			(this->*func_pointer[i])();
 			return ;
 		}
 	}
