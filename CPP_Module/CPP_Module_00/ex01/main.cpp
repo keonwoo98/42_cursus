@@ -12,6 +12,8 @@ int main()
 	{
 		std::cout << "Choose an option (ADD, SEARCH, EXIT): ";
 		std::cin >> cmd;
+		if (std::cin.eof())
+			break ;
 		std::cout << std::endl;
 		if (cmd == "ADD")
 		{
