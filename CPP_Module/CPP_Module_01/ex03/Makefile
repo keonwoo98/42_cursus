@@ -1,5 +1,5 @@
 NAME = violence
-CC = clang++
+CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
 SRCS =	main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
