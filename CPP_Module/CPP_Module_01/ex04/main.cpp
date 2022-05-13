@@ -23,6 +23,10 @@ void replace(std::string const& filename, std::string const& s_find, std::string
 
 	if (!in || !out)
 	{
+		if (in)
+			in.close();
+		else if (out)
+			out.close();
 		std::cerr << "Error : open fail" << std::endl;
 		return ;
 	}
