@@ -56,4 +56,3 @@ std::ostream& operator<<(std::ostream& os, const Fixed& cp)
 	os << cp.toFloat();
 	return os;
 }
-
