@@ -13,7 +13,7 @@ Fixed::Fixed(const int value)
 }
 Fixed::Fixed(const float value)
 {
-	_value = round(value * (1 << _bits));
+	_value = roundf(value * (1 << _bits));
 	std::cout << "Float constructor called" << std::endl;
 }
 Fixed::Fixed(const Fixed& cp)
@@ -24,8 +24,7 @@ Fixed::Fixed(const Fixed& cp)
 Fixed& Fixed::operator=(const Fixed& cp)
 {
 	std::cout << "Copy assignation operator called" << std::endl;
-	if (this != &cp)
-		_value = cp._value;
+	_value = cp._value;
 	return *this;
 }
 Fixed::~Fixed(void)
@@ -49,7 +48,7 @@ int Fixed::toInt(void) const
 }
 float Fixed::toFloat(void) const
 {
-	return (float(_value) / (1 << _bits));
+	return ((float)_value / (1 << _bits));
 }
 std::ostream& operator<<(std::ostream& os, const Fixed& cp)
 {
