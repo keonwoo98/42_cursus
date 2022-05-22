@@ -10,9 +10,10 @@ private :
 	static const int _bits;
 public :
 	Fixed(void);
-	Fixed(const Fixed &cp);
-	Fixed& operator=(const Fixed &cp);
+	Fixed(const Fixed &fix);
 	~Fixed(void);
+	
+	Fixed& operator=(const Fixed &fix);
 
 	int getRawBits(void) const;
 	void setRawBits(int const raw);
