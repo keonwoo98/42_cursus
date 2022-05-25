@@ -12,6 +12,7 @@ public :
 	Point(void);
 	Point(const Point &pt);
 	Point(const Fixed x, const Fixed y);
+	Point(const float x, const float y);
 	~Point(void);
 
 	Point& operator=(const Point &pt);
