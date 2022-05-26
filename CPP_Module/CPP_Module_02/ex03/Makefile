@@ -1,4 +1,4 @@
-NAME = canon
+NAME = bsp
 CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98
 
