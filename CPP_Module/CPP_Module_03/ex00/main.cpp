@@ -3,23 +3,18 @@
 int main(void)
 {
 	ClapTrap def;
-	ClapTrap r1("Robot1");
-	ClapTrap r2("Robot2");
+	ClapTrap c1("Clap1");
+	ClapTrap c2("Clap2");
 
 	std::cout << std::endl;
-	r1.attack("Robot2");
-	r2.takeDamage(5);
+	while (c1.is_alive() && c2.is_alive())
+	{
+		c1.attack("Clap2");
+		c2.takeDamage(c1.getAd());
+		std::cout << std::endl;
+	}
 	std::cout << std::endl;
-	
-	r2.attack("Default");
-	def.takeDamage(5);
-	std::cout << std::endl;
-
 	def.beRepaired(10);
-	std::cout << std::endl;
-	
-	def.attack("Robot2");
-	r2.takeDamage(5);
 	std::cout << std::endl;
 	
 	return 0;

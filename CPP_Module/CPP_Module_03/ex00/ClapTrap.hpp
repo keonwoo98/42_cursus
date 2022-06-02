@@ -21,6 +21,7 @@ public :
 	void takeDamage(unsigned int amount);
 	void beRepaired(unsigned int amount);
 	
+	bool is_alive(void) const;
 	unsigned int getAd(void) const;
 };
 
