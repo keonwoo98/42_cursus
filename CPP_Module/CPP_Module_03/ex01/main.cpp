@@ -10,25 +10,15 @@ int main(void)
 	s1.attack("Scav2");
 	s2.takeDamage(s1.getAd());
 	std::cout << std::endl;
-	
-	s2.attack("Default");
-	def.takeDamage(s2.getAd());
-	std::cout << std::endl;
 
-	def.beRepaired(10);
+	s2.beRepaired(10);
+	std::cout << std::endl;
+	
+	s2.guardGate();
 	std::cout << std::endl;
 	
 	def.attack("Scav2");
 	s2.takeDamage(def.getAd());
-	std::cout << std::endl;
-
-	def.guardGate();
-	std::cout << std::endl;
-
-	s1.guardGate();
-	std::cout << std::endl;
-
-	s2.guardGate();
 	std::cout << std::endl;
 	
 	return 0;

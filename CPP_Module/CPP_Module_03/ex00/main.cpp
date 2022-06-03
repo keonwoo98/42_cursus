@@ -5,6 +5,8 @@ int main(void)
 	ClapTrap def;
 	ClapTrap c1("Clap1");
 	ClapTrap c2("Clap2");
+	ClapTrap c3(c1);
+	ClapTrap c4 = c2;
 
 	std::cout << std::endl;
 	while (c1.is_alive() && c2.is_alive())

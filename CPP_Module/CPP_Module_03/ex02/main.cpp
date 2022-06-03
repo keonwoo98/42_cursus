@@ -12,14 +12,14 @@ int main(void)
 	f1.takeDamage(s1.getAd());
 	std::cout << std::endl;
 	
-	f1.attack("Default");
-	def.takeDamage(f1.getAd());
+	s1.guardGate();
+	std::cout << std::endl;
+
+	f1.attack("Scav1");
+	s1.takeDamage(f1.getAd());
 	std::cout << std::endl;
 
 	def.beRepaired(100);
-	std::cout << std::endl;
-
-	s1.guardGate();
 	std::cout << std::endl;
 
 	f1.highFivesGuys();
