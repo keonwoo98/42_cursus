@@ -11,9 +11,6 @@ Fixed get_area(Point const a, Point const b, Point const c)
 
 bool bsp(Point const a, Point const b, Point const c, Point const point)
 {
-	int cnt;
-
-	cnt = 0;
 	if (get_area(a, b, c) == get_area(a, b, point) + get_area(b, c, point) + get_area(c, a, point))
 		return true;
 	else
