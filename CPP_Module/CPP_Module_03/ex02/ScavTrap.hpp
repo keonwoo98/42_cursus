@@ -4,7 +4,7 @@
 #include <string>
 #include "ClapTrap.hpp"
 
-class ScavTrap : virtual public ClapTrap
+class ScavTrap : public ClapTrap
 {
 public :
 	bool guard_mode;
