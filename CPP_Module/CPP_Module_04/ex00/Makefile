@@ -1,8 +1,8 @@
 NAME = animal
 CC = c++
-CFLAGS = -Wall -Werror -Wextra -std=c++98
+CFLAGS = -Wall -Werror -Wextra -std=c++98 -pedantic -g -fsanitize=address
 
-SRCS =	main.cpp Animal.cpp WrongAnimal.cpp Dog.cpp Cat.cpp
+SRCS =	main.cpp Animal.cpp WrongAnimal.cpp Dog.cpp Cat.cpp WrongCat.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

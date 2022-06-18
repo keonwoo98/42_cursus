@@ -2,9 +2,6 @@
 #define CHARACTER_HPP
 
 #include "ICharacter.hpp"
-#include "AMateria.hpp"
-
-#define INV_SIZE 4
 
 class Character : public ICharacter
 {

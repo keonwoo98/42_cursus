@@ -3,6 +3,8 @@
 
 #include "ICharacter.hpp"
 
+#define INV_SIZE 4
+
 class AMateria
 {
 protected :
