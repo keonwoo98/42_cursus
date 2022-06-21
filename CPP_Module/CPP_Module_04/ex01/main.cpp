@@ -30,6 +30,7 @@ int main(void)
 	{
 		std::cout << "i : " << i << std::endl;
 		delete animal[i];
+		std::cout << std::endl;
 	}
 	
 	std::cout << std::endl;
@@ -45,18 +46,19 @@ int main(void)
 
 	std::cout << "-----------Deep copy Test-----------" << std::endl;
 	Dog d1;
-	Dog d2(d1);
-	std::cout << std::endl;
-	d1.setType("Type changed");
-	std::cout << "Type : " << d1.getType() << std::endl;
-	std::cout << "Type : " << d2.getType() << std::endl;
+	Dog d2 = d1;
+	d1.getBrain()->setIdea(0, "idea 99");
 
 	std::cout << std::endl;
 
 	for (int index = 0; index < 100; index++)
 		std::cout << d1.getBrain()->getIdea(index) << " ";
-	std::cout << std::endl;
-	std::cout << std::endl;
+
+	std::cout << std::endl << std::endl;
+
+	for (int index = 0; index < 100; index++)
+		std::cout << d2.getBrain()->getIdea(index) << " ";
+	std::cout << std::endl << std::endl;
 
 	return 0;
 }

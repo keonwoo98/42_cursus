@@ -12,12 +12,9 @@ MateriaSource::MateriaSource(const MateriaSource& ms)
 	std::cout << "MateriaSource copy constructor called" << std::endl;
 	for (int i = 0; i < INV_SIZE; i++)
 	{
-		if (_inventory[i])
-		{
-			delete _inventory[i];
-			_inventory[i] = NULL;
-		}
-		_inventory[i] = ms._inventory[i]->clone();
+		_inventory[i] = NULL;
+		if (ms._inventory[i])
+			_inventory[i] = ms._inventory[i]->clone();
 	}
 }
 
@@ -37,14 +34,18 @@ MateriaSource::~MateriaSource(void)
 MateriaSource& MateriaSource::operator=(const MateriaSource& ms)
 {
 	std::cout << "MateriaSource copy assignation operator called" << std::endl;
-	for (int i = 0; i < INV_SIZE; i++)
+	if (this != &ms)
 	{
-		if (_inventory[i])
+		for (int i = 0; i < INV_SIZE; i++)
 		{
-			delete _inventory[i];
-			_inventory[i] = NULL;
+			if (_inventory[i])
+			{
+				delete _inventory[i];
+				_inventory[i] = NULL;
+			}
+			if (ms._inventory[i])
+				_inventory[i] = ms._inventory[i]->clone();
 		}
-		_inventory[i] = ms._inventory[i]->clone();
 	}
 	return *this;
 }

@@ -19,12 +19,9 @@ Character::Character(const Character& c) : _name(c.getName())
 	std::cout << "Character copy constructor called" << std::endl;
 	for (int i = 0; i < INV_SIZE; i++)
 	{
-		if (_inventory[i])
-		{
-			delete _inventory[i];
-			_inventory[i] = NULL;
-		}
-		_inventory[i] = c._inventory[i]->clone();
+		_inventory[i] = NULL;
+		if (c._inventory[i])
+			_inventory[i] = c._inventory[i]->clone();
 	}
 }
 
@@ -44,15 +41,19 @@ Character::~Character(void)
 Character& Character::operator=(const Character& c)
 {
 	std::cout << "Character copy assignation operator called" << std::endl;
-	_name = c.getName();
-	for (int i = 0; i < INV_SIZE; i++)
+	if (this != &c)
 	{
-		if (_inventory[i])
+		_name = c.getName();
+		for (int i = 0; i < INV_SIZE; i++)
 		{
-			delete _inventory[i];
-			_inventory[i] = NULL;
+			if (_inventory[i])
+			{
+				delete _inventory[i];
+				_inventory[i] = NULL;
+			}
+			if (c._inventory[i])
+				_inventory[i] = c._inventory[i]->clone();
 		}
-		_inventory[i] = c._inventory[i]->clone();
 	}
 	return *this;
 }

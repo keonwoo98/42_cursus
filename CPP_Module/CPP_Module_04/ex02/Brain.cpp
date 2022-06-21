@@ -38,3 +38,8 @@ std::string Brain::getIdea(const int i) const
 {
 	return _ideas[i];
 }
+
+void Brain::setIdea(const int i, const std::string& idea)
+{
+	_ideas[i] = idea;
+}
