@@ -1,6 +1,6 @@
 NAME = amateria
 CC = c++
-CFLAGS = -Wall -Werror -Wextra -std=c++98 -pedantic -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 
 SRCS =	main.cpp AMateria.cpp Character.cpp Cure.cpp Ice.cpp MateriaSource.cpp
 

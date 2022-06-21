@@ -1,6 +1,6 @@
 NAME = brain
 CC = c++
-CFLAGS = -Wall -Werror -Wextra -std=c++98 -pedantic -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 
 SRCS =	main.cpp Animal.cpp WrongAnimal.cpp Dog.cpp Cat.cpp WrongCat.cpp Brain.cpp
 

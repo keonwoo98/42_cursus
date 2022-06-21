@@ -1,6 +1,8 @@
 #ifndef CHARACTER_HPP
 #define CHARACTER_HPP
 
+#define INV_SIZE 4
+
 #include "ICharacter.hpp"
 
 class Character : public ICharacter

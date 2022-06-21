@@ -1,9 +1,12 @@
 #ifndef AMATERIA_HPP
-#define AMATERIAL_HPP
-
-#include "ICharacter.hpp"
+#define AMATERIA_HPP
 
 #define INV_SIZE 4
+
+#include <iostream>
+#include <string>
+
+class ICharacter;
 
 class AMateria
 {

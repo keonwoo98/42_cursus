@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "Dog.hpp"
 #include "Cat.hpp"
 #include "WrongCat.hpp"

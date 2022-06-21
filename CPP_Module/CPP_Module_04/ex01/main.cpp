@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "Dog.hpp"
 #include "Cat.hpp"
 #include "WrongCat.hpp"
@@ -58,8 +57,6 @@ int main(void)
 		std::cout << d1.getBrain()->getIdea(index) << " ";
 	std::cout << std::endl;
 	std::cout << std::endl;
-
-	// system("leaks animal");
 
 	return 0;
 }
