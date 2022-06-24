@@ -11,20 +11,19 @@ private :
 	const int _grade_sign;
 	const int _grade_exec;
 
-	Form(void);
-
 public :
+	Form(void);
 	Form(const std::string& name, const int& grade_sign, const int& grade_exec);
 	Form(const Form& f);
 	~Form(void);
 	Form& operator=(const Form& f);
 
-	void beSigned(const Bureaucrat& b);
+	void beSigned(Bureaucrat b);
 
-	const std::string& getName(void) const;
-	const bool& getSigned(void) const;
-	const int& getGradeSign(void) const;
-	const int& getGradeExec(void) const;
+	const std::string getName(void) const;
+	const bool getSigned(void) const;
+	const int getGradeSign(void) const;
+	const int getGradeExec(void) const;
 	
 	class GradeTooHighException : public std::exception
 	{

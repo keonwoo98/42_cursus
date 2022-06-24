@@ -31,12 +31,12 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& b)
 	return *this;
 }
 
-const std::string& Bureaucrat::getName(void) const
+const std::string Bureaucrat::getName(void) const
 {
 	return _name;
 }
 
-const int& Bureaucrat::getGrade(void) const
+const int Bureaucrat::getGrade(void) const
 {
 	return _grade;
 }
@@ -55,15 +55,17 @@ void Bureaucrat::decrementGrade(void)
 	_grade++;
 }
 
-void Bureaucrat::signForm(const Form& f) const
+void Bureaucrat::signForm(Form f) const
 {
 	try
 	{
-		/* code */
+		f.beSigned(*this);
+		std::cout << _name << " signed " << f.getName() << '.' << std::endl;
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << std::endl;
+		std::cerr << _name << " couldn't sign " << f.getName()
+					<< " because " << e.what() << std::endl;
 	}
 	
 }

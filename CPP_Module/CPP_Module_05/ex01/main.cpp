@@ -1,22 +1,30 @@
-#include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 int main(void)
 {
 	try
 	{
-		Bureaucrat kim("Kim", 150);
-		Bureaucrat lee("Lee", 1);
+		Bureaucrat b1("b1", 50);
+		Bureaucrat b2("b2", 100);
+		Form f1("f1", 150, 1);
+		Form f2("f2", 1, 150);
+		Form f3(f1);
+		Form f4 = f2;
 
-		std::cout << kim << std::endl;
-		std::cout << lee << std::endl;
+		b1.signForm(f1);
+		b2.signForm(f2);
+		std::cout << std::endl;
+
+		std::cout << f1 << std::endl;
+		std::cout << std::endl;
+		std::cout << f2 << std::endl;
+		std::cout << std::endl;
+		std::cout << f3 << std::endl;
+		std::cout << std::endl;
+		std::cout << f4 << std::endl;
+		std::cout << std::endl;
 
 		/* Exception */
-		// kim.decrementGrade();
-		// lee.incrementGrade();
-		kim.incrementGrade();
-		lee.decrementGrade();
-		std::cout << kim << std::endl;
-		std::cout << lee << std::endl;
 	}
 	catch(const std::exception& e)
 	{

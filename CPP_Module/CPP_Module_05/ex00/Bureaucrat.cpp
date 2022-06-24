@@ -30,12 +30,12 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& b)
 	return *this;
 }
 
-const std::string& Bureaucrat::getName(void) const
+const std::string Bureaucrat::getName(void) const
 {
 	return _name;
 }
 
-const int& Bureaucrat::getGrade(void) const
+const int Bureaucrat::getGrade(void) const
 {
 	return _grade;
 }
