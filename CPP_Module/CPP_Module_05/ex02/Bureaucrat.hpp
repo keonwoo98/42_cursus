@@ -30,6 +30,8 @@ public :
 
 	void signForm(Form& f) const;
 
+	void executeForm(const Form& f) const;
+
 	class GradeTooHighException : public std::exception
 	{
 	public :
