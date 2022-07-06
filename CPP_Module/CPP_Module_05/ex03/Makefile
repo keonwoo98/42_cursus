@@ -1,8 +1,8 @@
-NAME = shrubbery
+NAME = intern
 CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 
-SRCS =	main.cpp Bureaucrat.cpp Form.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
+SRCS =	main.cpp Bureaucrat.cpp Form.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp inter.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
