@@ -2,7 +2,7 @@ NAME = form
 CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 
-SRCS =	main.cpp Bureaucrat.cpp Form.cpp
+SRCS =	main.cpp Bureaucrat.cpp Form.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -21,6 +21,7 @@ $(NAME) : $(OBJS)
 
 clean:
 		@rm -rf $(OBJS)
+		@rm -f *_shrubbery
 		@echo "$(NAME): $(RED)$(OBJS) deleted$(RESET)"
 		@echo "$(NAME): $(RED)object files deleted$(RESET)"
 

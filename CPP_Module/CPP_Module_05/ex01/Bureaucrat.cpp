@@ -72,12 +72,12 @@ void Bureaucrat::signForm(Form &f) const
 
 const char* Bureaucrat::GradeTooHighException::what(void) const throw()
 {
-	return "Bureaucrat grade too high!!";
+	return "Grade too high!!";
 }
 
 const char* Bureaucrat::GradeTooLowException::what(void) const throw()
 {
-	return "Bureaucrat grade too low!!";
+	return "Grade too low!!";
 }
 
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& b)

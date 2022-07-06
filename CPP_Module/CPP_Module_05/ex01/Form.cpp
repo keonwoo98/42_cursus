@@ -57,18 +57,18 @@ const int Form::getGradeExec(void) const
 void Form::beSigned(Bureaucrat b)
 {
 	if (b.getGrade() > _grade_sign)
-		throw Form::GradeTooHighException();
+		throw GradeTooLowException();
 	_signed = true;
 }
 
 const char* Form::GradeTooHighException::what(void) const throw()
 {
-	return "Form grade too high!!";
+	return "Grade too high!!";
 }
 
 const char* Form::GradeTooLowException::what(void) const throw()
 {
-	return "Form grade too low!!";
+	return "Grade too low!!";
 }
 
 std::ostream& operator<<(std::ostream& os, const Form& f)

@@ -1,12 +1,16 @@
 #ifndef ROBOTOMYREQUESTFORM_HPP
 #define ROBOTOMYREQUESTFORM_HPP
 
+#include <cstdlib>
+#include <ctime>
 #include "Form.hpp"
 
 class RobotomyRequestForm : public Form
 {
-public :
+private :
 	RobotomyRequestForm(void);
+
+public :
 	RobotomyRequestForm(const std::string& target);
 	RobotomyRequestForm(const RobotomyRequestForm& r);
 	~RobotomyRequestForm(void);

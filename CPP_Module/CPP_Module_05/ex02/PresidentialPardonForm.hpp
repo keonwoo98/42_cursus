@@ -5,8 +5,10 @@
 
 class PresidentialPardonForm : public Form
 {
-public :
+private :
 	PresidentialPardonForm(void);
+
+public :
 	PresidentialPardonForm(const std::string& target);
 	PresidentialPardonForm(const PresidentialPardonForm& s);
 	~PresidentialPardonForm(void);
