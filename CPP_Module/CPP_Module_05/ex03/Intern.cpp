@@ -18,16 +18,19 @@ Intern& Intern::operator=(const Intern& i)
 
 Form* Intern::CreateShrubberyCreationForm(const std::string& target)
 {
+	std::cout << "Intern creates shrubbery creation form. (" << target << ')' << std::endl;
 	return new ShrubberyCreationForm(target);
 }
 
 Form* Intern::CreateRobotomyForm(const std::string& target)
 {
+	std::cout << "Intern creates robotomy request form. (" << target << ')' << std::endl;
 	return new RobotomyRequestForm(target);
 }
 
 Form* Intern::CreatePresidentialPardonForm(const std::string& target)
 {
+	std::cout << "Intern creates presidential pardon form. (" << target << ')' << std::endl;
 	return new PresidentialPardonForm(target);
 }
 
@@ -41,6 +44,6 @@ Form* Intern::makeForm(const std::string& name, const std::string& target)
 		if (form[i] == name)
 			return (this->*func_ptr[i])(target);
 	}
-	std::cout << "name does not match any Form" << std::endl;
+	std::cout << "No form exists for the given name." << std::endl;
 	return (NULL);
 }

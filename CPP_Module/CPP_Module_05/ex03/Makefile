@@ -2,7 +2,7 @@ NAME = intern
 CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 
-SRCS =	main.cpp Bureaucrat.cpp Form.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp inter.cpp
+SRCS =	main.cpp Bureaucrat.cpp Form.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp Intern.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -17,7 +17,6 @@ all: $(NAME)
 $(NAME) : $(OBJS)
 		@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 		@echo "$(NAME): $(GREEN)object files created$(RESET)"
-		@echo "$(NAME): $(GREEN)_shrubbery file created$(RESET)"
 		@echo "$(NAME): $(GREEN)$(NAME) compiled$(RESET)"
 
 clean:
@@ -25,7 +24,6 @@ clean:
 		@rm -f *_shrubbery
 		@echo "$(NAME): $(RED)$(OBJS) deleted$(RESET)"
 		@echo "$(NAME): $(RED)object files deleted$(RESET)"
-		@echo "$(NAME): $(RED)_shrubbery file deleted$(RESET)"
 
 fclean: clean
 		@rm -f $(NAME)

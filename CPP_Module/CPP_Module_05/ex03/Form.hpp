@@ -15,7 +15,7 @@ public :
 	Form(void);
 	Form(const std::string& name, const int& grade_sign, const int& grade_exec);
 	Form(const Form& f);
-	~Form(void);
+	virtual ~Form(void);
 	Form& operator=(const Form& f);
 
 	const std::string getName(void) const;
