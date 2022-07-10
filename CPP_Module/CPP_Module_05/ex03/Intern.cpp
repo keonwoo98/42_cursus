@@ -6,7 +6,6 @@ Intern::~Intern(void) {}
 
 Intern::Intern(const Intern& i)
 {
-	// *this = i;
 	static_cast<void>(i);
 }
 
