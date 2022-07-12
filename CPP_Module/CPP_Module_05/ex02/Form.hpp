@@ -19,9 +19,9 @@ public :
 	Form& operator=(const Form& f);
 
 	const std::string getName(void) const;
-	const bool getSigned(void) const;
-	const int getGradeSign(void) const;
-	const int getGradeExec(void) const;
+	bool getSigned(void) const;
+	int getGradeSign(void) const;
+	int getGradeExec(void) const;
 
 	void beSigned(Bureaucrat b);
 

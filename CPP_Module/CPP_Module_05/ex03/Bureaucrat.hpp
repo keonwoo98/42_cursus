@@ -12,7 +12,7 @@ class Form;
 
 class Bureaucrat
 {
-protected :
+private :
 	const std::string _name;
 	int _grade;
 
@@ -24,7 +24,7 @@ public :
 	Bureaucrat& operator=(const Bureaucrat& b);
 
 	const std::string getName(void) const;
-	const int getGrade(void) const;
+	int getGrade(void) const;
 	void incrementGrade(void);
 	void decrementGrade(void);
 

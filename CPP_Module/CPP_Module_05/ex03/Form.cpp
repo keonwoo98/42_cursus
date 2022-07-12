@@ -5,7 +5,7 @@ Form::Form(void) : _grade_sign(0), _grade_exec(0) {}
 Form::~Form(void) {}
 
 Form::Form(const std::string& name, const int& grade_sign, const int& grade_exec)
-	: _name(name), _grade_sign(grade_sign), _grade_exec(grade_exec), _signed(false)
+	: _name(name),_signed(false),  _grade_sign(grade_sign), _grade_exec(grade_exec)
 {
 	if (_grade_sign < GRADE_MAX || _grade_exec < GRADE_MAX)
 		throw GradeTooHighException();
@@ -14,7 +14,7 @@ Form::Form(const std::string& name, const int& grade_sign, const int& grade_exec
 }
 
 Form::Form(const Form& f)
-	: _name(f.getName()), _grade_sign(f.getGradeSign()), _grade_exec(f.getGradeExec()), _signed(false)
+	: _name(f.getName()), _signed(false), _grade_sign(f.getGradeSign()), _grade_exec(f.getGradeExec())
 {
 	if (_grade_sign < GRADE_MAX || _grade_exec < GRADE_MAX)
 		throw GradeTooHighException();
@@ -39,17 +39,17 @@ const std::string Form::getName(void) const
 	return _name;
 }
 
-const bool Form::getSigned(void) const
+bool Form::getSigned(void) const
 {
 	return _signed;
 }
 
-const int Form::getGradeSign(void) const
+int Form::getGradeSign(void) const
 {
 	return _grade_sign;
 }
 
-const int Form::getGradeExec(void) const
+int Form::getGradeExec(void) const
 {
 	return _grade_exec;
 }

@@ -1,6 +1,6 @@
 NAME = shrubbery
-CC = c++
-CFLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address
+CXX = c++
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -pedantic -fsanitize=address
 
 SRCS =	main.cpp Bureaucrat.cpp Form.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
 
@@ -15,7 +15,7 @@ RESET = \033[m
 all: $(NAME)
 
 $(NAME) : $(OBJS)
-		@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+		@$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
 		@echo "$(NAME): $(GREEN)object files created$(RESET)"
 		@echo "$(NAME): $(GREEN)_shrubbery file created$(RESET)"
 		@echo "$(NAME): $(GREEN)$(NAME) compiled$(RESET)"
