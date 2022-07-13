@@ -23,7 +23,6 @@ public :
 	void print(void) const;
 };
 
-std::ostream& operator<<(std::ostream& o, const Data& d);
 uintptr_t serialize(Data *ptr);
 Data *deserialize(uintptr_t raw);
 
