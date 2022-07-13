@@ -82,8 +82,8 @@ void Convert::toChar(void)
 {
 	_char = _input[0];
 	_int = static_cast<int>(_char);
-	_float = static_cast<int>(_char);
-	_double = static_cast<int>(_char);
+	_float = static_cast<float>(_char);
+	_double = static_cast<double>(_char);
 	if (!isprint(_char))
 		_charErr = "Non displayable";
 }
