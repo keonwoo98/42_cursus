@@ -10,39 +10,30 @@ private :
 	int _size;
 	T* _arr;
 public :
-	Array(void) : _size(0), _arr(NULL) {}
-	Array(unsigned int n) : _size(n), _arr(NULL)
+	Array(void) : _size(0), _arr(new T[0]) {}
+	Array(unsigned int n) : _size(n), _arr(new T[n])
 	{
-		if (_size)
-			_arr = new T[_size];
+		for (int i = 0 ; i < _size; i++)
+			_arr[i] = 0;
 	}
-	Array(const Array& a) : _size(a._size), _arr(NULL)
+	Array(const Array& a) : _size(a._size), _arr(new T[a._size])
 	{
-		if (_size)
-			_arr = new T[_size];
 		for (int i = 0 ; i < _size ; i++)
 			_arr[i] = a[i];
 	}
 	~Array(void)
 	{
-		if (_size)
-		{
-			delete[] _arr;
-			_arr = NULL;
-		}
+		delete[] _arr;
+		_arr = NULL;
 	}
 	Array& operator=(const Array& a)
 	{
 		if (this != &a)
 		{
-			if (_size)
-			{
-				delete[] _arr;
-				_arr = NULL;
-			}
-			_size = a.size();
-			if (_size)
-				_arr = new T[_size];
+			delete[] _arr;
+			_arr = NULL;
+			_size = a._size;
+			_arr = new T[_size];
 			for (int i = 0 ; i < _size ; i++)
 				_arr[i] = a[i];
 		}
