@@ -29,13 +29,13 @@ namespace ft
 		typedef ft::random_access_iterator<const value_type, allocator_type>	const_iterator;
 		typedef typename ft::reverse_iterator<iterator>							reverse_iterator;
 		typedef typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
-	
+
 	protected :
 		allocator_type		_alloc;
 		pointer				_start;
 		pointer				_end;
 		pointer				_end_capacity;
-	
+
 	public :
 		explicit vector(const allocator_type& alloc = allocator_type())
 			: _alloc(alloc), _start(0), _end(0), _end_capacity(0) {}
@@ -50,6 +50,13 @@ namespace ft
 			while (n--)
 				this->_alloc.construct(this->_end++, val);
 		}
+		
+		template <class InputIterator>
+		vector(InputIterator first, InputIterator last,
+				const allocator_type& alloc = allocator_type(),
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0);
+		
+		vector(const vector& x);
 	};
 }
 
