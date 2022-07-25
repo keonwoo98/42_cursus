@@ -38,7 +38,7 @@ namespace ft
 
 	public :
 		/**
-		 * @brief Construct a new vector object. (Default constructor)
+		 * @brief Default constructor
 		 * Constructs an empty container, with no elements.
 		 * @param alloc 
 		 */
@@ -46,7 +46,7 @@ namespace ft
 			: _alloc(alloc), _start(0), _end(0), _end_capacity(0) {}
 		
 		/**
-		 * @brief Construct a new vector object. (Fill constructor)
+		 * @brief Fill constructor
 		 * Constructs a container with n elements. Each element is a copy of val.
 		 * @param n 
 		 * @param val 
@@ -64,7 +64,7 @@ namespace ft
 		}
 		
 		/**
-		 * @brief Construct a new vector object. (Range constructor)
+		 * @brief Range constructor
 		 * Constructs a container with as many elements as the range[first, last), with each
 		 * element constructed from its corresponding element in that range, in the same order.
 		 * @tparam InputIterator 
@@ -87,7 +87,7 @@ namespace ft
 		}
 		
 		/**
-		 * @brief Construct a new vector object. (Copy constructor)
+		 * @brief Copy constructor
 		 * Constructs a container with a copy of each of the elements in x, in the same order.
 		 * @param x 
 		 */
@@ -103,7 +103,7 @@ namespace ft
 		}
 
 		/**
-		 * @brief Destroy the vector object.
+		 * @brief Vector destructor
 		 * This destroys all container elements, and deallocates all the storage
 		 * capacity allocated by the vector using its allocater.
 		 */
@@ -118,11 +118,10 @@ namespace ft
  */
 
 		/**
-		 * @brief = Operator Overloading
-		 * Copies all the elements from x into the container.
-		 * The container preserves its current allocator,
-		 * which is used to allocate storage in case of reallocation.
-		 * @param x 
+		 * @brief Assign content
+		 * Assigns new contents to the container, replacing its
+		 * current contents, and modifying its size accordingly.
+		 * @param x A vector object of the same type.
 		 * @return vector& 
 		 */
 		vector& operator=(const vector& x)
@@ -142,7 +141,8 @@ namespace ft
 		/* Iterators */
 
 		/**
-		 * @brief Returns an iterator pointing to the first element in the vector.
+		 * @brief Return iterator to beginning
+		 * Returns an iterator pointing to the first element in the vector.
 		 * 
 		 * @return iterator / const_iterator
 		 */
@@ -150,7 +150,8 @@ namespace ft
 		const_iterator begin() const { return const_iterator(this->_start); }
 
 		/**
-		 * @brief Returns an iterator referring to the past-the-end element in the vector.
+		 * @brief Return iterator to end
+		 * Returns an iterator referring to the past-the-end element in the vector.
 		 * The past-the-end element is the theoretical element that would follow the last element in the vector.
 		 * @return iterator / const_iterator
 		 */
@@ -158,7 +159,8 @@ namespace ft
 		const_iterator end() const { return const_iterator(this->_end); }
 
 		/**
-		 * @brief Returns a reverse iterator pointing to the last element in the vector.
+		 * @brief Return reverse iterator to reverse beginning
+		 * Returns a reverse iterator pointing to the last element in the vector.
 		 * 
 		 * @return reverse_iterator / const_reverse_iterator
 		 */
@@ -166,8 +168,9 @@ namespace ft
 		const_reverse_iterator rbegin() const { return const_reverse_iterator(end()); }
 
 		/**
-		 * @brief Returns a reverse iterator pointing to the
-		 * theoretical element preceding the first element in the vector.
+		 * @brief Return reverse iterator to reverse end
+		 * Returns a reverse iterator pointing to the theoretical
+		 * element preceding the first element in the vector.
 		 * 
 		 * @return reverse_iterator / const_reverse_iteroator
 		 */
@@ -226,7 +229,7 @@ namespace ft
 		/**
 		 * @brief Request a change in capacity
 		 * Requests that the vector capacity be at least enough to contain n elements.
-		 * @param n 
+		 * @param n Minimum capacity for the vector.
 		 */
 		void reserve (size_type n)
 		{
@@ -254,7 +257,7 @@ namespace ft
 		/**
 		 * @brief Access element
 		 * Returns a reference to the element at position n in the vector.
-		 * @param n 
+		 * @param n Position of an element in the container.
 		 * @return reference / const_reference
 		 */
 		reference operator[](size_type n) { return *(begin() + n); }
@@ -367,7 +370,7 @@ namespace ft
 		}
 		
 		/**
-		 * @brief Add element at the end.
+		 * @brief Add element at the end
 		 * Adds a new element at the end of the vector, after its current last element.
 		 * @param val Value to be copied(or moved) to the new element.
 		 */
@@ -560,7 +563,8 @@ namespace ft
 		 * @brief Swap content
 		 * Exchange the content of the container by the content of x,
 		 * which is another vector object of the same type.
-		 * @param x 
+		 * @param x Another vector container of the same type
+		 * whose content is swapped with that of this container.
 		 */
 		void swap(vector &x)
 		{
@@ -597,7 +601,7 @@ namespace ft
 		/* Alloc */
 
 		/**
-		 * @brief Get the allocator object.
+		 * @brief Get allocator
 		 * Returns a copy of the allocator object associated with the vector
 		 * @return allocator_type 
 		 */
@@ -644,6 +648,14 @@ namespace ft
 		bool operator>=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
 		{ return !(lhs < rhs); }
 
+		/**
+		 * @brief Exchange contents of vectors
+		 * The contents of container x are exchanged with those of y.
+		 * @tparam T 
+		 * @tparam Alloc 
+		 * @param x vector container of the same type.
+		 * @param y vector container of the same type.
+		 */
 		template <typename T, typename Alloc>
 		void swap(vector<T, Alloc> &x, vector<T, Alloc> &y)
 		{ x.swap(y); }
