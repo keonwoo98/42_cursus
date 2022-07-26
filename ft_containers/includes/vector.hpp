@@ -2,20 +2,30 @@
 #define VECTOR_HPP
 
 #include "random_access_iterator.hpp"
+#include "reverse_iterator.hpp"
 #include "utils.hpp"
 #include <memory>
+#include <stdexcept>
+#include <cassert>
 
 namespace ft
 {
 	/**
-	 * @brief 
-	 * 
+	 * @brief Vector
+	 * Vectors are sequence containers representing arrays that can change in size.
 	 * @tparam T 
 	 * @tparam Alloc 
 	 */
 	template <typename T, typename Alloc = std::allocator<T> >
 	class vector
 	{
+private :
+	typedef vector<T, Alloc> vector_type;
+
+/*
+ * Member types :
+ */
+
 	public :
 		typedef T																value_type;
 		typedef Alloc															allocator_type;
@@ -25,8 +35,8 @@ namespace ft
 		typedef typename allocator_type::const_reference						const_reference;
 		typedef typename allocator_type::pointer								pointer;
 		typedef typename allocator_type::const_pointer							const_pointer;
-		typedef ft::random_access_iterator<value_type, allocator_type>			iterator;
-		typedef ft::random_access_iterator<const value_type, allocator_type>	const_iterator;
+		typedef ft::random_access_iterator<pointer, vector_type>				iterator;
+		typedef ft::random_access_iterator<const pointer, vector_type>			const_iterator;
 		typedef typename ft::reverse_iterator<iterator>							reverse_iterator;
 		typedef typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
@@ -35,6 +45,10 @@ namespace ft
 		pointer				_start;
 		pointer				_end;
 		pointer				_end_capacity;
+
+/*
+ * Member functions :
+ */
 
 	public :
 		/**
@@ -110,12 +124,8 @@ namespace ft
 		~vector()
 		{
 			this->clear();
-			this->_alloc.deallocate(this->_start, this->capacity())
+			this->_alloc.deallocate(this->_start, this->capacity());
 		}
-
-/*
- * Member functions :
- */
 
 		/**
 		 * @brief Assign content
@@ -184,7 +194,7 @@ namespace ft
 		 * Returns the number of elements in the vector.
 		 * @return size_type 
 		 */
-		size_type size() const { return size_type(end() - begin()); }
+		size_type size() const { return size_type(this->end() - this->begin()); }
 
 		/**
 		 * @brief Return maximum size
@@ -239,7 +249,7 @@ namespace ft
 				return ;
 			
 			pointer prev_start = this->_start;
-			pointer prev_end = this->end;
+			pointer prev_end = this->_end;
 			size_type prev_capacity = this->capacity();
 
 			this->_start = this->_alloc.allocate(n);
@@ -610,56 +620,57 @@ namespace ft
 			return this->_alloc;
 		}
 
-/*
- * Non-Member overloads :
- */
-
-		/**
-		 * @brief Relational operaors for vector
-		 * Performs the appropriate comparison operation between the vector containers lhs and rhs.
-		 * @tparam T 
-		 * @tparam Alloc 
-		 * @param lhs vector containers, having both the same template parameters. (left-hand side of the operator)
-		 * @param rhs (right-hand side of the operator)
-		 * @return true 
-		 * @return false 
-		 */
-		template <typename T, typename Alloc>
-		bool operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
-		{ return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()); }
-
-		template <typename T, typename Alloc>
-		bool operator!=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
-		{ return !(lhs == rhs); }
-
-		template <typename T, typename Alloc>
-		bool operator<(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
-		{ return ft::lexicographical_compare(lhs.begin(), lsh.end(), rhs.begin(), rhs.end()); }
-
-		template <typename T, typename Alloc>
-		bool operator<=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
-		{ !(rhs < lhs); }
-
-		template <typename T, typename Alloc>
-		bool operator>(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
-		{ return rhs < lhs; }
-
-		template <typename T, typename Alloc>
-		bool operator>=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
-		{ return !(lhs < rhs); }
-
-		/**
-		 * @brief Exchange contents of vectors
-		 * The contents of container x are exchanged with those of y.
-		 * @tparam T 
-		 * @tparam Alloc 
-		 * @param x vector container of the same type.
-		 * @param y vector container of the same type.
-		 */
-		template <typename T, typename Alloc>
-		void swap(vector<T, Alloc> &x, vector<T, Alloc> &y)
-		{ x.swap(y); }
 	};
+
+/*
+* Non-Member overloads :
+*/
+
+	/**
+	 * @brief Relational operaors for vector
+	 * Performs the appropriate comparison operation between the vector containers lhs and rhs.
+	 * @tparam T 
+	 * @tparam Alloc 
+	 * @param lhs vector containers, having both the same template parameters. (left-hand side of the operator)
+	 * @param rhs (right-hand side of the operator)
+	 * @return true 
+	 * @return false 
+	 */
+	template <typename T, typename Alloc>
+	bool operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+	{ return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()); }
+
+	template <typename T, typename Alloc>
+	bool operator!=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+	{ return !(lhs == rhs); }
+
+	template <typename T, typename Alloc>
+	bool operator<(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+	{ return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()); }
+
+	template <typename T, typename Alloc>
+	bool operator<=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+	{ !(rhs < lhs); }
+
+	template <typename T, typename Alloc>
+	bool operator>(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+	{ return rhs < lhs; }
+
+	template <typename T, typename Alloc>
+	bool operator>=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+	{ return !(lhs < rhs); }
+
+	/**
+	 * @brief Exchange contents of vectors
+	 * The contents of container x are exchanged with those of y.
+	 * @tparam T 
+	 * @tparam Alloc 
+	 * @param x vector container of the same type.
+	 * @param y vector container of the same type.
+	 */
+	template <typename T, typename Alloc>
+	void swap(vector<T, Alloc> &x, vector<T, Alloc> &y)
+	{ x.swap(y); }
 }
 
 #endif

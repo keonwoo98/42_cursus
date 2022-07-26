@@ -1,31 +1,31 @@
 #ifndef RANDOMACCESSITERATOR_HPP
 #define RANDOMACCESSITERATOR_HPP
 
-#include "iterator.hpp"
+#include "iterator_base.hpp"
 
 namespace ft
 {
 	/**
-	 * @brief 
+	 * @brief Random accesss iterator
 	 * 
 	 * @tparam Iterator 
 	 * @tparam Container 
 	 */
 	template <typename Iterator, typename Container>
 	class random_access_iterator
-		: public iterator<	typename iterator_traits<Iterator>::iterator_category,
-							typename iterator_traits<Iterator>::value_type,
-							typename iterator_traits<Iterator>::difference_type,
-							typename iterator_traits<Iterator>::pointer,
-							typename iterator_traits<Iterator>::reference >
+		: public ft::iterator<	typename ft::iterator_traits<Iterator>::iterator_category,
+								typename ft::iterator_traits<Iterator>::value_type,
+								typename ft::iterator_traits<Iterator>::difference_type,
+								typename ft::iterator_traits<Iterator>::pointer,
+								typename ft::iterator_traits<Iterator>::reference >
 	{
 	public :
 		// typedef Iterator												iterator_type;
-		// typedef typename iterator_traits<Iterator>::iterator_category	iterator_category;
-		// typedef typename iterator_traits<Iterator>::value_type			value_type;
-		typedef typename iterator_traits<Iterator>::difference_type		difference_type;
-		typedef typename iterator_traits<Iterator>::reference			reference;
-		typedef typename iterator_traits<Iterator>::pointer				pointer;
+		// typedef typename ft::iterator_traits<Iterator>::iterator_category	iterator_category;
+		// typedef typename ft::iterator_traits<Iterator>::value_type			value_type;
+		typedef typename ft::iterator_traits<Iterator>::difference_type		difference_type;
+		typedef typename ft::iterator_traits<Iterator>::reference			reference;
+		typedef typename ft::iterator_traits<Iterator>::pointer				pointer;
 	
 	protected :
 		Iterator		_current;
