@@ -19,8 +19,8 @@ namespace ft
 	template <typename T, typename Alloc = std::allocator<T> >
 	class vector
 	{
-private :
-	typedef vector<T, Alloc> vector_type;
+	private :
+		typedef vector<T, Alloc> vector_type;
 
 /*
  * Member types :
@@ -36,7 +36,7 @@ private :
 		typedef typename allocator_type::pointer								pointer;
 		typedef typename allocator_type::const_pointer							const_pointer;
 		typedef ft::random_access_iterator<pointer, vector_type>				iterator;
-		typedef ft::random_access_iterator<const pointer, vector_type>			const_iterator;
+		typedef ft::random_access_iterator<const_pointer, vector_type>			const_iterator;
 		typedef typename ft::reverse_iterator<iterator>							reverse_iterator;
 		typedef typename ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 
@@ -92,7 +92,7 @@ private :
 				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0)
 			: _alloc(alloc)
 		{
-			size_type n = last - first; // FIXME : '-' impossible
+			size_type n = ft::difference(first, last);
 			this->_start = this->_alloc.allocate(n);
 			this->_end_capacity = this->_start + n;
 			this->_end = this->_start;
@@ -110,7 +110,7 @@ private :
 			size_type n = x.size();
 			this->_start = this->_alloc.allocate(n);
 			this->_end_capacity = this->_start + n;
-			this->end = this->_start;
+			this->_end = this->_start;
 			pointer x_start = x._start;
 			while (n--)
 				this->_alloc.construct(this->_end++, *x_start++);
@@ -139,9 +139,12 @@ private :
 			if (*this == x)
 				return *this;
 			this->clear();
-			this->_alloc.deallocate(this->_start, this->_end);
+			this->_alloc.deallocate(this->_start, this->capacity());
 			size_type n = x.size();
-			reserve(x.capacity());
+			// reserve(x.capacity());
+			this->_start = this->_alloc.allocate(n);
+			this->_end = this->_start;
+			this->_end_capacity = this->_start + n;
 			pointer x_start = x._start;
 			while (n--)
 				this->_alloc.construct(this->_end++, *x_start++);
@@ -215,9 +218,9 @@ private :
 			if (n > this->max_size())
 				throw std::out_of_range("ft::vector");
 			if (this->size() > n)
-				erase(this->_start + n, this->_end);
+				this->erase(iterator(this->_start + n), iterator(this->_end));
 			else
-				this->insert(this->_end, n - this->size(), val);
+				this->insert(iterator(this->_end), n - this->size(), val);
 		}
 
 		/**
@@ -234,7 +237,7 @@ private :
 		 * @return true 
 		 * @return false 
 		 */
-		bool empty() const { return begin() == end(); }
+		bool empty() const { return this->begin() == this->end(); }
 
 		/**
 		 * @brief Request a change in capacity
@@ -258,7 +261,8 @@ private :
 
 			for (pointer it = prev_start; it != prev_end; it++)
 				this->_alloc.construct(this->_end++, *it);
-			this->clear();
+			for (pointer it = prev_end; it != prev_start; it--)
+				this->_alloc.destroy(it);
 			this->_alloc.deallocate(prev_start, prev_capacity);
 		}
 
@@ -270,8 +274,8 @@ private :
 		 * @param n Position of an element in the container.
 		 * @return reference / const_reference
 		 */
-		reference operator[](size_type n) { return *(begin() + n); }
-		const_reference operator[](size_type n) const { return *(begin() + n); }
+		reference operator[](size_type n) { return *(this->begin() + n); }
+		const_reference operator[](size_type n) const { return *(this->begin() + n); }
 
 		/**
 		 * @brief Access element
@@ -367,7 +371,7 @@ private :
 			if (this->capacity() >= n)
 			{
 				while (n--)
-					this->_alloc.constrct(this->_end++, val);
+					this->_alloc.construct(this->_end++, val);
 			}
 			else
 			{
@@ -375,7 +379,7 @@ private :
 				this->_end = this->_start;
 				this->_end_capacity = this->_start + n;
 				while (n--)
-					this->_alloc.constrct(this->_end++, val);
+					this->_alloc.construct(this->_end++, val);
 			}
 		}
 		
@@ -415,7 +419,14 @@ private :
 		{
 			size_type pos = &(*position) - this->_start;
 			this->insert(position, 1, val);
-			return this->_start + pos;
+			return iterator(this->_start + pos);
+		}
+
+		template <typename InputIterator>
+		void insert(iterator position, InputIterator first, InputIterator last)
+		{
+			typedef typename ft::is_integral<InputIterator>::type Integral;
+			insert_aux(position, first, last, Integral());
 		}
 
 		/**
@@ -463,7 +474,53 @@ private :
 			for (size_type i = 0; i < prev_size - pos; i++)
 			{
 				this->_alloc.construct(this->_end - i - 1, *(prev_end - i - 1));
-				this->_alloc.destory(prev_end - i - 1);
+				this->_alloc.destroy(prev_end - i - 1);
+			}
+
+			for (size_type i = 0; i < n; i++)
+				this->_alloc.construct(this->_start + pos + i, val);
+			
+			this->_alloc.deallocate(prev_start, prev_capacity);
+		}
+
+		void insert_aux(iterator position, size_type n, const value_type &val, true_type)
+		{
+			size_type pos = &(*position) - this->_start;
+
+			if (this->capacity() >= this->size() + n)
+			{
+				for (size_type i = 0; i < this->size() - pos; i++)
+				{
+					this->_alloc.construct(this->_end + n - i, *(this->_end - i));
+					this->_alloc.destroy(this->_end - i);
+				}
+				this->_end = this->_start + this->size() + n;
+				for (size_type i = 0; i < n; i++)
+					this->_alloc.construct(this->_start + pos + i, val);
+				return ;
+			}
+
+			size_type next_capacity = this->size() + n;
+
+			pointer prev_start = this->_start;
+			pointer prev_end = this->_end;
+			size_type prev_size = this->size();
+			size_type prev_capacity = this->capacity();
+
+			this->_start = this->_alloc.allocate(next_capacity);
+			this->_end = this->_start + prev_size + n;
+			this->_end_capacity = this->_end;
+
+			for (size_type i = 0; i < pos; i++)
+			{
+				this->_alloc.construct(this->_start + i, *(prev_start + i));
+				this->_alloc.destroy(prev_start + i);
+			}
+
+			for (size_type i = 0; i < prev_size - pos; i++)
+			{
+				this->_alloc.construct(this->_end - i - 1, *(prev_end - i - 1));
+				this->_alloc.destroy(prev_end - i - 1);
 			}
 
 			for (size_type i = 0; i < n; i++)
@@ -482,7 +539,7 @@ private :
 		 * @param last Copies of the elements in the range are inserted at position.
 		 */
 		template <typename InputIterator>
-		void insert(iterator position, InputIterator first, InputIterator last)
+		void insert_aux(iterator position, InputIterator first, InputIterator last, false_type)
 		{
 			size_type pos = &(*position) - this->_start;
 			size_type n = ft::difference(first, last);
@@ -544,7 +601,7 @@ private :
 				this->_alloc.destroy(this->_start + pos + i + 1);
 			}
 			this->_end--;
-			return this->_start + pos;
+			return iterator(this->_start + pos);
 		}
 
 		/**
@@ -554,21 +611,21 @@ private :
 		 * @param last 
 		 * @return iterator 
 		 */
-		iterator erase(iterator first, iterator last)
-		{
-			size_type pos = &(*first) - this->_start;
-			size_type n = last - first;		// FIXME : Iterator간 연산 불가??
-			for (size_type i = 0; i < n; i++)
-				this->_alloc.destroy(&(*first + i));
-			for (size_type i = 0; i < this->size() - pos; i++)
+			iterator erase(iterator first, iterator last)
 			{
-				this->_alloc.construct(this->_start + pos + i, *(this->_start + pos, i + n));
-				this->_alloc.destroy(this->_start + pos + i + n);
+				size_type pos = &(*first) - this->_start;
+				size_type n = ft::difference(first, last);
+				for (size_type i = 0; i < n; i++)
+					this->_alloc.destroy(&(*(first + i)));
+				for (size_type i = 0; i < this->size() - pos; i++)
+				{
+					this->_alloc.construct(this->_start + pos + i, *(this->_start + pos + i + n));
+					this->_alloc.destroy(this->_start + pos + i + n);
+				}
+				this->_end = this->_start + this->size() - n;
+				return iterator(this->_start + pos);
 			}
-			this->_end = this->_start + this->size() - n;
-			return this->_start + pos;
-		}
-		
+
 		/**
 		 * @brief Swap content
 		 * Exchange the content of the container by the content of x,
@@ -576,11 +633,11 @@ private :
 		 * @param x Another vector container of the same type
 		 * whose content is swapped with that of this container.
 		 */
-		void swap(vector &x)
+		void swap(vector & x)
 		{
 			if (&x == this)
-				return ;
-			
+				return;
+
 			pointer start = x._start;
 			pointer end = x._end;
 			pointer end_capacity = x._end_capacity;
@@ -593,7 +650,7 @@ private :
 			this->_end = end;
 			this->_end_capacity = end_capacity;
 		}
-		
+
 		/**
 		 * @brief Clear content
 		 * Removes all elements from the vector(which are destroyed),
@@ -619,7 +676,6 @@ private :
 		{
 			return this->_alloc;
 		}
-
 	};
 
 /*
@@ -650,7 +706,7 @@ private :
 
 	template <typename T, typename Alloc>
 	bool operator<=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
-	{ !(rhs < lhs); }
+	{ return !(rhs < lhs); }
 
 	template <typename T, typename Alloc>
 	bool operator>(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)

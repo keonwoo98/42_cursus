@@ -67,7 +67,7 @@ namespace ft
 	template <>
 	struct is_integral<unsigned long long int> : public true_type {};
 
-	template <class InputIterator>
+	template <typename InputIterator>
 	typename ft::iterator_traits<InputIterator>::difference_type difference(InputIterator first, InputIterator last)
 	{
 		typedef typename ft::iterator_traits<InputIterator>::difference_type size_type;
