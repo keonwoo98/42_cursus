@@ -3,7 +3,8 @@
 
 #include "random_access_iterator.hpp"
 #include "reverse_iterator.hpp"
-#include "utils.hpp"
+#include "algorithm.hpp"
+#include "type_traits.hpp"
 #include <memory>
 #include <stdexcept>
 #include <cassert>
@@ -141,7 +142,6 @@ namespace ft
 			this->clear();
 			this->_alloc.deallocate(this->_start, this->capacity());
 			size_type n = x.size();
-			// reserve(x.capacity());
 			this->_start = this->_alloc.allocate(n);
 			this->_end = this->_start;
 			this->_end_capacity = this->_start + n;

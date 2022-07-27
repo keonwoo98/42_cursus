@@ -3,7 +3,12 @@ CXX = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -pedantic -fsanitize=address
 INCLUDES = -I$(HEADERS_DIRECTORY)
 
-HEADERS_LIST =	iterator.hpp\
+HEADERS_LIST =	iterator_base.hpp\
+				random_access_iterator.hpp\
+				reverse_iterator.hpp\
+				type_traits.hpp\
+				algorithm.hpp\
+				utility.hpp\
 				vector.hpp
 HEADERS_DIRECTORY = ./includes/
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
