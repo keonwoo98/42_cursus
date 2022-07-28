@@ -12,6 +12,21 @@ namespace ft
 			n++;
 		return n;
 	}
+
+	/**
+	 * @brief Exchange values of two objects
+	 * Exchanges the values of a and b.
+	 * @tparam T 
+	 * @param a Two objects, whose contents are swapped.
+	 * @param b Two objects, whose contents are swapped.
+	 */
+	template <typename T>
+	void swap(T& a, T& b)
+	{
+		T c = a;
+		a = b;
+		b = c;
+	}
 	
 	/**
 	 * @brief Test whether the elemets in two ranges are equal (Equality)

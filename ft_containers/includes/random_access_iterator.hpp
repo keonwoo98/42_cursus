@@ -19,17 +19,23 @@ namespace ft
 								typename ft::iterator_traits<Iterator>::pointer,
 								typename ft::iterator_traits<Iterator>::reference >
 	{
+/*
+ * Member types :
+ */
 	public :
-		// typedef Iterator												iterator_type;
-		// typedef typename ft::iterator_traits<Iterator>::iterator_category	iterator_category;
-		// typedef typename ft::iterator_traits<Iterator>::value_type			value_type;
 		typedef typename ft::iterator_traits<Iterator>::difference_type		difference_type;
 		typedef typename ft::iterator_traits<Iterator>::reference			reference;
 		typedef typename ft::iterator_traits<Iterator>::pointer				pointer;
-	
+
+/*
+ * Member variables :
+ */	
 	protected :
 		Iterator		_current;
-	
+
+/*
+ * Member functions :
+ */	
 	public :
 		random_access_iterator() : _current(Iterator()) {}
 
@@ -55,6 +61,10 @@ namespace ft
 		difference_type operator-(const random_access_iterator& it) const { return _current - it._current; }
 		reference operator[](const difference_type& n) const { return _current[n]; }
 	};
+
+/*
+* Non-Member overloads :
+*/
 
 	template <typename Iterator1, typename Iterator2, typename Container>
 	bool operator==(const random_access_iterator<Iterator1, Container>& lhs,

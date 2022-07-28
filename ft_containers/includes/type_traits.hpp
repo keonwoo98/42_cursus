@@ -2,6 +2,7 @@
 #define TYPE_TRAITS_HPP
 
 #include "iterator_base.hpp"
+#include <cstdint>
 
 namespace ft
 {
@@ -57,7 +58,7 @@ namespace ft
 	template <>
 	struct is_integral<long int> : public true_type {};
 	template <>
-	struct is_integral<long long int> : public true_type {};
+	struct is_integral<int64_t> : public true_type {};
 	template <>
 	struct is_integral<unsigned char> : public true_type {};
 	template <>
@@ -67,7 +68,7 @@ namespace ft
 	template <>
 	struct is_integral<unsigned long int> : public true_type {};
 	template <>
-	struct is_integral<unsigned long long int> : public true_type {};
+	struct is_integral<uint64_t> : public true_type {};
 }
 
 #endif
