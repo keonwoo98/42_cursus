@@ -547,18 +547,6 @@ namespace ft
 		 * @param position Iterator pointing to a single element to be removed from the vector
 		 * @return iterator 
 		 */
-		// iterator erase(iterator position)
-		// {
-		// 	size_type pos = &(*position) - this->_start;
-		// 	this->_alloc.destroy(&(*position));
-		// 	for (size_type i = 0; i < this->size() - pos; i++)
-		// 	{
-		// 		this->_alloc.construct(this->_start + pos + i, *(this->_start + pos + i + 1));
-		// 		this->_alloc.destroy(this->_start + pos + i + 1);
-		// 	}
-		// 	this->_end--;
-		// 	return iterator(this->_start + pos);
-		// }
 		iterator erase(iterator position)
 		{
 			pointer pos = &(*position);
@@ -575,28 +563,13 @@ namespace ft
 			return iterator(pos);
 		}
 
-		// /**
-		//  * @brief Erase elements
-		//  * Removes from the vectora range of elements([first, last)).
-		//  * @param first Iterators specifying a range within the vector] to be removed: [first, last).
-		//  * @param last 
-		//  * @return iterator 
-		//  */
-		// iterator erase(iterator first, iterator last)
-		// {
-		// 	size_type pos = &(*first) - this->_start;
-		// 	size_type n = ft::difference(first, last);
-		// 	for (size_type i = 0; i < n; i++)
-		// 		this->_alloc.destroy(&(*(first + i)));
-		// 	for (size_type i = 0; i < this->size() - pos; i++)
-		// 	{
-		// 		this->_alloc.construct(this->_start + pos + i, *(this->_start + pos + i + n));
-		// 		this->_alloc.destroy(this->_start + pos + i + n);
-		// 	}
-		// 	this->_end = this->_start + this->size() - n;
-		// 	return iterator(this->_start + pos);
-		// }
-
+		/**
+		 * @brief Erase elements
+		 * Removes from the vector a range of elements ([first,last)).
+		 * @param first Iterators specifying a range within the vector] to be removed: [first,last).
+		 * @param last 
+		 * @return iterator 
+		 */
 		iterator erase(iterator first, iterator last)
 		{
 			pointer p_first = &(*first);
