@@ -43,20 +43,18 @@ void Warlock::introduce(void) const
 
 void Warlock::learnSpell(ASpell* spell)
 {
-	_spell.insert(std::make_pair(spell->getName(), spell));
+	_book->learnSpell(spell);
 }
 
 void Warlock::forgetSpell(std::string name)
 {
-	_spell.erase(name);
+	_book->forgetSpell(name);
 }
 
 void Warlock::launchSpell(std::string name, ATarget& target)
 {
-	std::map<std::string, ASpell*>::iterator it;
-
-	it = _spell.find(name);
-	if (it != _spell.end())
-		it->second->launch(target);
-		// ((*it).second)->launch(target);
+	ASpell *spell = _book->createSpell(name);
+	
+	if (spell)
+		spell->launch(target);
 }
