@@ -58,5 +58,4 @@ void Warlock::launchSpell(std::string name, ATarget& target)
 	it = _spell.find(name);
 	if (it != _spell.end())
 		it->second->launch(target);
-		// ((*it).second)->launch(target);
 }

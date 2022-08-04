@@ -29,6 +29,5 @@ ATarget* TargetGenerator::createTarget(const std::string& name)
 	it = _generator.find(name);
 	if (it != _generator.end())
 		return it->second;
-		// return ((*it).second)->clone();
 	return NULL;
 }

@@ -5,6 +5,7 @@ Warlock::Warlock(void) {}
 Warlock::Warlock(std::string name, std::string title) : _name(name), _title(title)
 {
 	std::cout << _name << ": This looks like another boring day." << std::endl;
+	_book = new SpellBook();
 }
 
 Warlock::Warlock(const Warlock& w) : _name(w.getName()), _title(w.getTitle()) {}
@@ -12,6 +13,7 @@ Warlock::Warlock(const Warlock& w) : _name(w.getName()), _title(w.getTitle()) {}
 Warlock::~Warlock(void)
 {
 	std::cout << _name << ": My job here is done!" << std::endl;
+	delete _book;
 }
 
 Warlock& Warlock::operator=(const Warlock& w)

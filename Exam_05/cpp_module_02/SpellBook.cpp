@@ -29,6 +29,5 @@ ASpell* SpellBook::createSpell(const std::string& name)
 	it = _book.find(name);
 	if (it != _book.end())
 		return it->second;
-		// return ((*it).second)->clone();
 	return NULL;
 }
