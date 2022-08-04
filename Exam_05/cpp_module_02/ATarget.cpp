@@ -14,7 +14,7 @@ ATarget& ATarget::operator=(const ATarget& a)
 	return *this;
 }
 
-std::string ATarget::ATarget::getType(void) const
+std::string ATarget::getType(void) const
 {
 	return _type;
 }
