@@ -41,7 +41,7 @@ namespace ft
 		 * Constructs a stack container adaptor object.
 		 * @param ctnr Container object.
 		 */
-		explicit stack (const container_type& ctnr = container_type()) : _c(ctnr) {}
+		explicit stack(const container_type& ctnr = container_type()) : _c(ctnr) {}
 
 		/**
 		 * @brief Destruct stack
