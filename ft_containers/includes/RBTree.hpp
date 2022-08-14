@@ -48,6 +48,8 @@ namespace ft
 		typedef T									value_type;
 		typedef T*									pointer;
 		typedef T&									reference;
+
+		node_type *node;
 	};
 };
 
