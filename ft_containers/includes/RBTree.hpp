@@ -57,7 +57,17 @@ namespace ft
 
 		void flip_color()
 		{
-			_color = _color == RED ? BLACK : RED;
+			this->_color = _color == RED ? BLACK : RED;
+		}
+
+		bool tree_is_left_child(node_ptr node)
+		{
+			return node == node->_parent->_left;
+		}
+
+		bool tree_is_left_child(const_node_ptr node)
+		{
+			return node == node->_parent->_left;
 		}
 
 		node_ptr tree_min(node_ptr ptr)
@@ -126,13 +136,9 @@ namespace ft
 				_node = tree_min<value_type>(_node->_right);
 			else
 			{
-				Node_ptr p = _node->_parent;
-				while (p != NULL && _node == p->_right)
-				{
-					_node = p;
-					p = p->_parent;
-				}
-				_node = p;
+				while (!tree_is_left_child<value_type>(_node))
+					_node = _node->_parent;
+				_node = _node->_parent;
 			}
 			return *this;
 		}
@@ -150,13 +156,9 @@ namespace ft
 				_node = tree_max<value_type>(_node->_left);
 			else
 			{
-				Node_ptr p = _node->_parent;
-				while (p != NULL && _node == p->_left)
-				{
-					_node = p;
-					p = p->parent;
-				}
-				_node = p;
+				while (tree_is_left_child<value_type>(_node))
+					_node = _node->parent;
+				_node = _node->parent;
 			}
 			return *this;
 		}
@@ -440,6 +442,324 @@ namespace ft
 					return ft::make_pair(const_iterator(node), const_iterator(node->_right == NULL ? pos : tree_min<value_type>(node->_right)));
 			}
 			return ft::make_pair(const_iterator(pos), const_iterator(pos));
+		}
+
+		// Allocator
+		allocator_type get_allocator() const { return this->_allocator; }
+
+	private :
+		// utility
+		node_ptr& root() { return this->_parent._left; }
+		const_node_ptr& root() const { return const_cast<const_node_ptr&>(this->_parent._left); }
+		node_ptr end_node() { return &this->_parent; }
+		const_node_ptr end_node() const { return const_cast<const_node_ptr>(&this->_parent); }
+		
+		node_ptr get_sibling(node_ptr node) const
+		{
+			if (tree_is_left_child<value_type>(node))
+				return node->_parent->_right;
+			else
+				return node->_parent->_left;
+		}
+		
+		node_color get_node_color(node_ptr node)
+		{
+			if (node == NULL)
+				return BLACK;
+			else
+				return node->_color;
+		}
+
+		void rotate_left(node_ptr node)
+		{
+			node_ptr right_node = node->_right;
+			node->_right = right_node->_left;
+			if (node->_right != NULL)
+				node->_right->_parent = node;
+			right_node->_parent = node->_parent;
+			if (tree_is_left_child<value_type>(node))
+				node->_parent->_left = right_node;
+			else
+				node->_parent->_right = right_node;
+			right_node->_left = node;
+			node->_parent = right_node;
+		}
+
+		void rotate_right(node_ptr node)
+		{
+			node_ptr left_node = node->_left;
+			node->_left = left_node->_right;
+			if (node->_left != NULL)
+				node->_left->_parent = node;
+			left_node->_parent = node->_parent;
+			if (tree_is_left_child<value_type>(node))
+				node->_parent->_left = left_node;
+			else
+				node->_parent->_right = left_node;
+			left_node->_right = node;
+			node->_parent = left_node;
+		}
+
+		// insertion
+		node_ptr contruct_node(const value_type& data)
+		{
+			node_ptr new_node = this->_node_allocator.allocate(1);
+			this->_allocator.contruct(&new_node->_data, data);
+			new_node->_color = RED;
+			new_node->_parent = NULL;
+			new_node->_left = NULL;
+			new_node->_right = NULL;
+			if (this->empty() || this->_compare(data, this->_begin_node->_data))
+				this->_begin_node = new_node;
+			++this->_size;
+			return new_node;
+		}
+
+		node_ptr copy(const_node_ptr node)
+		{
+			if (node == NULL)
+				return NULL;
+			node_ptr new_node = this->contruct_node(node->_data);
+			new_node->_left = copy(node->_left);
+			if (new_node->_left != NULL)
+				new_node->_left->_parent = new_node;
+			new_node->_right = copy(node->_right);
+			if (new_node->_right != NULL)
+				new_node->_right->_parent = new_node;
+			return new_node;
+		}
+
+		node_ptr insert(node_ptr node, node_ptr new_node, bool& inserted, iterator& pos)
+		{
+			if (node == NULL)
+			{
+				pos = new_node;
+				inserted = true;
+				return new_node;
+			}
+			if (this->_compare(node->_data, new_node->_data))	// greater than
+			{
+				node->_right = insert(node->_right, new_node, inserted, pos);
+				node->_right->_parent = node;
+			}
+			else if (this->_compare(new_node->_data, node->_data))	// less than
+			{
+				node->_left = insert(node->_left, new_node, inserted, pos);
+				node->_left->_parent = node;
+			}
+			else	// equal
+			{
+				pos = node;
+				inserted = false;
+			}
+			return node;
+		}
+
+		void rebalance_after_insertion(node_ptr node)
+		{
+			while (node != this->root() && this->get_node_color(node->_parent) == RED)	// Case 1 & 2
+			{
+				node_ptr uncle = this->get_sibling(node->_parent);
+				if (this->get_node_color(uncle) == RED)	// Case 3
+				{
+					uncle->flip_color();
+					node = node->_parent;
+					node->flip_color();
+					node = node->_parent;
+					node->flicp_color();
+				}
+				else if (tree_is_left_child<value_type>(node->_parent))		// Case 4
+				{
+					if (!tree_is_left_child<value_type>(node))		// Case 4.1
+					{
+						node = node->_parent;
+						this->rotate_left(node);
+					}
+					node = node->_parent;		// Case 4.2
+					node->flip_color();
+					node = node->_parent;
+					node->flip_color();
+					this->rotate_right(node);
+					break ;
+				}
+				else	// Case 4
+				{
+					if (tree_is_left_child<value_type>(node))		// Case 4.3
+					{
+						node = node->_parent;
+						this->rotate_right(node);
+					}
+					node = node->_parent;		// Case 4.4
+					node->flip_color();
+					node = node->_parent;
+					node->flip_color();
+					this->rotate_left(node);
+					break ;
+				}
+			}
+		}
+
+		// deletion
+		void destroy_node(node_ptr node)
+		{
+			this->_allocator.destroy(&node->_data);
+			this->_node_allocator.deallocate(node, 1);
+			--this->_size;
+		}
+
+		void destroy(node_ptr node)
+		{
+			if (node == NULL)
+				return ;
+			destroy(node->_left);
+			destroy(node->_right);
+			this->destroy_node(node);
+		}
+
+		void replacement_node(node_ptr node) const
+		{
+			if (node->_left == NULL || node->_right == NULL)
+				return node;
+			else
+				return tree_min<value_type>(node->_right);
+		}
+
+		void erase(node_ptr root, node_ptr node)
+		{
+			node_ptr replmt = this->replacement_node(node);
+			node_ptr replmt_child = replmt->_left == NULL ? replmt->_right : replmt->_left;
+			node_ptr sibling = NULL;
+
+			if (replmt_child != NULL)
+				replmt_child->_parent = replmt->_parent;
+			if (tree_is_left_child<value_type>(replmt))
+			{
+				replmt->_parent->_left = replmt_child;
+				if (replmt == root)
+					root = replmt_child;	// sibling will be null in this case
+				else
+					sibling = replmt->_parent->_right;
+			}
+			else
+			{
+				// root can't be this->_parent's right child
+				replmt->_parent->_right = replmt_child;
+				sibling = replmt->_parent->_left;
+			}
+
+			node_color replmt_color = replmt->_color;
+			
+			if (replmt != node) // copy the content of node into replmt
+			{
+				replmt->_parent = node->_parent;
+				if (tree_is_left_child<value_type>(node))
+					replmt->_parent->_left = replmt;
+				else
+					replmt->_parent->_right = replmt;
+				replmt->_left = node->_left;
+				replmt->_left->_parent = replmt;
+				replmt->_right = node->_right;
+				if (replmt->_right != NULL)
+					remplmt->_right->_parent = replmt;
+				replmt->_color = node_color;
+				if (node == root)
+					root = replmt;
+			}
+
+			// we don't need to rebalance if we removed a red node or if there are no more nodes in the tree
+			if (replmt_color == BLACK && root != NULL)		// Case 1
+			{
+				// replmt had either no children or one red child (replmt_child).
+				// so, if replmt_child != NULL it is either red or root.
+				// root can't be double black and a red node will be flipped to black.
+				if (replmt_child != NULL)		// Case 2
+					replmt_child->_color = BLACK;
+				else
+					this->_rebalance_before_erasion(root, replmt_child, sibling);	// replmt_child is always NULL at the start
+			}
+		}
+
+		void rebalance_before_erasion(node_ptr root, node_ptr node, node_ptr sibling)
+		{
+			while (true)	// (node != root && this->get_node_color(node) == BLACK)
+			{
+				if (!tree_is_left_child<value_type>(sibling))	// tree_is_left_child(node)
+				{
+					if (this->get_node_color(sibling) == RED)	// Case 3
+					{
+						sibling->flip_color();
+						sibling->_parent->flip_color();
+						this->rotate_left(sibling->_parent);
+						if (root == sibling->_left)
+							root = sibling;
+						sibling = sibling->_left->_right;
+					}
+					if (this->get_node_color(sibling->_left) == BLACK && this->get_node_color(sibling->_right) == BLACK)	// Case 4
+					{
+						sibling->flip_color();
+						node = sibling->_parent;
+						if (node == root || this->get_node_color(node) == RED)
+						{
+							node->_color = BLACK;
+							break ;
+						}
+						sibling = this->get_sibling(node);
+					}
+					else	// sibling has one red child
+					{
+						if (this->get_node_color(sibling->_right) == BLACK)		// Case 5
+						{
+							sibling->_left->flip_color();	// the left child is red
+							sibling->flip_color();
+							this->rotate_right(sibling);
+							sibling = sibling->_parent;
+						}
+						sibling->_color = sibling->_parent->_color;		// Case 6
+						sibling->_parent->_color = BLACK;
+						sibling->_right->_color = BLACK;
+						this->rotate_left(sibling->_parent);
+						break ;
+					}
+				}
+				else	// the same as before, but in reverse color
+				{
+					if (this->get_node_color(sibling) == RED)		// Case 3
+					{
+						sibling->flip_color();
+						sibling->_parent->flip_color();
+						this->rotate_right(sibling->_parent);
+						if (root == sibling->_right)
+							root = sibling;
+						sibling = sibling->_right->_left;
+					}
+					if (this->get_node_color(sibling->_left) == BLACK && this->get_node_color(sibling->_right) == BLACK)	// Case 4
+					{
+						sibling->flip_color();
+						node = sibling->_parent;
+						if (node == root || this->get_node_color(node) == RED)
+						{
+							node->_color = BLACK;
+							break ;
+						}
+						sibling = this->get_sibling(node);
+					}
+					else	// sibling has one red child
+					{
+						if (this->get_node_color(sibling->_left) == BLACK)		// Case 5
+						{
+							sibling->_right->flip_color();	// the right child is red
+							sibling->flip_color();
+							this->rotate_left(sibling);
+							sibling = sibling->_parent;
+						}
+						sibling->_color = sibling->_parent->_color;		// Case 6
+						sibling->_parent->_color = BLACK;
+						sibling->_left->_color = BLACK;
+						this->rotate_right(sibling->_parent);
+						break ;
+					}
+				}
+			}
 		}
 	};
 };
