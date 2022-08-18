@@ -42,7 +42,7 @@ namespace ft
 		typedef typename allocator_type::const_pointer const_pointer;
 
 		// subclass
-		class value_compare : public ft::binary_function<value_type, value_type, bool>
+		class value_compare : public std::binary_function<value_type, value_type, bool>
 		{
 			friend class map;
 			key_compare comp;
@@ -172,7 +172,7 @@ namespace ft
 		void erase(iterator position)
 		{ this->_tree.erase(position); }
 		size_type erase(const key_type &k)
-		{ this->_tree.erase(ft::make_pair(k, mapped_type())); }
+		{ return this->_tree.erase(ft::make_pair(k, mapped_type())); }
 		void erase(iterator first, iterator last)
 		{ this->_tree.erase(first, last); }
 		void swap(map &x)
@@ -191,23 +191,31 @@ namespace ft
 
 		iterator find(const key_type &k)
 		{ return this->_tree.find(ft::make_pair(k, mapped_type())); }
+
 		const_iterator find(const key_type &k) const
 		{ return this->_tree.find(ft::make_pair(k, mapped_type())); }
+
 		size_type count(const key_type &k) const
 		{ return this->_tree.count(ft::make_pair(k, mapped_type())); }
+
 		iterator lower_bound(const key_type &k)
 		{ return this->_tree.lower_bound(ft::make_pair(k, mapped_type())); }
+
 		const_iterator lower_bound(const key_type &k) const
 		{ return this->_tree.lower_bound(ft::make_pair(k, mapped_type())); }
+
 		iterator upper_bound(const key_type &k)
 		{ return this->_tree.upper_bound(ft::make_pair(k, mapped_type())); }
+
 		const_iterator upper_bound(const key_type &k) const
 		{ return this->_tree.upper_bound(ft::make_pair(k, mapped_type())); }
+
 		ft::pair<iterator, iterator> equal_range(const key_type &k)
 		{ return this->_tree.equal_range(ft::make_pair(k, mapped_type())); }
+
 		ft::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
 		{ return this->_tree.equal_range(ft::make_pair(k, mapped_type())); }
-
+		
 		/* Alloc */
 
 		allocator_type get_allocator() const

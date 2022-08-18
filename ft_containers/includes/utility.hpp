@@ -42,7 +42,7 @@ namespace ft
 		 * @param pr Another pair object.
 		 */
 		template <typename U, typename V>
-		pair(const pair<U, V> &pr) : first(pr.first), second(pr.second){};
+		pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {};
 
 		/**
 		 * @brief Initialization constructor
@@ -51,7 +51,7 @@ namespace ft
 		 * @param a An object of the type of first, or some other type implicitly convertible to it.
 		 * @param b An object of the type of second, or some other type implicitly convertible to it.
 		 */
-		pair(const first_type& a, const second_type& b) : first(a), second(b){};
+		pair(const first_type& a, const second_type& b) : first(a), second(b) {};
 
 		/**
 		 * @brief Assign contents
@@ -59,10 +59,13 @@ namespace ft
 		 * @param pr Another pair object.
 		 * @return pair& 
 		 */
-		pair &operator=(const pair &pr)
+		pair& operator=(const pair& pr)
 		{
-			first = pr.first;
-			second = pr.second;
+			if (this != &pr)
+			{
+				first = pr.first;
+				second = pr.second;
+			}
 
 			return *this;
 		}
@@ -131,11 +134,15 @@ namespace ft
 	 * @param y Value for the members second, respectively, of the pair object being constructed.
 	 * @return pair<T1, T2> 
 	 */
+	// template <typename T1, typename T2>
+	// pair<T1, T2> make_pair(const T1 &x, const T2 &y)
+	// {
+	// 	return pair<T1, T2>(x, y);
+	// }
 	template <typename T1, typename T2>
-	pair<T1, T2> make_pair(const T1 &x, const T2 &y)
-	{
-		return pair<T1, T2>(x, y);
-	}
+	inline ft::pair<T1, T2>
+	make_pair(T1 first, T2 second)
+	{ return ft::pair<T1, T2>(first, second); }
 }
 
 #endif

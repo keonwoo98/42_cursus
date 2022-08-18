@@ -4,12 +4,15 @@
 #include "reverse_iterator.hpp"
 #include "utility.hpp"
 #include "type_traits.hpp"
+#include "algorithm.hpp"
 #include <memory>
 
 namespace ft
 {
 	enum node_color
 	{ RED, BLACK };
+
+	/* Red-Black Tree Node */
 
 	template <typename T>
 	class RBtree_node
@@ -60,30 +63,84 @@ namespace ft
 			this->_color = _color == RED ? BLACK : RED;
 		}
 
-		bool tree_is_left_child(node_ptr node)
-		{
-			return node == node->_parent->_left;
-		}
+		// bool tree_is_left_child(node_ptr node)
+		// {
+		// 	return node == node->_parent->_left;
+		// }
 
-		bool tree_is_left_child(const_node_ptr node)
-		{
-			return node == node->_parent->_left;
-		}
+		// bool tree_is_left_child(const_node_ptr node)
+		// {
+		// 	return node == node->_parent->_left;
+		// }
 
-		node_ptr tree_min(node_ptr ptr)
-		{
-			while (ptr->_left != NULL)
-				ptr = ptr->_left;
-			return ptr;
-		}
+		// node_ptr tree_min(node_ptr ptr)
+		// {
+		// 	while (ptr->_left != NULL)
+		// 		ptr = ptr->_left;
+		// 	return ptr;
+		// }
 
-		node_ptr tree_max(node_ptr ptr)
-		{
-			while (ptr->_right != NULL)
-				ptr = ptr->_right;
-			return ptr;
-		}
+		// node_ptr tree_max(node_ptr ptr)
+		// {
+		// 	while (ptr->_right != NULL)
+		// 		ptr = ptr->_right;
+		// 	return ptr;
+		// }
 	};
+
+	/* Tree utility functions */
+
+	template <typename T>
+	bool
+	tree_is_left_child(typename RBtree_node<T>::node_ptr node)
+	{
+		return node == node->_parent->_left;
+	}
+
+	template <typename T>
+	bool
+	tree_is_left_child(typename RBtree_node<T>::const_node_ptr node)
+	{
+		return node == node->_parent->_left;
+	}
+
+	template <typename T>
+	typename RBtree_node<T>::node_ptr
+	tree_min(typename RBtree_node<T>::node_ptr root)
+	{
+		while (root->_left != NULL)
+			root = root->_left;
+		return root;
+	}
+
+	template <typename T>
+	typename RBtree_node<T>::const_node_ptr
+	tree_min(typename RBtree_node<T>::const_node_ptr root)
+	{
+		while (root->_left != NULL)
+			root = root->_left;
+		return root;
+	}
+
+	template <typename T>
+	typename RBtree_node<T>::node_ptr
+	tree_max(typename RBtree_node<T>::node_ptr root)
+	{
+		while (root->_right != NULL)
+			root = root->_right;
+		return root;
+	}
+
+	template <typename T>
+	typename RBtree_node<T>::const_node_ptr
+	tree_max(typename RBtree_node<T>::const_node_ptr root)
+	{
+		while (root->_right != NULL)
+			root = root->_right;
+		return root;
+	}
+
+	/* Red-Black Tree Iterator */
 
 	template <typename Node_ptr, typename Value>
 	class RBtree_iterator
@@ -108,7 +165,7 @@ namespace ft
  * Member functions :
  */
 	public :
-		RBtree_iterator() : node() {}
+		RBtree_iterator() : _node() {}
 
 		RBtree_iterator(const RBtree_iterator& it) : _node(it._node) {}
 
@@ -157,8 +214,8 @@ namespace ft
 			else
 			{
 				while (tree_is_left_child<value_type>(_node))
-					_node = _node->parent;
-				_node = _node->parent;
+					_node = _node->_parent;
+				_node = _node->_parent;
 			}
 			return *this;
 		}
@@ -171,9 +228,7 @@ namespace ft
 		}
 
 		Node_ptr base() const
-		{
-			return _node;
-		}
+		{ return _node; }
 	};
 
 	template<typename Node_ptr, typename Value>
@@ -185,6 +240,150 @@ namespace ft
 	inline bool
 		operator!=(const RBtree_iterator<Node_ptr, Value>& rhs, const RBtree_iterator<Node_ptr, Value>& lhs)
 	{ return rhs.base() != lhs.base(); }
+
+/* Red-Black Tree Const Iterator */
+
+	template <typename Const_node_ptr, typename Value>
+	class RBtree_const_iterator
+	{
+/*
+ * Member types :
+ */
+	public :
+		typedef ft::bidirectional_iterator_tag		iterator_category;
+		typedef ptrdiff_t							difference_type;
+		typedef Value								value_type;
+		typedef const Value*						pointer;
+		typedef const Value&						reference;
+		typedef RBtree_iterator<typename RBtree_node<Value>::node_ptr, Value>	RBtree_normal_iterator;
+
+/*
+ * Member variables :
+ */
+	private :
+		Const_node_ptr	_node;
+
+/*
+ * Member functions :
+ */
+	public :
+		RBtree_const_iterator() : _node() {}
+
+		RBtree_const_iterator(const RBtree_const_iterator& it) : _node(it._node) {}
+
+		RBtree_const_iterator(const RBtree_normal_iterator& it) : _node(it.base()) {}
+
+		RBtree_const_iterator(const Const_node_ptr& val) : _node(val) {}
+
+		RBtree_const_iterator& operator=(const RBtree_const_iterator& it)
+		{
+			if (this != &it)
+				_node = it._node;
+			return *this;
+		}
+
+		RBtree_const_iterator& operator=(const Const_node_ptr& p)
+		{
+			_node = p;
+			return *this;
+		}
+
+		reference operator*() const { return _node->_data; }
+		pointer operator->() const { return &(_node->_data); }
+
+		RBtree_const_iterator& operator++()
+		{
+			if (_node->_right != NULL)
+				_node = tree_min<value_type>(_node->_right);
+			else
+			{
+				while (!tree_is_left_child<value_type>(_node))
+					_node = _node->_parent;
+				_node = _node->_parent;
+			}
+			return *this;
+		}
+
+		RBtree_const_iterator operator++(int)
+		{
+			RBtree_const_iterator tmp(*this);
+			++(*this);
+			return tmp;
+		}
+
+		RBtree_const_iterator& operator--()
+		{
+			if (_node->_left != NULL)
+				_node = tree_max<value_type>(_node->_left);
+			else
+			{
+				while (tree_is_left_child<value_type>(_node))
+					_node = _node->_parent;
+				_node = _node->_parent;
+			}
+			return *this;
+		}
+
+		RBtree_const_iterator operator--(int)
+		{
+			RBtree_const_iterator tmp(*this);
+			--(*this);
+			return tmp;
+		}
+
+		Const_node_ptr base() const
+		{ return _node; }
+	};
+
+	template <typename Const_node_ptr, typename Value>
+	inline bool
+	operator==(const RBtree_const_iterator<Const_node_ptr, Value> &rhs,
+			   const RBtree_const_iterator<Const_node_ptr, Value> &lhs)
+	{
+		return rhs.base() == lhs.base();
+	}
+
+	template <typename Const_node_ptr, typename Value>
+	inline bool
+	operator!=(const RBtree_const_iterator<Const_node_ptr, Value> &rhs,
+			   const RBtree_const_iterator<Const_node_ptr, Value> &lhs)
+	{
+		return rhs.base() != lhs.base();
+	}
+
+	template <typename Const_node_ptr, typename Node_ptr, typename Value>
+	inline bool
+	operator==(const RBtree_const_iterator<Const_node_ptr, Value> &rhs,
+			   const RBtree_iterator<Node_ptr, Value> &lhs)
+	{
+		return rhs.base() == lhs.base();
+	}
+
+	template <typename Const_node_ptr, typename Node_ptr, typename Value>
+	inline bool
+	operator!=(const RBtree_const_iterator<Const_node_ptr, Value> &rhs,
+			   const RBtree_iterator<Node_ptr, Value> &lhs)
+	{
+		return rhs.base() != lhs.base();
+	}
+
+	template <typename Const_node_ptr, typename Node_ptr, typename Value>
+	inline bool
+	operator==(const RBtree_iterator<Node_ptr, Value> &rhs,
+			   const RBtree_const_iterator<Const_node_ptr, Value> &lhs)
+	{
+		return rhs.base() == lhs.base();
+	}
+
+	template <typename Const_node_ptr, typename Node_ptr, typename Value>
+	inline bool
+	operator!=(const RBtree_iterator<Node_ptr, Value> &rhs,
+			   const RBtree_const_iterator<Const_node_ptr, Value> &lhs)
+	{
+		return rhs.base() != lhs.base();
+	}
+
+	/* Red-Black Tree */
 
 	template <typename T, typename Compare = std::less<T>, typename Alloc = std::allocator<T> >
 	class RBtree
@@ -203,12 +402,12 @@ namespace ft
 		typedef typename allocator_type::reference							reference;
 		typedef typename allocator_type::const_reference					const_reference;
 		typedef typename allocator_type::size_type							size_type;
-		typedef typename allocator_type::differenct_type					difference_type;
+		typedef typename allocator_type::difference_type					difference_type;
 		typedef typename node_type::node_ptr								node_ptr;
 		typedef typename node_type::const_node_ptr							const_node_ptr;
 
 		typedef ft::RBtree_iterator<node_ptr, value_type>					iterator;
-		typedef ft::RBtree_iterator<const node_ptr, const value_type>		const_iterator;
+		typedef ft::RBtree_const_iterator<const_node_ptr, value_type>		const_iterator;
 		typedef ft::reverse_iterator<iterator>								reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
 
@@ -229,10 +428,10 @@ namespace ft
 	public :
 		// Constructors
 		explicit RBtree(const value_compare& comp, const allocator_type& alloc)
-			: _size(), _parent(), _begin_node(&_parent), _compare(comp), _allocator(alloc), _node_allocator(alloc) {}
+			: _size(0), _parent(), _begin_node(&_parent), _compare(comp), _allocator(alloc), _node_allocator(alloc) {}
 		
 		RBtree(const RBtree& t)
-			: _size(), _parent(), _begin_node(&_parent), _compare(t._compare), _allocator(t._allocator), _node_allocator(t._node_allocator)
+			: _size(t._size), _parent(), _begin_node(&_parent), _compare(t._compare), _allocator(t._allocator), _node_allocator(t._node_allocator)
 		{
 			if (t.root() != NULL)
 			{
@@ -270,7 +469,7 @@ namespace ft
 
 		// Iterators
 		iterator begin() { return iterator(this->_begin_node); }
-		const iterator begin() const { return const_iterator(this->_begin_node); }
+		const_iterator begin() const { return const_iterator(this->_begin_node); }
 		iterator end() { return iterator(&this->_parent); }
 		const_iterator end() const { return const_iterator(&this->_parent); }
 		reverse_iterator rbegin() { return reverse_iterator(this->end()); }
@@ -281,12 +480,12 @@ namespace ft
 		// Capacity
 		bool empty() const { return this->_size == 0; }
 		size_type size() const { return this->_size; }
-		size_type max_size() const { return-> this->_allocator.max_size(); }
+		size_type max_size() const { return this->_allocator.max_size(); }
 
 		// Modifiers
 		ft::pair<iterator, bool> insert(const value_type& val)
 		{
-			node_ptr new_node = this->contruct_node(val);
+			node_ptr new_node = this->construct_node(val);
 			bool inserted = false;
 			iterator pos;
 
@@ -300,8 +499,11 @@ namespace ft
 			return ft::make_pair(pos, inserted);
 		}
 
-		iterator insert(iterator posision, const value_type& val)
-		{ return this->insert(val).first; }
+		iterator insert(iterator position, const value_type& val)
+		{
+			(void)position;
+			return this->insert(val).first;
+		}
 
 		template<typename InputIterator>
 		void insert (InputIterator first, InputIterator last)
@@ -403,7 +605,7 @@ namespace ft
 			return this->end();
 		}
 
-		size_type count(const value_type& val)
+		size_type count(const value_type& val) const
 		{ return this->find(val) == this->end() ? 0 : 1; }
 
 		iterator lower_bound(const value_type& val)
@@ -449,7 +651,7 @@ namespace ft
 
 			while (node != NULL)
 			{
-				if (!this->_compare(val, node->_data))
+				if (this->_compare(val, node->_data))
 				{
 					pos = node;
 					node = node->_left;
@@ -467,7 +669,7 @@ namespace ft
 
 			while (node != NULL)
 			{
-				if (!this->_compare(val, node->_data))
+				if (this->_compare(val, node->_data))
 				{
 					pos = node;
 					node = node->_left;
@@ -500,8 +702,8 @@ namespace ft
 
 		ft::pair<const_iterator, const_iterator> equal_range(const value_type& val) const
 		{
-			node_ptr node = this->root();
-			node_ptr pos = this->end_node();
+			const_node_ptr node = this->root();
+			const_node_ptr pos = this->end_node();
 
 			while (node != NULL)
 			{
@@ -575,10 +777,10 @@ namespace ft
 		}
 
 		// insertion
-		node_ptr contruct_node(const value_type& data)
+		node_ptr construct_node(const value_type& data)
 		{
 			node_ptr new_node = this->_node_allocator.allocate(1);
-			this->_allocator.contruct(&new_node->_data, data);
+			this->_allocator.construct(&new_node->_data, data);
 			new_node->_color = RED;
 			new_node->_parent = NULL;
 			new_node->_left = NULL;
@@ -593,7 +795,7 @@ namespace ft
 		{
 			if (node == NULL)
 				return NULL;
-			node_ptr new_node = this->contruct_node(node->_data);
+			node_ptr new_node = this->construct_node(node->_data);
 			new_node->_left = copy(node->_left);
 			if (new_node->_left != NULL)
 				new_node->_left->_parent = new_node;
@@ -640,7 +842,7 @@ namespace ft
 					node = node->_parent;
 					node->flip_color();
 					node = node->_parent;
-					node->flicp_color();
+					node->flip_color();
 				}
 				else if (tree_is_left_child<value_type>(node->_parent))		// Case 4
 				{
@@ -690,7 +892,7 @@ namespace ft
 			this->destroy_node(node);
 		}
 
-		void replacement_node(node_ptr node) const
+		node_ptr replacement_node(node_ptr node) const
 		{
 			if (node->_left == NULL || node->_right == NULL)
 				return node;
@@ -734,8 +936,8 @@ namespace ft
 				replmt->_left->_parent = replmt;
 				replmt->_right = node->_right;
 				if (replmt->_right != NULL)
-					remplmt->_right->_parent = replmt;
-				replmt->_color = node_color;
+					replmt->_right->_parent = replmt;
+				replmt->_color = node->_color;
 				if (node == root)
 					root = replmt;
 			}
@@ -749,7 +951,7 @@ namespace ft
 				if (replmt_child != NULL)		// Case 2
 					replmt_child->_color = BLACK;
 				else
-					this->_rebalance_before_erasion(root, replmt_child, sibling);	// replmt_child is always NULL at the start
+					this->rebalance_before_erasion(root, replmt_child, sibling);	// replmt_child is always NULL at the start
 			}
 		}
 
