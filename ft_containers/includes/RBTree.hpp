@@ -284,14 +284,88 @@ namespace ft
 		size_type max_size() const { return-> this->_allocator.max_size(); }
 
 		// Modifiers
-		ft::pair<iterator, bool> insert(const value_type& val);
-		iterator insert(iterator posision, const value_type& val);
+		ft::pair<iterator, bool> insert(const value_type& val)
+		{
+			node_ptr new_node = this->contruct_node(val);
+			bool inserted = false;
+			iterator pos;
+
+			this->root() = this->insert(this->root(), new_node, inserted, pos);
+			this->root()->_parent = &this->_parent;
+			if (!inserted)
+				this->destroy_node(new_node);
+			else
+				this->rebalance_after_insertion(new_node);
+			this->root()->_color = BLACK;
+			return ft::make_pair(pos, inserted);
+		}
+
+		iterator insert(iterator posision, const value_type& val)
+		{ return this->insert(val).first; }
+
 		template<typename InputIterator>
-		void insert (InputIterator first, InputIterator last);
-		void erase(iterator position);
-		size_type erase(const value_type& val);
-		void swap(RBtree& t);
-		void clear();
+		void insert (InputIterator first, InputIterator last)
+		{
+			for (; first != last; first++)
+				this->insert(*first);
+		}
+
+		void erase(iterator position)
+		{
+			node_ptr pos = position.base();
+			if (pos == this->_begin_node)
+			{
+				position++;
+				this->_begin_node = position.base();
+			}
+			this->erase(this->root(), pos);
+			if (this->root() != NULL)
+			{
+				this->root()->_parent = this->end_node();
+				this->root()->_color = BLACK;
+			}
+			this->destroy_node(pos);
+		}
+
+		size_type erase(const value_type& val)
+		{
+			iterator pos = this->find(val);
+			if (pos == this->end())
+				return 0;
+			this->erase(pos);
+			return 1;
+		}
+
+		void erase(iterator first, iterator last)
+		{
+			while (first != last)
+				this->erase(first++);
+		}
+
+		void swap(RBtree& t)
+		{
+			ft::swap(this->_begin_node, t._begin_node);
+			ft::swap(this->_parent._left, t._parent._left);
+			ft::swap(this->_size, t._size);
+			if (this->_size != 0 && t._size != 0)
+				ft::swap(this->root()->_parent, t.root()->_parent);
+			else if (this->_size != 0)
+				this->root()->_parent = this->end_node();
+			else if (t._size != 0)
+				t.root()->_parent = t.end_node();
+			ft::swap(this->_compare, t._compare);
+			
+		}
+
+		void clear()
+		{
+			if (this->root() != NULL)
+			{
+				this->destroy(this->root());
+				this->root() = NULL;
+				this->_begin_node = this->end_node();
+			}
+		}
 
 		// Observer
 		value_compare value_comp() const { return this->_compare; }
@@ -762,6 +836,10 @@ namespace ft
 			}
 		}
 	};
-};
+
+	template<typename T, typename Compare, typename Alloc>
+	void swap(RBtree<T, Compare, Alloc>& first, RBtree<T, Compare, Alloc>& second)
+	{ first.swap(second); }
+}
 
 #endif
