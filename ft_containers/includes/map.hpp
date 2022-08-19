@@ -156,8 +156,7 @@ namespace ft
 		 */
 		mapped_type& operator[](const key_type& k)
 		{
-			iterator pos(this->insert(ft::make_pair(k, mapped_type())).first);
-			return (*pos).second;
+			return (*((this->insert(ft::make_pair(k, mapped_type()))).first)).second;
 		}
 
 		/* Modifiers */

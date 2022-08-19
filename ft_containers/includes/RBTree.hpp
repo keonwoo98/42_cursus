@@ -6,6 +6,7 @@
 #include "type_traits.hpp"
 #include "algorithm.hpp"
 #include <memory>
+#include <iostream>
 
 namespace ft
 {
@@ -62,30 +63,6 @@ namespace ft
 		{
 			this->_color = _color == RED ? BLACK : RED;
 		}
-
-		// bool tree_is_left_child(node_ptr node)
-		// {
-		// 	return node == node->_parent->_left;
-		// }
-
-		// bool tree_is_left_child(const_node_ptr node)
-		// {
-		// 	return node == node->_parent->_left;
-		// }
-
-		// node_ptr tree_min(node_ptr ptr)
-		// {
-		// 	while (ptr->_left != NULL)
-		// 		ptr = ptr->_left;
-		// 	return ptr;
-		// }
-
-		// node_ptr tree_max(node_ptr ptr)
-		// {
-		// 	while (ptr->_right != NULL)
-		// 		ptr = ptr->_right;
-		// 	return ptr;
-		// }
 	};
 
 	/* Tree utility functions */
@@ -94,14 +71,20 @@ namespace ft
 	bool
 	tree_is_left_child(typename RBtree_node<T>::node_ptr node)
 	{
-		return node == node->_parent->_left;
+		if (node && node->_parent && node->_parent->_left)
+			return node == node->_parent->_left;
+		else
+			return false;
 	}
 
 	template <typename T>
 	bool
 	tree_is_left_child(typename RBtree_node<T>::const_node_ptr node)
 	{
-		return node == node->_parent->_left;
+		if (node && node->_parent && node->_parent->_left)
+			return node == node->_parent->_left;
+		else
+			return false;
 	}
 
 	template <typename T>
@@ -426,12 +409,13 @@ namespace ft
  * Member functions :
  */
 	public :
+		
 		// Constructors
 		explicit RBtree(const value_compare& comp, const allocator_type& alloc)
-			: _size(0), _parent(), _begin_node(&_parent), _compare(comp), _allocator(alloc), _node_allocator(alloc) {}
+			: _size(), _parent(), _begin_node(&_parent), _compare(comp), _allocator(alloc), _node_allocator(alloc) {}
 		
 		RBtree(const RBtree& t)
-			: _size(t._size), _parent(), _begin_node(&_parent), _compare(t._compare), _allocator(t._allocator), _node_allocator(t._node_allocator)
+			: _size(), _parent(), _begin_node(&_parent), _compare(t._compare), _allocator(t._allocator), _node_allocator(t._node_allocator)
 		{
 			if (t.root() != NULL)
 			{
@@ -1045,3 +1029,4 @@ namespace ft
 }
 
 #endif
+ 

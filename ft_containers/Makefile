@@ -3,14 +3,19 @@ CXX = c++
 CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -pedantic -fsanitize=address
 INCLUDES = -I$(HEADERS_DIRECTORY)
 
+HEADERS_DIRECTORY = ./includes/
 HEADERS_LIST =	iterator_base.hpp\
 				random_access_iterator.hpp\
 				reverse_iterator.hpp\
 				type_traits.hpp\
 				algorithm.hpp\
 				utility.hpp\
-				vector.hpp
-HEADERS_DIRECTORY = ./includes/
+				RBtree.hpp\
+				vector.hpp\
+				stack.hpp\
+				map.hpp\
+				set.hpp\
+				container.hpp
 HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = ./sources/
@@ -18,7 +23,7 @@ SOURCES_LIST =	main.cpp
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = ./objects/
-OBJECTS_LIST = $(patsubst %.c, %.o, $(SOURCES_LIST))
+OBJECTS_LIST = $(patsubst %.cpp, %.o, $(SOURCES_LIST))
 OBJECTS = $(addprefix $(OBJECTS_DIRECTORY), $(OBJECTS_LIST))
 
 RED = \033[0;31m
@@ -32,11 +37,15 @@ $(NAME) : $(OBJECTS_DIRECTORY) $(OBJECTS)
 	@echo "\n$(BLUE)$(NAME) : object files created$(RESET)"
 	@echo "$(BLUE)$(NAME) : $(NAME) created$(RESET)"
 
+std:
+	@$(MAKE) fclean
+	@make CXXFLAGS="Wall -Wextra -Werror -std=c++98 -pedantic -fsanitize=address" -g -D STD_MODE=1" all
+
 $(OBJECTS_DIRECTORY) :
 	@mkdir -p $(OBJECTS_DIRECTORY)
 	@echo "$(BLUE)$(NAME) : $(OBJECTS_DIRECTORY) created$(RESET)"
 
-$(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
+$(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.cpp $(HEADERS)
 	@$(CXX) $(CXXFLAGS) -c $(INCLUDES) $< -o $@
 	@echo "$(BLUE).$(RESET)\c"
 
@@ -52,4 +61,4 @@ re:
 	@$(MAKE) fclean
 	@$(MAKE) all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re std
