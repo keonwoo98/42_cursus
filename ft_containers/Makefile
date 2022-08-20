@@ -10,7 +10,7 @@ HEADERS_LIST =	iterator_base.hpp\
 				type_traits.hpp\
 				algorithm.hpp\
 				utility.hpp\
-				RBtree.hpp\
+				RBTree.hpp\
 				vector.hpp\
 				stack.hpp\
 				map.hpp\
@@ -39,7 +39,7 @@ $(NAME) : $(OBJECTS_DIRECTORY) $(OBJECTS)
 
 std:
 	@$(MAKE) fclean
-	@make CXXFLAGS="Wall -Wextra -Werror -std=c++98 -pedantic -fsanitize=address" -g -D STD_MODE=1" all
+	@make CXXFLAGS="-Wall -Wextra -Werror -std=c++98 -pedantic -fsanitize=address -g -D STD_MODE=1" all
 
 $(OBJECTS_DIRECTORY) :
 	@mkdir -p $(OBJECTS_DIRECTORY)

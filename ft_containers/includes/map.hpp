@@ -39,19 +39,22 @@ namespace ft
 		// allocator_type::pointer
 		typedef typename allocator_type::pointer					pointer;
 		// allocator_type::const_pointer
-		typedef typename allocator_type::const_pointer const_pointer;
+		typedef typename allocator_type::const_pointer				const_pointer;
 
 		// subclass
 		class value_compare : public std::binary_function<value_type, value_type, bool>
 		{
-			friend class map;
-			key_compare comp;
+			friend class		map;
+		
+		protected :
+			key_compare			comp;
+			value_compare(key_compare c) : comp(c) {}
 
 		public:
-			bool operator()(const value_type &x, const value_type &y) const
+			typedef bool		result_type;
+			bool operator()(const value_type& x, const value_type& y) const
 			{ return comp(x.first, y.first); }
 
-			value_compare(key_compare c) : comp(c) {}
 		};
 
 		// tree_type

@@ -169,7 +169,7 @@ namespace ft
 
 		reference operator*() const { return _node->_data; }
 		pointer operator->() const { return &_node->_data; }
-
+		
 		RBtree_iterator& operator++()
 		{
 			if (_node->_right != NULL)
@@ -233,11 +233,11 @@ namespace ft
  * Member types :
  */
 	public :
-		typedef ft::bidirectional_iterator_tag		iterator_category;
-		typedef ptrdiff_t							difference_type;
-		typedef Value								value_type;
-		typedef const Value*						pointer;
-		typedef const Value&						reference;
+		typedef ft::bidirectional_iterator_tag									iterator_category;
+		typedef ptrdiff_t														difference_type;
+		typedef Value															value_type;
+		typedef const Value*													pointer;
+		typedef const Value&													reference;
 		typedef RBtree_iterator<typename RBtree_node<Value>::node_ptr, Value>	RBtree_normal_iterator;
 
 /*
@@ -411,7 +411,7 @@ namespace ft
 	public :
 		
 		// Constructors
-		explicit RBtree(const value_compare& comp, const allocator_type& alloc)
+		RBtree(const value_compare& comp, const allocator_type& alloc)
 			: _size(), _parent(), _begin_node(&_parent), _compare(comp), _allocator(alloc), _node_allocator(alloc) {}
 		
 		RBtree(const RBtree& t)
@@ -1029,4 +1029,3 @@ namespace ft
 }
 
 #endif
- 
