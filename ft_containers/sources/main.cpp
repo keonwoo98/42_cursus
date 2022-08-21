@@ -6,14 +6,14 @@
 	#include <map>
 	#include <stack>
 	#include <vector>
-	namespace ft = std;
+	// namespace ft = std;
 #else
 	#include <map.hpp>
 	#include <stack.hpp>
 	#include <vector.hpp>
 #endif
 
-#include <stdlib.h>
+// #include <stdlib.h>
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
@@ -34,15 +34,15 @@ public:
 	MutantStack(const MutantStack<T>& src) { *this = src; }
 	MutantStack<T>& operator=(const MutantStack<T>& rhs) 
 	{
-		this->c = rhs.c;
+		this->_c = rhs.c;
 		return *this;
 	}
 	~MutantStack() {}
 
 	typedef typename ft::stack<T>::container_type::iterator iterator;
 
-	iterator begin() { return this->c.begin(); }
-	iterator end() { return this->c.end(); }
+	iterator begin() { return this->_c.begin(); }
+	iterator end() { return this->_c.end(); }
 };
 
 int main(int argc, char** argv) {
