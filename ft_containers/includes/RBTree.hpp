@@ -7,6 +7,7 @@
 #include "algorithm.hpp"
 #include <memory>
 #include <iostream>
+#include <functional>
 
 namespace ft
 {
@@ -473,6 +474,10 @@ namespace ft
 			bool inserted = false;
 			iterator pos;
 
+			// iterator pos = find_key(val.first);
+			// if (pos != end()) {
+			// 	return ft::make_pair<iterator, bool>(pos, false);
+
 			this->root() = this->insert(this->root(), new_node, inserted, pos);
 			this->root()->_parent = &this->_parent;
 			if (!inserted)
@@ -486,11 +491,14 @@ namespace ft
 		iterator insert(iterator position, const value_type& val)
 		{
 			(void)position;
+			// iterator it = find_key(val.first);
+			// if (it != end())
+			// 	return it;
 			return this->insert(val).first;
 		}
 
 		template<typename InputIterator>
-		void insert (InputIterator first, InputIterator last)
+		void insert(InputIterator first, InputIterator last)
 		{
 			for (; first != last; first++)
 				this->insert(*first);
@@ -807,11 +815,11 @@ namespace ft
 				node->_left = insert(node->_left, new_node, inserted, pos);
 				node->_left->_parent = node;
 			}
-			else	// equal
-			{
-				pos = node;
-				inserted = false;
-			}
+			// else	// equal
+			// {
+			// 	pos = node;
+			// 	inserted = false;
+			// }
 			return node;
 		}
 
