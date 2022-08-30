@@ -803,8 +803,6 @@ namespace ft
 				inserted = true;
 				return new_node;
 			}
-			if (this->_compare == std::minus<int> s)
-				std::cout << "minus" << '\n';
 			if (this->_compare(node->_data, new_node->_data) == this->_compare(new_node->_data, node->_data))
 			{
 				node->_left = insert(node->_left, new_node, inserted, pos);
