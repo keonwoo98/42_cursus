@@ -29,7 +29,7 @@ namespace ft
 /*
  * Member variables :
  */
-	public :
+	protected :
 		container_type			_c;
 
 /*
@@ -86,18 +86,10 @@ namespace ft
 		 */
 		void pop() { this->_c.pop_back(); }
 
-		// template <typename Tp, typename C>
-		// friend bool operator==(const stack<T, Container>& x, const stack<Tp, C>& y);
-		// template <typename Tp, typename C>
-		// friend bool operator<(const stack<T, Container>& x, const stack<Tp, C>& y);
-		// template <typename Tp, typename C>
-		// friend bool operator!=(const stack<T, Container>& x, const stack<Tp, C>& y);
-		// template <typename Tp, typename C>
-		// friend bool operator>(const stack<T, Container>& x, const stack<Tp, C>& y);
-		// template <typename Tp, typename C>
-		// friend bool operator>=(const stack<T, Container>& x, const stack<Tp, C>& y);
-		// template <typename Tp, typename C>
-		// friend bool operator<=(const stack<T, Container>& x, const stack<Tp, C>& y);
+		template <typename Tp, typename C>
+		friend bool operator==(const stack<Tp, C>& x, const stack<Tp, C>& y);
+		template <typename Tp, typename C>
+		friend bool operator<(const stack<Tp, C>& x, const stack<Tp, C>& y);
 	};
 
 /*

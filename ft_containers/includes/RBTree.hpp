@@ -8,6 +8,7 @@
 #include <memory>
 #include <iostream>
 #include <functional>
+#include <cmath>
 
 namespace ft
 {
@@ -470,13 +471,13 @@ namespace ft
 		// Modifiers
 		ft::pair<iterator, bool> insert(const value_type& val)
 		{
+			iterator it = find(val);
+			if (it != end())
+				return ft::make_pair<iterator, bool>(it, false);
+
 			node_ptr new_node = this->construct_node(val);
 			bool inserted = false;
 			iterator pos;
-
-			// iterator pos = find_key(val.first);
-			// if (pos != end()) {
-			// 	return ft::make_pair<iterator, bool>(pos, false);
 
 			this->root() = this->insert(this->root(), new_node, inserted, pos);
 			this->root()->_parent = &this->_parent;
@@ -491,9 +492,6 @@ namespace ft
 		iterator insert(iterator position, const value_type& val)
 		{
 			(void)position;
-			// iterator it = find_key(val.first);
-			// if (it != end())
-			// 	return it;
 			return this->insert(val).first;
 		}
 
@@ -805,7 +803,14 @@ namespace ft
 				inserted = true;
 				return new_node;
 			}
-			if (this->_compare(node->_data, new_node->_data))	// greater than
+			if (this->_compare == std::minus<int> s)
+				std::cout << "minus" << '\n';
+			if (this->_compare(node->_data, new_node->_data) == this->_compare(new_node->_data, node->_data))
+			{
+				node->_left = insert(node->_left, new_node, inserted, pos);
+				node->_left->_parent = node;
+			}
+			else if (this->_compare(node->_data, new_node->_data))	// greater than
 			{
 				node->_right = insert(node->_right, new_node, inserted, pos);
 				node->_right->_parent = node;
@@ -815,11 +820,11 @@ namespace ft
 				node->_left = insert(node->_left, new_node, inserted, pos);
 				node->_left->_parent = node;
 			}
-			// else	// equal
-			// {
-			// 	pos = node;
-			// 	inserted = false;
-			// }
+			else	// equal
+			{
+				pos = node;
+				inserted = false;
+			}
 			return node;
 		}
 
