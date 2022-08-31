@@ -466,7 +466,7 @@ namespace ft
 		// Capacity
 		bool empty() const { return this->_size == 0; }
 		size_type size() const { return this->_size; }
-		size_type max_size() const { return this->_allocator.max_size(); }
+		size_type max_size() const { return this->_allocator.max_size() / 5; }
 
 		// Modifiers
 		ft::pair<iterator, bool> insert(const value_type& val)

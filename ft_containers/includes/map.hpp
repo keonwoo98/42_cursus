@@ -2,7 +2,6 @@
 #define MAP_HPP
 
 #include "RBTree.hpp"
-#include <functional>
 
 namespace ft
 {
@@ -87,7 +86,7 @@ namespace ft
 		 * @param alloc
 		 */
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
-			: _tree(value_compare(comp), alloc) {}
+			: _tree(comp, alloc) {}
 
 		/**
 		 * @brief Range constructor
@@ -102,7 +101,7 @@ namespace ft
 		 */
 		template<typename InputIterator>
 		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
-			: _tree(value_compare(comp), alloc)
+			: _tree(comp, alloc)
 		{ this->insert(first, last); }
 
 		/**
@@ -228,39 +227,27 @@ namespace ft
 * Non-Member overloads :
 */
 	template <typename Key, typename T, typename Compare, typename Alloc>
-	inline bool
-	operator==(const map<Key, T, Compare, Alloc> &lhs,
-			   const map<Key, T, Compare, Alloc> &rhs)
+	inline bool operator==(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{ return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()); }
 
 	template <typename Key, typename T, typename Compare, typename Alloc>
-	inline bool
-	operator!=(const map<Key, T, Compare, Alloc> &lhs,
-			   const map<Key, T, Compare, Alloc> &rhs)
+	inline bool operator!=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{ return !(lhs == rhs); }
 
 	template <typename Key, typename T, typename Compare, typename Alloc>
-	inline bool
-	operator<(const map<Key, T, Compare, Alloc> &lhs,
-			  const map<Key, T, Compare, Alloc> &rhs)
+	inline bool operator<(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{ return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()); }
 
 	template <typename Key, typename T, typename Compare, typename Alloc>
-	inline bool
-	operator>(const map<Key, T, Compare, Alloc> &lhs,
-			  const map<Key, T, Compare, Alloc> &rhs)
+	inline bool operator>(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{ return rhs < lhs; }
 
 	template <typename Key, typename T, typename Compare, typename Alloc>
-	inline bool
-	operator<=(const map<Key, T, Compare, Alloc> &lhs,
-			   const map<Key, T, Compare, Alloc> &rhs)
+	inline bool operator<=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{ return !(rhs < lhs); }
 
 	template <typename Key, typename T, typename Compare, typename Alloc>
-	inline bool
-	operator>=(const map<Key, T, Compare, Alloc> &lhs,
-			   const map<Key, T, Compare, Alloc> &rhs)
+	inline bool operator>=(const map<Key, T, Compare, Alloc> &lhs, const map<Key, T, Compare, Alloc> &rhs)
 	{ return !(lhs < rhs); }
 
 	template <typename Key, typename T, typename Compare, typename Alloc>

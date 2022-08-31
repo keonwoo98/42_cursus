@@ -2,7 +2,6 @@
 #define SET_HPP
 
 #include "RBTree.hpp"
-#include <functional>
 
 namespace ft
 {
