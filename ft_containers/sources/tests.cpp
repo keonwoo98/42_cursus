@@ -24,14 +24,25 @@
 
 void vector_tests(void)
 {
+	std::cout << "vector test" << std::endl;
 	NAMESPACE::vector<int> v;
 
 	for (int i = 0; i < 10; i++)
 		v.push_back(i);
 
 	NAMESPACE::vector<int>::iterator it;
+	NAMESPACE::vector<int>::const_iterator cit;
 	it = v.begin();
-	std::cout << *it << std::endl;
+	cit = v.begin();
+	if (it == cit)
+		std::cout << "it == cit" << std::endl;
+	NAMESPACE::vector<int> swap;
+	swap = v;
+	NAMESPACE::vector<int>::iterator sit;
+	sit = swap.begin();
+	v.swap(swap);
+	if (*it == *cit)
+		std::cout << "iterator remain valid after swap" << std::endl;
 	it = v.end();
 	it--;
 	std::cout << *it << std::endl;
@@ -45,7 +56,7 @@ void vector_tests(void)
 	NAMESPACE::vector<int> copy;
 	copy.assign(v.begin(), v.end());
 	if (v == copy)
-		std::cout << "same" << std::endl;
+		std::cout << "v == copy" << std::endl;
 	copy.erase(copy.begin());
 	std::cout << copy.front() << std::endl;
 	v.clear();
@@ -54,6 +65,7 @@ void vector_tests(void)
 
 void stack_tests(void)
 {
+	std::cout << "stack test" << std::endl;
 	NAMESPACE::stack<int> st1;
 	NAMESPACE::stack<int> st2;
 
@@ -71,31 +83,48 @@ void stack_tests(void)
 	std::cout << st1.size() << std::endl;
 	std::cout << st1.top() << std::endl;
 	if (st1 != st2)
-		std::cout << "different" << std::endl;
+		std::cout << "st1 != st2" << std::endl;
 }
 
 void map_tests(void)
 {
+	std::cout << "map test" << std::endl;
 	NAMESPACE::map<int, int> m;
 
 	for (int i = 10; i > 0; i--)
 		m.insert(NAMESPACE::make_pair(i, i * 10));
+	std::cout << m.size() << std::endl;
+	
+	for (int i = 10; i > 0; i--)
+		m.insert(NAMESPACE::make_pair(i, i * 10));
+	std::cout << m.size() << std::endl;
 	
 	NAMESPACE::map<int, int>::iterator it;
 	it = m.begin();
 	std::cout << it->first << it->second << std::endl;
-	m.erase(m.begin(), ++m.begin());
+	m.erase(m.begin());
+	for (it = --m.end(); it != m.begin(); it--)
+		std::cout << it->first << it->second << std::endl;
 	std::cout << m.size() << std::endl;
+	std::cout << it->first << it->second << std::endl;
 	NAMESPACE::map<int, int> copy(m);
+	it = m.begin();
 	m.swap(copy);
 	if (m == copy)
-		std::cout << "same" << std::endl;
+		std::cout << "m == copy" << std::endl;
+	NAMESPACE::map<int, int>::iterator sit;
+	sit = copy.begin();
+	if (it == sit)
+		std::cout << "m == copy" << std::endl;
 	m.clear();
 	std::cout << m.size() << std::endl;
+	sit = --copy.end();
+	std::cout << sit->first << std::endl;
 }
 
 void set_tests(void)
 {
+	std::cout << "set test" << std::endl;
 	NAMESPACE::set<int> s;
 
 	for (int i = 10; i > 0; i--)
@@ -108,7 +137,7 @@ void set_tests(void)
 	s.erase(s.begin(), s.end());
 	std::cout << s.size() << std::endl;
 	if (s != copy)
-		std::cout << "different" << std::endl;
+		std::cout << "s != copy" << std::endl;
 	std::cout << copy.count(1) << std::endl;
 	std::cout << s.empty() << std::endl;
 }
