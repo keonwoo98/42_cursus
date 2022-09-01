@@ -8,8 +8,8 @@ ARG=$1
 
 if [ $# -eq 1 ]
 then
-	c++ sources/tests.cpp && ./a.out $ARG > ft_test
-	c++ -D STD_MODE=1 sources/tests.cpp && ./a.out $ARG > std_test
+	c++ -Wall -Werror -Wextra -std=c++98 -pedantic -fsanitize=address sources/tests.cpp && ./a.out $ARG > ft_test
+	c++ -Wall -Werror -Wextra -std=c++98 -pedantic -fsanitize=address -D STD_MODE=1 sources/tests.cpp && ./a.out $ARG > std_test
 	result=$(diff ft_test std_test)
 	time=$(diff ft_time std_time)
 	if [ "$result" != "" ]
