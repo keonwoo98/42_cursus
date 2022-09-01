@@ -6,6 +6,7 @@
 #include <map>
 #include <stack>
 #include <vector>
+#include <set>
 #define NAMESPACE std
 #define TIME_DIFF "std_time"
 #define MODE 1
@@ -15,6 +16,7 @@
 #include "map.hpp"
 #include "stack.hpp"
 #include "vector.hpp"
+#include "set.hpp"
 #define NAMESPACE ft
 #define TIME_DIFF "ft_time"
 #define MODE 0

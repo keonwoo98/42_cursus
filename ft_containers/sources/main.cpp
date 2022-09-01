@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
 	clock_t start = clock();
 	if (argc != 2)
 	{
-		std::cerr << "Usage: ./test seed" << std::endl;
+		std::cerr << "Usage: ./ft_containers seed" << std::endl;
 		std::cerr << "Provide a seed please" << std::endl;
 		std::cerr << "Count value:" << COUNT << std::endl;
 		return 1;

@@ -39,7 +39,7 @@ $(NAME) : $(OBJECTS_DIRECTORY) $(OBJECTS)
 
 std:
 	@$(MAKE) fclean
-	@make CXXFLAGS="-Wall -Wextra -Werror -std=c++98 -pedantic -fsanitize=address -g -D STD_MODE=1" all
+	@make CXXFLAGS="-Wall -Wextra -Werror -std=c++98 -pedantic -fsanitize=address -D STD_MODE=1" all
 
 $(OBJECTS_DIRECTORY) :
 	@mkdir -p $(OBJECTS_DIRECTORY)
