@@ -2,7 +2,7 @@ FROM debian:buster
 
 RUN apt-get update
 RUN apt-get upgrade
-RUN apt-get install -y mariadb-server
+RUN apt-get install -y mariadb-server mariadb-client
 
 EXPOSE 3306
 
