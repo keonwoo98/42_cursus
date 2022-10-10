@@ -1,14 +1,11 @@
 FROM debian:buster
 
-RUN apt-get update
-RUN apt-get upgrade
-RUN apt-get install -y mariadb-server mariadb-client
+RUN apt-get update && apt-get upgrade && apt-get install -y mariadb-server mariadb-client
 
 EXPOSE 3306
 
-COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/
-COPY ./tools /var/www/
-
-RUN service mysql start && mysql < /var/www/initial_db.sql && rm -f /var/www/initial_db.sql;
+COPY ./tools/create_db.sh /usr/local/bin/
+COPY ./conf/wordpress.sql /usr/local/bin/
+ENTRYPOINT [ "create_db.sh" ]
 
 CMD ["mysqld"]
