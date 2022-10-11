@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# if [ -f $(변수) ]; then : 파일이 존재하고 정규 파일이면 참
 if [ ! -f /etc/ssl/certs/nginx.crt ]; then
 echo "Nginx: setting up ssl...";
 # 개인키 및 인증서 생성
@@ -16,6 +17,7 @@ openssl req -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=KR/ST=Seoul/L=Seou
 echo "Nginx: ssl is set up!";
 fi
 
+# 이 .sh script에서 모든 작업을 수행한 다음 동일한 shell에서 사용자가 CMD에 전달한 명령을 실행
 exec "$@"
 
 # self-signed SSL 인증서 생성
