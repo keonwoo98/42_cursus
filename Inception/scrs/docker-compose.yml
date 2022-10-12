@@ -1,45 +1,93 @@
 # docker-compose : 여러 개의 컨테이너를 하나로 묶어주는 역할을 하는 툴
 # yaml : yet another markup language -> yaml ain't markup language (보기 편하고 이해하기 쉬운 포맷)
 
-version: "3.8"
+version: "3"
 
-volumes:
-	data: {}
 services:
 	mariadb:
 		image: debian:buster
-		restart: always
+		build:
+			context: ./requirements/mariadb
+		container_name: mariadb
+		environment:
+			- DB_ROOT_PWD=${DB_ROOT_PWD}
+			- DB_NAME=${DB_NAME}
+			- DB_USER=${DB_USER}
+			- DB_PWD=${DB_PWD}
 		expose:
 			- "3306"
+		volumes:
+			- data:/var/lib/mysql
 		networks:
 			- intra
+		restart: always
 		tty: true
+
 	nginx:
 		image: debian:buster
-		restart: always
+		build:
+			context: ./requirements/nginx
+		container_name: nginx
+		depends_on:
+			- wordpress
+		environment:
+			- DOMAIN_NAME=$(DOMAIN_NAME)
+			- EMAIL=$(WP_ADMIN_EMAIL)
 		ports:
 			- "443:443"
 		volumes:
 			- data:/var/www/html
 		networks:
 			- intra
+		restart: always
 		tty: true
+
 	wordpress:
 		image: debian:buster
-		restart: always
+		build:
+			context: ./requirements/wordpress
+		depends_on:
+			- mariadb
+		environment:
+			- DB_HOST=${DB_HOST}
+			- WP_TITLE=${WP_TITLE}
+			- WP_ADMIN_USER=${WP_ADMIN_USER}
+			- WP_ADMIN_PWD=${WP_ADMIN_PWD}
+			- WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
+			- WP_USER=${WP_USER}
+			- WP_PWD=${WP_PWD}
+			- WP_EMAIL=${WP_EMAIL}
+			- WP_HOME=${WP_HOME}
+			- WP_URL=${WP_URL}
 		volumes:
 			- data:/var/www/html
 		expose:
 			- "9000"
 		networks:
 			- intra
+		restart: always
 		tty: true
+
 networks:
 	intra:
 		driver: bridge
 
-# version : 컨테이너를 실행하기 위한 단위
-# services : build할 dockerfile의 경로 지정
+volumes:
+	db_data:
+		driver: local
+		driver_opts:
+			type: none
+			device: /home/keokim/data/mysql
+			o: bind
+	wordpress_data:
+		driver: local
+		driver_opts:
+			type: none
+			device: /home/keokim/data/wordpress
+			o: bind
+
+# version : 컨테이너를 실행하기 위한 단위 (docker-compose version 명시)
+# services : build할 dockerfile의 경로 지정 (서비스 정의)
 # ports : 포트포워딩 지정
 # volumes : 바인드 마운트, 볼륨 지정
 # environment : 컨테이너에서 사용될 환경변수 설정
@@ -53,7 +101,7 @@ networks:
 # services : 애플리케이션을 구성할 서비스 목록 (컨테이너를 실행할 때 필요한 정보 명시)
 #     서비스 이름 (아래의 목록은 순서가 상관없음)
 #         build : 빌드할 Dockerfile의 경로
-#         image : 사용할 이미지
+#         image : 컨테이너를 올릴 때 사용할 이미지
 #         command : 컨테이너에서 수행할 명령어
 #         ports : 포트 정의
 #         working_dir : 작업할 경로
