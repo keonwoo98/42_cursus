@@ -4,7 +4,7 @@
 if [ ! -f /etc/ssl/certs/nginx.crt ]; then
 echo "Nginx: setting up ssl...";
 # 개인키 및 인증서 생성
-openssl req -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=KR/ST=Seoul/L=Seoul/O=42Seoul/OU=Lee/CN=localhost" -keyout localhost.dev.key -out localhost.dev.crt
+openssl req -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=KR/ST=Seoul/L=Seoul/O=42Seoul/OU=Lee/CN=localhost" -keyout /etc/ssl/private/localhost.dev.key -out /etc/ssl/certs/localhost.dev.crt
 # req : 인증서 요청 및 인증서 생성 유틸
 # -newkey : 개인키를 성성하기 위한 옵션
 # rsa:4096 : rsa 방식을 이용해 개인키와 인증서 요청을 새로 만듦 (4096 bit 사이즈의 키 생성)

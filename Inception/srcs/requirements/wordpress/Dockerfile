@@ -1,15 +1,26 @@
 FROM debian:buster
 
-RUN apt-get update && apt-get upgrade && apt-get install -y wget php-fpm php-mysql php-mbstring
+RUN apt-get update && apt-get upgrade && \
+    apt-get install -y wget curl php-fpm php-mysql php-mbstring && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY ./tools/create_wordpress.sh /usr/local/bin/
-ENTRYPOINT ["create_wordpress.sh"]
+RUN mkdir -p tools && \
+	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+	chmod +x wp-cli.phar && \
+	mv wp-cli.phar /usr/local/bin/wp && \
+	wp cli update
 
-WORKDIR /var/www/html/
+# COPY ./config/www.conf /tools/www.conf
+# COPY ./config/php-fpm.conf /tools/php-fpm.conf
+COPY ./tools/create_wordpress.sh /tools/create_wordpress.sh
+
+RUN chmod +x /tools/create_wordpress.sh
+
+WORKDIR /www
 
 EXPOSE 9000
 
-CMD ["/usr/sbin/php-fpm7.3", "-F"]
+ENTRYPOINT ["/tools/create_wordpress.sh"]
 
 # CGI( Common Gateway Interface )는 웹서버와 외부 프로토콜을 연결시켜주는 표준 프로토콜이다.
 # CGI는 각각의 요청별로 프로세스를 생성하기 때문에 요청 때마다 생성과 삭제를 반복해야해서 속도가 느리다.

@@ -4,87 +4,88 @@
 version: "3"
 
 services:
-	mariadb:
-		image: debian:buster
-		build:
-			context: ./requirements/mariadb
-		container_name: mariadb
-		environment:
-			- DB_ROOT_PWD=${DB_ROOT_PWD}
-			- DB_NAME=${DB_NAME}
-			- DB_USER=${DB_USER}
-			- DB_PWD=${DB_PWD}
-		expose:
-			- "3306"
-		volumes:
-			- data:/var/lib/mysql
-		networks:
-			- intra
-		restart: always
-		tty: true
 
-	nginx:
-		image: debian:buster
-		build:
-			context: ./requirements/nginx
-		container_name: nginx
-		depends_on:
-			- wordpress
-		environment:
-			- DOMAIN_NAME=$(DOMAIN_NAME)
-			- EMAIL=$(WP_ADMIN_EMAIL)
-		ports:
-			- "443:443"
-		volumes:
-			- data:/var/www/html
-		networks:
-			- intra
-		restart: always
-		tty: true
+    nginx:
+        image: debian:buster
+        build:
+            context: ./requirements/nginx
+        container_name: nginx
+        depends_on:
+            - wordpress
+        environment:
+            - DOMAIN_NAME=${DOMAIN_NAME}
+            - EMAIL=${WP_ADMIN_EMAIL}
+        ports:
+            - "443:443"
+        volumes:
+            - wordpress_data:/var/www/html
+        networks:
+            - intra
+        restart: always
+        tty: true
 
-	wordpress:
-		image: debian:buster
-		build:
-			context: ./requirements/wordpress
-		depends_on:
-			- mariadb
-		environment:
-			- DB_HOST=${DB_HOST}
-			- WP_TITLE=${WP_TITLE}
-			- WP_ADMIN_USER=${WP_ADMIN_USER}
-			- WP_ADMIN_PWD=${WP_ADMIN_PWD}
-			- WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
-			- WP_USER=${WP_USER}
-			- WP_PWD=${WP_PWD}
-			- WP_EMAIL=${WP_EMAIL}
-			- WP_HOME=${WP_HOME}
-			- WP_URL=${WP_URL}
-		volumes:
-			- data:/var/www/html
-		expose:
-			- "9000"
-		networks:
-			- intra
-		restart: always
-		tty: true
+    mariadb:
+        image: debian:buster
+        build:
+            context: ./requirements/mariadb
+        container_name: mariadb
+        environment:
+            - DB_ROOT_PWD=${DB_ROOT_PWD}
+            - DB_NAME=${DB_NAME}
+            - DB_USER=${DB_USER}
+            - DB_PWD=${DB_PWD}
+        expose:
+            - "3306"
+        volumes:
+            - db_data:/var/lib/mysql
+        networks:
+            - intra
+        restart: always
+        tty: true
+
+    wordpress:
+        image: debian:buster
+        build:
+            context: ./requirements/wordpress
+        depends_on:
+            - mariadb
+        environment:
+            - DB_HOST=${DB_HOST}
+            - WP_TITLE=${WP_TITLE}
+            - WP_ADMIN_USER=${WP_ADMIN_USER}
+            - WP_ADMIN_PWD=${WP_ADMIN_PWD}
+            - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
+            - WP_USER=${WP_USER}
+            - WP_PWD=${WP_PWD}
+            - WP_EMAIL=${WP_EMAIL}
+            - WP_HOME=${WP_HOME}
+            - WP_URL=${WP_URL}
+        volumes:
+            - wordpress_data:/var/www/html
+        expose:
+            - "9000"
+        networks:
+            - intra
+        restart: always
+        tty: true
 
 networks:
-	intra:
-		driver: bridge
+    intra:
+        driver: bridge
 
 volumes:
-	db_data:
-		driver: local
-		driver_opts:
-			type: none
-			device: /home/keokim/data/mysql
-			o: bind
-	wordpress_data:
-		driver: local
-		driver_opts:
-			type: none
-			device: /home/keokim/data/wordpress
-			o: bind
+    db_data:
+        driver: local
+        driver_opts:
+            type: none
+            device: /Users/keokim/data/mysql
+            o: bind
+    wordpress_data:
+        driver: local
+        driver_opts:
+            type: none
+            device: /Users/keokim/data/wordpress
+            o: bind
 
 # version : 컨테이너를 실행하기 위한 단위 (docker-compose version 명시)
 # services : build할 dockerfile의 경로 지정 (서비스 정의)

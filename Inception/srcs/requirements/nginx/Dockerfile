@@ -7,11 +7,13 @@ EXPOSE 443
 COPY ./conf/nginx.conf /etc/nginx/sites-enabled/default
 COPY ./tools/nginx_start.sh /var/www
 
-RUN chmod +x /var/www/nginx_start.sh
+RUN chmod +x /var/www/nginx_start.sh && ln -sf /deb/stdout /var/log/access.log
 
 ENTRYPOINT [ "var/www/nginx_start.sh" ]
 
 CMD ["nginx", "-g", "daemon off;"]
+
+# ENTRYPOINT [ "tail", "-f", "/dev/null" ]
 
 # FROM : Docker Base Image (기반이 되는 이미지, <이미지 이름>:<태그> 형식으로 설정)
 # MAINTAINER : 메인테이너 정보 (작성자 정보)
