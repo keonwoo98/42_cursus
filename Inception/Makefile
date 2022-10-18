@@ -9,7 +9,7 @@ up :
 	@mkdir -p /Users/keokim/data/wordpress
 	@mkdir -p /Users/keokim/data/mysql
 	@echo "$(BLUE)Building containers ... $(RESET)"
-	@docker-compose -f $(COMPOSE_FILE) up --force-recreate --build
+	@docker-compose -f $(COMPOSE_FILE) up --build -d
 
 clean :
 	@echo "$(RED)Stopping containers ... $(RESET)"
@@ -21,7 +21,6 @@ fclean : clean
 	@-docker image rm -f `docker images -qa`
 	@-docker volume rm -f `docker volume ls -q`
 	@-docker network rm -f `docker network ls -q`
-	@sudo rm -rf /Users/keokim/data/wordpress
-	@sudo rm -rf /Users/keokim/data/mysql
+	@sudo rm -rf /Users/keokim/data
 
 .PHONY : all up clean fclean

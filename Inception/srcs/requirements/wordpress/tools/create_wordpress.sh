@@ -1,22 +1,14 @@
 #!/bin/sh
 
-if [ -f ./wordpress/wp-config.php ]
-then
-	echo "wordpress already downloaded"
-else
-	wget https://wordpress.org/lastest.tar.gz
-	tar -xzvf lastest.tar.gz
-	rm -rf lastest.tar.gz
+wp core downloaded --local=nl_NL --allow-root
 
-	rm -rf /etc/php/7.3/fpm/pool.d/www.conf
-	mv ./www.conf /etc/php/7.3/fpm/pool.d
+sleep 2
 
-	cd /var/www/html/wordpress
-	sed -i "s/username_here/$DB_USER/g" wp-config-sample.php
-	sed -i "s/password_here/$DB_PWD/g" wp-config-sample.php
-	sed -i "s/localhost/$DB_HOST/g" wp-config-sample.php
-	sed -i "s/database_name_here/$DB_NAME/g" wp-config-sample.php
-	mv wp-config-sample.php wp-config.php
-fi
+chown -R www-data:www-data /var/www/*
+chmod -R 755 /var/www/*
 
-exec "$@"
+wp config create --dbname=$DB_NAME --dbuser=$WP_ADMIN_USER --dbpass=$WP_ADMIN_PWD --dbhost=$DB_HOST  --dbcharset="utf8" --dbcollate="utf8_general_ci"  --allow-root
+
+wp core install --url=url_example.com --title=$WP_TITLE --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --dbhost=$DB_HOST  --allow-root
+
+exec php-fpm7.3 -F

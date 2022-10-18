@@ -9,7 +9,7 @@ services:
         image: debian:buster
         build:
             context: ./requirements/nginx
-        container_name: nginx
+        container_name: inception_nginx
         depends_on:
             - wordpress
         environment:
@@ -28,7 +28,7 @@ services:
         image: debian:buster
         build:
             context: ./requirements/mariadb
-        container_name: mariadb
+        container_name: inception_mariadb
         environment:
             - DB_ROOT_PWD=${DB_ROOT_PWD}
             - DB_NAME=${DB_NAME}
@@ -47,6 +47,7 @@ services:
         image: debian:buster
         build:
             context: ./requirements/wordpress
+        container_name: inception_wordpress
         depends_on:
             - mariadb
         environment:
