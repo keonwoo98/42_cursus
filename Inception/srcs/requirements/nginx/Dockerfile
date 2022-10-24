@@ -11,8 +11,6 @@ RUN chmod +x /var/www/html/nginx_start.sh && \
     ln -sf /deb/stdout /var/log/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log
 
-# RUN openssl req -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=KR/ST=Seoul/L=Seoul/O=42Seoul/OU=Lee/CN=localhost" -keyout /etc/ssl/private/localhost.dev.key -out /etc/ssl/certs/localhost.dev.crt
-
 ENTRYPOINT [ "/var/www/html/nginx_start.sh" ]
 
 CMD ["nginx", "-g", "daemon off;"]
