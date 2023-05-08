@@ -6,9 +6,3 @@
 	path = ft_transcendence/front
 	url = https://github.com/42-TRANSENDENCE/frontend.git
 	branch = develop
-[submodule "backend"]
-	path = backend
-	url = https://github.com/42-TRANSENDENCE/backend.git
-[submodule "frontend"]
-	path = frontend
-	url = https://github.com/42-TRANSENDENCE/frontend.git
