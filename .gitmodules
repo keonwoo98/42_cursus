@@ -1,8 +1,3 @@
-[submodule "ft_transcendence/back"]
-	path = ft_transcendence/back
-	url = https://github.com/42-TRANSENDENCE/backend.git
-	branch = develop
-[submodule "ft_transcendence/front"]
-	path = ft_transcendence/front
+[submodule "frontend"]
+	path = frontend
 	url = https://github.com/42-TRANSENDENCE/frontend.git
-	branch = develop
